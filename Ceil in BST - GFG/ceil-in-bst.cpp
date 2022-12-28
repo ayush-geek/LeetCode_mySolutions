@@ -110,22 +110,25 @@ int findCeil(Node* root, int input) {
         
         //Iterative
         
-        int ans=0;
+       
         
-        while(root!=NULL)
-        {
+        
             if(root->data==input)
                 return input;
-            else if(root->data>input)
+            else if(root->data<input)
             {
-                ans=root->data;
-                root=root->left;
+                return findCeil(root->right,input);
+                
             }
-            else
-                root=root->right;
             
-        }
+            int cc=findCeil(root->left,input);
+            
+            return cc>=input?cc:root->data;
+            
+               
+            
+    
         
-        return ans;
+        
     
 }
