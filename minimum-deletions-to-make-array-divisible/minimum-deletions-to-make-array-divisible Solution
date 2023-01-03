@@ -1,0 +1,48 @@
+class   Solution   { 
+  public : 
+ 
+      int   gcd ( int  a ,   int  b ) 
+  { 
+      return  b  ==   0   ?  a  :   gcd ( b ,  a  %  b ) ;    
+  } 
+ 
+      int   minOperations ( vector < int > &  nums ,  vector < int > &  numsDivide )   { 
+         
+ 
+          //Finding Gcd of Nums Divide 
+ 
+          int  a = numsDivide [ 0 ] ; 
+          int  n = numsDivide . size ( ) ; 
+          for ( int  i = 1 ; i < n ; i ++ ) 
+          { 
+             a = gcd ( a , numsDivide [ i ] ) ; 
+          } 
+ 
+          int  n1 = nums . size ( ) ; 
+         map < int , int >  mp ; 
+         
+          for ( int  ele :  nums ) 
+             mp [ ele ] ++ ; 
+         cout << mp . size ( ) << " " << a << endl ; 
+          int  ct = 0 ; 
+          for ( auto  it :  mp ) 
+          { 
+ 
+              int  z1 = it . first ; 
+ 
+             
+              if ( z1 <= a  &&  a % z1 == 0 ) 
+                  break ; 
+ 
+     // cout<<z1<<endl; 
+             ct += it . second ; 
+ 
+          } 
+ 
+          if ( ct == n1 ) 
+              return   - 1 ; 
+ 
+          return  ct ; 
+ 
+      } 
+  } ;
