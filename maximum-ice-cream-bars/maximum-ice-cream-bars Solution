@@ -1,0 +1,27 @@
+class   Solution   { 
+  public : 
+      int   maxIceCream ( vector < int > &  costs ,   int  coins )   { 
+          //Sort 
+          //Buy Inexpemsive icecream to max qty 
+ 
+          int  ans = 0 ; 
+ 
+          sort ( costs . begin ( ) , costs . end ( ) ) ; 
+ 
+          for ( int  i = 0 ; i < costs . size ( ) ; i ++ ) 
+          { 
+              if ( coins < costs [ i ] ) 
+                  break ; 
+              else 
+              { 
+                 coins -= costs [ i ] ; 
+                 ans ++ ; 
+              } 
+          } 
+     
+     
+          return  ans ; 
+      } 
+ 
+ 
+  } ;
