@@ -1,0 +1,76 @@
+class   Solution   { 
+  public : 
+      bool   isItPossible ( string word1 ,  string word2 )   { 
+         
+         
+         unordered_map < char , int >  mp1 ; 
+         unordered_map < char , int >  mp2 ; 
+         
+          for ( auto  ele :  word1 ) 
+             mp1 [ ele ] ++ ; 
+          for ( auto  ele :  word2 ) 
+             mp2 [ ele ] ++ ; 
+         
+            int  ex1 = word1 . size ( ) - mp1 . size ( ) ; 
+          int  ex2 = word2 . size ( ) - mp2 . size ( ) ; 
+         
+          int  diff = 0 ; 
+         
+          for ( auto  ele  :  mp1 ) 
+          { 
+              if ( mp2 . find ( ele . first ) == mp2 . end ( ) ) 
+              { 
+                  if ( ex2 > 0   &&  mp2 . size ( ) + 1 == mp1 . size ( ) ) 
+                          return   true ; 
+               
+                 
+                 diff ++ ; 
+              } 
+                 
+          } 
+         
+          for ( auto  ele  :  mp2 ) 
+          { 
+              if ( mp1 . find ( ele . first ) == mp1 . end ( ) ) 
+              { 
+                   if ( ex1 > 0   &&  mp1 . size ( ) + 1 == mp2 . size ( ) ) 
+                          return   true ; 
+                  diff ++ ; 
+              } 
+                
+          } 
+         
+         
+         
+         
+  //         if(mp1.size()==mp2.size()) 
+  //                 return true; 
+         
+  //         sort(word1.begin(),word1.end()); 
+  //         sort(word2.begin(),word2.end()); 
+         
+  //         if( word2.find(word1) != string::npos) 
+  //             return false; 
+  //         if(word1.find(word2)!=string::npos) 
+  //                 return  false; 
+             
+         
+  //        
+         
+         
+         
+  //        // if(mp1.size()>mp2.size()) 
+         
+            
+ 
+  //         int z=(diff+1)/2; 
+         
+  //         if(word1.size()<z || word2.size()<z)  
+  //             return false; 
+         
+           if ( ex1 == ex2  &&  mp1 . size ( ) == mp2 . size ( ) ) 
+                  return   true ; 
+                
+            return   false ; 
+      } 
+  } ;
