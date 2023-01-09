@@ -1,0 +1,40 @@
+class   Solution   { 
+  public : 
+      int   countNicePairs ( vector < int > &  nums )   { 
+ 
+      
+      unordered_map < int , int >  mp  ; 
+      int  n = nums . size ( ) ; 
+      int  ans = 0 ; 
+      int  m = 1e9 + 7 ; 
+       for ( int  i = 0 ; i < n ; i ++   ) 
+       { 
+          
+           //Reverse num 
+          int  z = nums [ i ] ; 
+          int  tmp = 0 ; 
+ 
+          while ( z > 0 ) 
+          { 
+              if ( tmp == 0   &&  z % 10 == 0 ) 
+              { 
+                 z = z / 10 ; 
+                  continue ; 
+              } 
+ 
+             tmp = tmp * 10 + z % 10 ; 
+             z = z / 10 ; 
+          } 
+ 
+          if ( mp . find ( nums [ i ] - tmp ) != mp . end ( ) )   
+             ans = ( ans + mp [ nums [ i ] - tmp ] ) % m ; 
+          
+         mp [ nums [ i ] - tmp ] ++ ; 
+          // cout<<nums[i]<<" "<<tmp<<endl; 
+ 
+       }    
+ 
+          return  ans ; 
+ 
+      } 
+  } ;
