@@ -1,0 +1,35 @@
+class   Solution   { 
+  public : 
+ 
+      void   solve ( int  i , int  j , vector < vector < int >> &  image , int  ncol , int  pcol ) 
+      { 
+          int  n = image . size ( ) ; 
+          int  m = image [ 0 ] . size ( ) ; 
+          if ( i < 0   ||  i >= n  ||  j < 0   ||  j >= m  ||  image [ i ] [ j ] != pcol  || image [ i ] [ j ] == ncol  ) 
+          { 
+              return   ; 
+          } 
+ 
+         image [ i ] [ j ] = ncol ; 
+ 
+          solve ( i - 1 , j , image , ncol , pcol ) ; 
+          solve ( i + 1 , j , image , ncol , pcol ) ; 
+          solve ( i , j - 1 , image , ncol , pcol ) ; 
+          solve ( i , j + 1 , image , ncol , pcol ) ; 
+         
+ 
+      } 
+ 
+ 
+ 
+ 
+ 
+     vector < vector < int >>   floodFill ( vector < vector < int >> &  image ,   int  sr ,   int  sc ,   int  color )   { 
+         
+ 
+          int  pcol = image [ sr ] [ sc ] ; 
+ 
+          solve ( sr , sc , image , color , pcol ) ; 
+          return  image ; 
+      } 
+  } ;
