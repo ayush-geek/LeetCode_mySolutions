@@ -1,0 +1,29 @@
+class   Solution   { 
+  public : 
+      int   eraseOverlapIntervals ( vector < vector < int >> &  intervals )   { 
+ 
+             vector < vector < int >>  res ; 
+              sort ( intervals . begin ( ) , intervals . end ( ) ) ; 
+ 
+         
+ 
+              int  ct = 0 ; 
+              for ( int  i = intervals . size ( ) - 1 ; i >= 0 ; i -- ) 
+              { 
+ 
+ 
+                  if ( res . empty ( ) ) 
+                     res . push_back ( intervals [ i ] ) ; 
+ 
+                  else   if ( res . back ( ) [ 0 ] >= intervals [ i ] [ 1 ] ) 
+                     res . push_back ( intervals [ i ] ) ; 
+                  else 
+                  { 
+                     ct ++ ; 
+ 
+                  } 
+              } 
+ 
+          return  ct ; 
+      } 
+  } ;
