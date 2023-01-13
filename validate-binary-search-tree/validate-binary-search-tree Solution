@@ -11,23 +11,21 @@
   */ 
   class   Solution   { 
   public : 
-     
+ 
       bool   solve ( TreeNode *  rt , long  mn , long  mx ) 
-      {        
-              if ( rt == NULL ) 
-                  return   true ; 
-              if ( rt -> val <= mn  ||  rt -> val >= mx ) 
-                  return   false ; 
-             
-              bool  a = solve ( rt -> left , mn , rt -> val ) ; 
-              bool  b = solve ( rt -> right , rt -> val , mx ) ; 
+      { 
+          if ( rt == NULL ) 
+              return   true ; 
  
- 
+          if ( rt -> val <= mn  ||  rt -> val >= mx ) 
+              return   false ; 
          
-          return  a  &&  b ; 
+          return   solve ( rt -> left , mn , rt -> val )   &&   solve ( rt -> right , rt -> val , mx ) ; 
       } 
  
       bool   isValidBST ( TreeNode *  root )   { 
+         
+ 
           return   solve ( root , LONG_MIN , LONG_MAX ) ; 
       } 
   } ;
