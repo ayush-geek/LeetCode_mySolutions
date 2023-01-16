@@ -1,0 +1,28 @@
+class   Solution   { 
+  public : 
+      int   maxFrequency ( vector < int > &  nums ,   int  k )   { 
+ 
+          sort ( nums . begin ( ) , nums . end ( ) ) ; 
+          int  n = nums . size ( ) ; 
+          long   long  sum = 0 ; 
+          int  j = 0 ; 
+          int  ans = 1 ; 
+ 
+          for ( int  i = 0 ; i < n ; i ++ ) 
+          { 
+             sum += nums [ i ] ; 
+ 
+              // /long long z=(long long)(i-j+1)*(long long)nums[i]- sum; 
+             
+          
+                while   ( ( long   long ) ( i  -  j  +   1 )   * ( long   long )  nums [ i ]   -  sum  >  k )  
+                     sum  -=  nums [ j ++ ] ; 
+                 
+             
+ 
+             ans = max ( ans , i - j + 1 ) ; 
+          } 
+ 
+          return  ans ; 
+      } 
+  } ;
