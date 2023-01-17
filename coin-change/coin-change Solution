@@ -1,0 +1,45 @@
+class   Solution   { 
+  public : 
+ 
+ 
+      int   solve ( int  i , int  j , vector < int > &  nums , vector < vector < int >> &  dp ) 
+      { 
+          if ( j == 0 ) 
+              return   0 ; 
+          if ( i == 0 ) 
+          { 
+              if ( j % nums [ i ] == 0 ) 
+                  return  j / nums [ i ] ; 
+              return   1e9 ; 
+          } 
+ 
+          if ( dp [ i ] [ j ] != - 1 ) 
+              return  dp [ i ] [ j ] ; 
+ 
+     
+          int  t = 1e9 , nt = 1e9 ; 
+ 
+ 
+          if ( j - nums [ i ] >= 0 ) 
+             t = 1 + solve ( i , j - nums [ i ] , nums , dp ) ; 
+         nt = solve ( i - 1 , j , nums , dp ) ; 
+ 
+          return  dp [ i ] [ j ] = min ( t , nt ) ;     
+      } 
+ 
+      int   coinChange ( vector < int > &  coins ,   int  amount )   { 
+         
+ 
+          int  n = coins . size ( ) ; 
+ 
+          sort ( coins . begin ( ) , coins . end ( ) ) ; 
+ 
+         vector < vector < int >>   dp ( n , vector < int >   ( amount + 1 , - 1 )   ) ; 
+ 
+          int  ans = solve ( n - 1 , amount , coins , dp  ) ; 
+ 
+          if ( ans >= 1e9 ) 
+              return   - 1 ; 
+          return  ans ; 
+      } 
+  } ;
