@@ -1,0 +1,37 @@
+class   Solution   { 
+  public : 
+      int   maxSubarraySumCircular ( vector < int > &  nums )   { 
+         
+          //Max Subarry by Kadane 
+ 
+          int  mx = nums [ 0 ] ; 
+ 
+          int  n = nums . size ( ) ; 
+          int  cursum = nums [ 0 ] ; 
+          for ( int  i = 1 ; i < n ; i ++ ) 
+          { 
+             cursum = max ( nums [ i ] , cursum + nums [ i ] ) ; 
+ 
+             mx = max ( mx , cursum ) ; 
+          } 
+ 
+ 
+          //Find min subaaray sum 
+ 
+          int  mn = nums [ 0 ] ; 
+          int  csum = nums [ 0 ] ; 
+          for ( int  i = 1 ; i < nums . size ( ) ; i ++ ) 
+          { 
+             csum = min ( csum + nums [ i ] , nums [ i ] ) ; 
+             mn = min ( mn , csum ) ; 
+          } 
+ 
+          int  z = accumulate ( nums . begin ( ) , nums . end ( ) , 0 ) ; 
+          //cout<<mn<<endl; 
+          if ( z == mn ) 
+              return  mx ; 
+          return   max ( mx , z - mn ) ; 
+ 
+          return  mx ; 
+      } 
+  } ;
