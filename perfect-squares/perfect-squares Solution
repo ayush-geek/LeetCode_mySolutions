@@ -20,14 +20,13 @@ class   Solution   {
               { 
                  dp [ i ] = min ( dp [ i ] , dp [ i - j * j ] + 1 ) ; 
                  
-                  if ( j * j == i ) { 
+                  if ( j * j == i ) 
                      dp [ i ] = 1 ; 
-                      break ; } 
                   j ++ ; 
               } 
                 
             
-              //cout<<i<<" "<<dp[i]<<" "<<j<<endl; 
+             cout << i << " " << dp [ i ] << " " << j << endl ; 
           } 
           return  dp [ n ] ; 
  
