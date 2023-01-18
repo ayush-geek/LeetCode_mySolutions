@@ -1,0 +1,23 @@
+class   Solution   { 
+  public : 
+      int   lastStoneWeight ( vector < int > &  nums )   { 
+         
+         priority_queue < int >   pq ( nums . begin ( ) , nums . end ( ) ) ; 
+ 
+          while ( pq . size ( ) >= 2 ) 
+          { 
+              int  z1 = pq . top ( ) ;  pq . pop ( ) ; 
+              int  z2 = pq . top ( )   ;   pq . pop ( ) ; 
+ 
+ 
+              if ( z1 != z2 ) 
+                 pq . push ( abs ( z1 - z2 ) ) ; 
+            
+          } 
+          if ( pq . empty ( ) ) 
+                  return   0 ; 
+ 
+          return  pq . top ( ) ; 
+         
+      } 
+  } ;
