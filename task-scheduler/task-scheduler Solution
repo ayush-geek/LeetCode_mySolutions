@@ -1,46 +1,49 @@
 class   Solution   { 
   public : 
-     
-     
-    
-     
-     
-     
       int   leastInterval ( vector < char > &  tasks ,   int  n )   { 
          
-         
-         vector < int >   v ( 26 , 0 ) ; 
-         
-         
-         
-         // unordered_map<char,int> mp; 
-         
+          // proiority_queue<pair<int,int>> pq; 
+         queue < pair < int , int >>  q ; 
+          int  t = 0 ; 
+         unordered_map < char , int >  mp ; 
+          //My Map is made 
           for ( int  i = 0 ; i < tasks . size ( ) ; i ++ ) 
+             mp [ tasks [ i ] ] ++ ; 
+         
+         priority_queue < int >  pq ; 
+         
+          for ( auto  ele :  mp ) 
           { 
-            v [ tasks [ i ] - 'A' ] ++ ; 
+             pq . push ( { ele . second } ) ; 
           } 
          
-     
-         
-          sort ( v . begin ( ) , v . end ( ) ) ; 
-         
-         
-          int  lg = v . back ( ) - 1 ; 
-          int  gaps = ( lg ) * n ; 
-         
-         
-          for ( int  i = 24 ; i >= 0 ; i -- ) 
+ 
+          while ( ! pq . empty ( )    ||   ! q . empty ( ) ) 
+          {    t += 1 ; 
+             
+          while ( ! q . empty ( )   &&  q . front ( ) . second == t ) 
           { 
-             gaps -= min ( v [ i ] , lg ) ; 
+             pq . push ( q . front ( ) . first ) ; 
+                 q . pop ( ) ; 
           } 
-         
-         
-          if ( gaps < 0 ) 
-              return  tasks . size ( ) ; 
-          else  
-              return  gaps + tasks . size ( ) ; 
-         
-         
-          //return mx_time; 
+ 
+          if ( ! pq . empty ( ) ) 
+          { 
+              int  z1 = pq . top ( ) ; 
+ 
+             pq . pop ( ) ; 
+             z1 -- ; 
+              if ( z1 != 0 ) 
+              {    
+                  //cout<<z1<<" "<<t+n+1<<endl; 
+                 q . push ( { z1 , t + n + 1 } ) ; 
+              } 
+ 
+          } 
+             
+          } 
+ 
+          return  t ; 
+ 
       } 
   } ;
