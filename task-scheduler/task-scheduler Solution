@@ -1,0 +1,46 @@
+class   Solution   { 
+  public : 
+     
+     
+    
+     
+     
+     
+      int   leastInterval ( vector < char > &  tasks ,   int  n )   { 
+         
+         
+         vector < int >   v ( 26 , 0 ) ; 
+         
+         
+         
+         // unordered_map<char,int> mp; 
+         
+          for ( int  i = 0 ; i < tasks . size ( ) ; i ++ ) 
+          { 
+            v [ tasks [ i ] - 'A' ] ++ ; 
+          } 
+         
+     
+         
+          sort ( v . begin ( ) , v . end ( ) ) ; 
+         
+         
+          int  lg = v . back ( ) - 1 ; 
+          int  gaps = ( lg ) * n ; 
+         
+         
+          for ( int  i = 24 ; i >= 0 ; i -- ) 
+          { 
+             gaps -= min ( v [ i ] , lg ) ; 
+          } 
+         
+         
+          if ( gaps < 0 ) 
+              return  tasks . size ( ) ; 
+          else  
+              return  gaps + tasks . size ( ) ; 
+         
+         
+          //return mx_time; 
+      } 
+  } ;
