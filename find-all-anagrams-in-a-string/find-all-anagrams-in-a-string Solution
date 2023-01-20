@@ -1,0 +1,51 @@
+class   Solution   { 
+  public : 
+      int   cmp ( vector < int > &  v1 , vector < int > &  v2 ) 
+      { 
+          for ( int  i = 0 ; i < 26 ; i ++ ) 
+          { 
+              if ( v1 [ i ] != v2 [ i ] ) 
+                  return   0 ; 
+          } 
+ 
+          return   1 ; 
+      } 
+ 
+     vector < int >   findAnagrams ( string s ,  string p )   { 
+         
+         
+         vector < int >   v1 ( 26 , 0 ) ; 
+         vector < int >   v2 ( 26 , 0 ) ; 
+         vector < int >  res ; 
+ 
+          for ( int  i = 0 ; i < p . size ( ) ; i ++ ) 
+          { 
+             v2 [ p [ i ] - 'a' ] ++ ; 
+          } 
+ 
+          int  j = 0 ; 
+          for ( int  i = 0 ; i < s . size ( ) ; i ++ ) 
+          { 
+             v1 [ s [ i ] - 'a' ] ++ ; 
+ 
+              if ( v1 [ s [ i ] - 'a' ] > v2 [ s [ i ] - 'a' ] ) 
+              { 
+                  while ( v1 [ s [ i ] - 'a' ] > v2 [ s [ i ] - 'a' ] ) 
+                  { 
+                         v1 [ s [ j ] - 'a' ] -- ; 
+                         j ++ ; 
+                  } 
+              } 
+ 
+              if ( i - j + 1 == p . size ( ) ) 
+              { 
+                  if ( cmp ( v1 , v2 ) ) 
+                     res . push_back ( j ) ; 
+              } 
+ 
+            
+          } 
+ 
+          return  res ; 
+      } 
+  } ;
