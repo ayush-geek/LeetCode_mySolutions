@@ -1,0 +1,50 @@
+class   Solution   { 
+  public : 
+ 
+      void   solve ( int  i , vector < int > &  candidates , int  tgt , vector < int > &  tmp , vector < vector < int >> &  res ) 
+      { 
+          if ( i < 0 ) 
+              { 
+                  if ( tgt == 0 ) 
+                      { 
+                         res . push_back ( tmp ) ; 
+                      } 
+ 
+                  return   ; 
+              } 
+          if ( tgt == 0 ) 
+          { 
+             res . push_back ( tmp ) ; 
+              return   ; 
+          } 
+ 
+          // Take 
+          if ( tgt >= candidates [ i ] ) 
+          {    
+             tmp . push_back ( candidates [ i ] ) ; 
+              solve ( i , candidates , tgt - candidates [ i ] , tmp , res ) ; 
+             tmp . pop_back ( ) ; 
+ 
+          } 
+ 
+ 
+          //Not Take 
+          solve ( i - 1 , candidates , tgt , tmp , res ) ; 
+ 
+         
+ 
+ 
+      } 
+ 
+     vector < vector < int >>   combinationSum ( vector < int > &  candidates ,   int  target )   { 
+         
+          sort ( candidates . begin ( ) , candidates . end ( ) ) ; 
+ 
+         vector < vector < int >>  res ; 
+         vector < int >  tmp ; 
+          int  n = candidates . size ( ) ; 
+          solve ( n - 1 , candidates , target , tmp , res ) ; 
+          return  res ; 
+ 
+      } 
+  } ;
