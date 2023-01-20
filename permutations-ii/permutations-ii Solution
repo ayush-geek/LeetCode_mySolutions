@@ -1,0 +1,32 @@
+class   Solution   { 
+  public : 
+  vector < vector < int >>  res ; 
+     set < vector < int >>  st ; 
+      void   solve ( int  i , vector < int > &  nums , vector < int > &  tmp ) 
+      { 
+          if ( st . find ( nums ) == st . end ( ) ) 
+          { 
+              res . push_back ( nums ) ;  
+             st . insert ( nums ) ; 
+          } 
+        
+          for ( int  j = i ; j < nums . size ( ) ; j ++ ) 
+          { 
+              swap ( nums [ i ] , nums [ j ] ) ; 
+              solve ( i + 1 , nums , tmp ) ; 
+              swap ( nums [ i ] , nums [ j ] ) ; 
+          } 
+ 
+      } 
+ 
+     vector < vector < int >>   permuteUnique ( vector < int > &  nums )   { 
+         
+          //Backtrack 
+ 
+        
+ 
+         vector < int >  tmp ; 
+          solve ( 0 , nums , tmp ) ; 
+          return  res ; 
+      } 
+  } ;
