@@ -1,0 +1,38 @@
+class   Solution   { 
+  public : 
+     vector < vector < int >>  res ; 
+     set < vector < int >>  st ; 
+ 
+      void   solve ( int  i , vector < int > &  nums , vector < int > &  ans ) 
+      {    
+           if ( ans . size ( ) >= 2   &&  st . find ( ans ) == st . end ( ) ) { 
+              st . insert ( ans ) ; 
+              
+             res . push_back ( ans ) ; 
+           }         
+          if ( i >= nums . size ( ) ) 
+              return   ; 
+        
+          if ( ans . empty ( )   ||  ans . back ( ) <= nums [ i ] ) 
+            {    ans . push_back ( nums [ i ] ) ; 
+                  solve ( i + 1 , nums , ans ) ; 
+                 ans . pop_back ( ) ; 
+ 
+            } 
+        
+          solve ( i + 1 , nums , ans ) ; 
+      } 
+ 
+ 
+ 
+     vector < vector < int >>   findSubsequences ( vector < int > &  nums )   { 
+         
+          //Simply Backtrack 
+         
+         vector < int >  ans ; 
+ 
+          solve ( 0 , nums , ans ) ; 
+ 
+          return  res ; 
+      } 
+  } ;
