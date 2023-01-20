@@ -1,33 +1,41 @@
 class   Solution   { 
   public : 
- 
      
-     set < vector < int >>  st ; 
-      void   solve ( int  i , vector < int > &  nums , vector < int > &  ans ) 
+     
+      void   solve ( int  i , vector < int > &  nums , vector < vector < int >> &  mat , vector < int > &  lvl ) 
       { 
+         
           if ( i == nums . size ( ) ) 
           { 
-             st . insert ( ans ) ; 
-              return   ; 
+             mat . push_back ( lvl ) ; 
+              return ; 
           } 
- 
-          //Take 
-         ans . push_back ( nums [ i ] ) ; 
-          solve ( i + 1 , nums , ans ) ; 
-         ans . pop_back ( ) ; 
-          //Not Take 
-          solve ( i + 1 , nums , ans ) ; 
-      } 
- 
-     vector < vector < int >>   subsets ( vector < int > &  nums )   { 
          
- 
-          //subsrts  
-          //takins 
-        vector < int >  tmp ; 
-          solve ( 0 , nums , tmp ) ; 
-        vector < vector < int >>   res ( st . begin ( ) , st . end ( ) ) ; 
- 
-          return  res ; 
+         
+          //Take 
+         lvl . push_back ( nums [ i ] ) ; 
+          solve ( i + 1 , nums , mat , lvl ) ; 
+         lvl . pop_back ( ) ; 
+         
+         
+          //Not take 
+         
+          solve ( i + 1 , nums , mat , lvl ) ; 
+      } 
+     
+     
+     
+     
+     
+     
+     vector < vector < int >>   subsets ( vector < int > &  nums )   { 
+      
+         
+         vector < vector < int >>  mat ; 
+         vector < int >  lvl ; 
+         
+         
+          solve ( 0 , nums , mat , lvl ) ; 
+          return  mat ; 
       } 
   } ;
