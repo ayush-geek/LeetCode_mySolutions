@@ -1,26 +1,25 @@
 class   Solution   { 
   public : 
  
-      int   solve ( vector < int > &  nums , int  l , int  r ) 
+      int   solve ( int  i , int  j , vector < int > &  nums ) 
       { 
           int  prev2 = 0 ; 
-          int  prev = nums [ l ] ; 
+          int  prev = nums [ i ] ; 
  
-          for ( int  i = l + 1 ; i <= r ; i ++ ) 
+          for ( int  k = i + 1 ; k <= j ; k ++ ) 
           { 
-              int  cur = max ( nums [ i ] + prev2 , prev ) ; 
+              int  cur = max ( nums [ k ] + prev2 , prev ) ; 
              prev2 = prev ; 
              prev = cur ; 
-            
           } 
- 
           return  prev ; 
       } 
  
       int   rob ( vector < int > &  nums )   { 
-        
+         
+ 
           if ( nums . size ( ) == 1 ) 
               return  nums [ 0 ] ; 
-          return   max ( solve ( nums , 0 , nums . size ( ) - 2 )   , solve ( nums , 1 , nums . size ( ) - 1 ) ) ; 
+          return   max ( solve ( 0 , nums . size ( ) - 2 , nums ) ,   solve ( 1 , nums . size ( ) - 1 , nums ) ) ; 
       } 
   } ;
