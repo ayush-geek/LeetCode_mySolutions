@@ -1,0 +1,38 @@
+class   Solution   { 
+  public : 
+ 
+     vector < vector < int >>  res ; 
+ 
+      void   solve ( int  i ,  vector < vector < int >> &  graph , vector < int >  tmp ) 
+      { 
+ 
+          if ( i == graph . size ( ) - 1 ) 
+          { 
+             tmp . push_back ( i ) ; 
+             res . push_back ( tmp ) ; 
+              return   ; 
+          } 
+         tmp . push_back ( i ) ; 
+          for ( auto  e :  graph [ i ] ) 
+          { 
+              solve ( e , graph , tmp ) ; 
+          } 
+ 
+         tmp . pop_back ( ) ; 
+      } 
+ 
+ 
+ 
+ 
+     vector < vector < int >>   allPathsSourceTarget ( vector < vector < int >> &  graph )   { 
+         
+ 
+         vector < int >  tmp ; 
+ 
+          solve ( 0 , graph , tmp ) ; 
+ 
+          return  res ; 
+ 
+ 
+      } 
+  } ;
