@@ -1,0 +1,60 @@
+class   Solution   { 
+  public : 
+ 
+     vector < string >  res ; 
+ 
+      bool   valid ( string ss ) 
+      { 
+          if ( ss . size ( ) > 3   ||  ss . size ( ) == 0 ) 
+              return   false ; 
+          if ( ss . size ( ) > 1   &&  ss [ 0 ] == '0' ) 
+              return   false ; 
+          if ( stoll ( ss ) > 255 ) 
+              return   false ; 
+ 
+          return   true ; 
+ 
+      } 
+ 
+      void   solve ( int  i , string s , string tmp , int  dts ) 
+      { 
+        
+         if ( dts == 3 ) 
+         { 
+             if ( valid ( s . substr ( i ) ) ) 
+              { 
+                 res . push_back ( tmp + s . substr ( i ) ) ; 
+              } 
+ 
+              return   ; 
+         } 
+ 
+ 
+         for ( int  j = i ; j < s . size ( ) ; j ++ ) 
+         { 
+             if ( valid ( s . substr ( i , j - i + 1 ) ) ) 
+             { 
+                 tmp . push_back ( s [ j ] ) ; 
+                tmp . push_back ( '.' ) ; 
+ 
+                 solve ( j + 1 , s , tmp , dts + 1 ) ; 
+                tmp . pop_back ( ) ; 
+             } 
+         } 
+ 
+        
+ 
+         
+         
+ 
+      } 
+ 
+     vector < string >   restoreIpAddresses ( string s )   { 
+         
+          //Backtracking Question 
+         string tmp ; 
+          int  dts = 0 ; 
+          solve ( 0 , s , tmp , dts ) ; 
+          return  res ; 
+      } 
+  } ;
