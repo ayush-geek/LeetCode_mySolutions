@@ -11,30 +11,35 @@
   */ 
   class   Solution   { 
   public : 
- 
-      bool   chk ( TreeNode *  rt1 , TreeNode *  rt2 ) 
-      { 
-          if ( rt1 == NULL   &&  rt2 == NULL ) 
+    bool   isSameTree ( TreeNode *  p ,  TreeNode *  q )   { 
+          if ( p == NULL   &&  q == NULL ) 
               return   true ; 
-          if ( rt1 == NULL   ||  rt2 == NULL ) 
+          if ( p == NULL   ||  q == NULL ) 
               return   false ; 
-         
-          return   ( rt1 -> val == rt2 -> val )   &&   chk ( rt1 -> left , rt2 -> left ) &&   chk ( rt1 -> right , rt2 -> right ) ; 
+          return  p -> val == q -> val  &&   isSameTree ( p -> left , q -> left )   &&   isSameTree ( p -> right , q -> right ) ;    
+      } 
+      void   solve ( TreeNode *  root , TreeNode *  subroot , bool &  ans ) 
+      { 
+          if ( root == NULL ) 
+              return   ; 
+          if ( root -> val == subroot -> val  &&  ans == false ) 
+          { 
+             ans = isSameTree ( root , subroot ) ; 
+          } 
+ 
+          solve ( root -> left , subroot , ans ) ; 
+          solve ( root -> right , subroot , ans ) ; 
+ 
       } 
  
       bool   isSubtree ( TreeNode *  root ,  TreeNode *  subRoot )   { 
-         
-          //Just do dfs 
+          //Do dfs 
  
-          if ( root == NULL ) 
-              return   false ; 
-         
-          if ( root -> val == subRoot -> val ) 
-          { 
-              if (   chk ( root , subRoot ) ) 
-              return   true ; 
-          } 
+         bool  ans = false ; 
+          solve ( root , subRoot , ans ) ; 
+        
  
-          return   isSubtree ( root -> left , subRoot )   ||   isSubtree ( root -> right , subRoot ) ; 
+ 
+          return  ans ; 
       } 
   } ;
