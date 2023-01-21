@@ -1,0 +1,51 @@
+class   Solution   { 
+  public : 
+      int   shortestPathBinaryMatrix ( vector < vector < int >> &  grid )   { 
+         
+ 
+          //bfs  
+ 
+          int  n = grid . size ( ) ; 
+          int  m = grid [ 0 ] . size ( ) ; 
+ 
+         vector < vector < int >>   vis ( n , vector < int >   ( m , 0 ) ) ; 
+ 
+         queue < pair < pair < int , int > , int >>  q ; 
+ 
+          if ( grid [ 0 ] [ 0 ] != 0 ) 
+              return   - 1 ; 
+         q . push ( { { 0 , 0 } , 0 } ) ; 
+     
+         vis [ 0 ] [ 0 ] = 1 ; 
+          while ( ! q . empty ( ) ) 
+          { 
+              auto  itr = q . front ( ) ; 
+             q . pop ( ) ; 
+              int  r = itr . first . first ; 
+              int  c = itr . first . second ; 
+              int  d = itr . second ; 
+ 
+              if ( r == n - 1   &&  c == n - 1 ) 
+                  return  d + 1 ; 
+ 
+              for ( int  i = - 1 ; i <= 1 ; i ++ ) 
+              { 
+                  for ( int  j = - 1 ; j <= 1 ; j ++ ) 
+                  { 
+                      int  nr = r + i ; 
+                      int  nc = c + j ; 
+ 
+                      if ( nr >= 0   &&  nr < n  &&  nc >= 0   &&  nc < n  &&   ! vis [ nr ] [ nc ]   &&  grid [ nr ] [ nc ] == 0   ) 
+                      {    
+                         vis [ nr ] [ nc ] = 1 ; 
+                         q . push ( { { nr , nc } , d + 1 } ) ; 
+ 
+ 
+                      } 
+                  } 
+              } 
+          } 
+          return   - 1 ; 
+ 
+      } 
+  } ;
