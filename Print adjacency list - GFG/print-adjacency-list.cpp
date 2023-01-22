@@ -7,20 +7,16 @@ class Solution {
   public:
     // Function to return the adjacency list for each vertex.
     vector<vector<int>> printGraph(int V, vector<int> adj[]) {
-        // Code here
         
-        vector<vector<int>> res;
+        vector<vector<int>> g;
         
         for(int i=0;i<V;i++)
         {
-            vector<int> tmp;
-            tmp.push_back(i);
-            for(int j=0;j<adj[i].size();j++)    
-                tmp.push_back(adj[i][j]);
-            res.push_back(tmp);
+            adj[i].insert(adj[i].begin(),i);
+            g.push_back(adj[i]);
         }
         
-        return res;
+        return g;
     }
 };
 
