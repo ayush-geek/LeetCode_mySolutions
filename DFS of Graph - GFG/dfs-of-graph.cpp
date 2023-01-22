@@ -4,37 +4,29 @@ using namespace std;
 
 // } Driver Code Ends
 class Solution {
+  public:
+    // Function to return a list containing the DFS traversal of the graph.
     
     
-  private: 
-  
-  void dfs(int i,int V,vector<int> adj[],vector<int>& vis,vector<int>& res)
-  {
-      if(i<0 || i>=V || vis[i]==1)
-        return ;
-        
-        vis[i]=1;
+    void dfs(int i,vector<int> adj[],vector<int>& res,vector<int>& vis)
+    {
         res.push_back(i);
+        vis[i]=1;
         
         for(auto ele: adj[i])
         {
-            dfs(ele,V,adj,vis,res);
+            if(!vis[ele])
+                dfs(ele,adj,res,vis);
         }
-  }
+    }
     
-  public:
-    // Function to return a list containing the DFS traversal of the graph.
     vector<int> dfsOfGraph(int V, vector<int> adj[]) {
-        
-        
-        vector<int> vis(V,0);
+        // Code here
         
         vector<int> res;
-        dfs(0,V ,adj,vis,res);
-        
+        vector<int> vis(V,0);
+        dfs(0,adj,res,vis);
         return res;
-        
-        
     }
 };
 
