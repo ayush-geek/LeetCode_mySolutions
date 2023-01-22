@@ -7,62 +7,54 @@ class Solution {
   public:
     // Function to find the number of islands.
     
-    
-    void solve(int i,int j,vector<vector<char>>& grid,vector<vector<int>>& vis)
+    void dfs(int r,int c,vector<vector<char>>& grid,vector<vector<int>>& vis)
     {
+         int n=grid.size();
+        int m=grid[0].size();
         
-           int n=grid.size();
-       int m=grid[0].size();
        
-        if(i<0 || i>=n || j<0 || j>=m || grid[i][j]=='0' || vis[i][j])
-        {
-            return ;
-        }
+        vis[r][c]=1;
         
-        vis[i][j]=1;
-        
-        for(int di=-1;di<=1;di++)
-        {
-            for(int dj=-1;dj<=1;dj++)
-            {
-                int nr=di+i;
-                int nc=dj+j;
-                
-                solve(nr,nc,grid,vis);
-            }
-        }
+      for(int i=-1;i<=1;i++)
+      {
+          for(int j=-1;j<=1;j++)
+          {
+              int nr=r+i;
+              int nc=c+j;
+              
+              if(nr>=0 && nr<n && nc>=0 && nc<m && !vis[nr][nc] && grid[nr][nc]=='1')
+              {
+                  dfs(nr,nc,grid,vis);
+              }
+          }
+      }
+      
     }
     
-    
-    
     int numIslands(vector<vector<char>>& grid) {
-       
-       
-       //8 directionally Connected
-       
-       int n=grid.size();
-       int m=grid[0].size();
-       
-       
-       vector<vector<int>> vis(n,vector<int> (m,0));
-       
-       int ans=0;
-       
-       
-       for(int i=0;i<n;i++)
-       {
-           for(int j=0;j<m;j++)
-           {
-               
-               if(!vis[i][j]  && grid[i][j]=='1' )
+        
+        //bfs 
+        
+        
+        int n=grid.size();
+        int m=grid[0].size();
+        int ans=0;
+        
+        vector<vector<int>> vis(n,vector<int> (m,0));
+        for(int i=0;i<n;i++)
+        {
+            for(int j=0;j<m;j++)
+            {
+                if(grid[i][j]=='1' && !vis[i][j])
                 {
-                    solve(i,j,grid,vis);
+                    dfs(i,j,grid,vis);
                     ans++;
+                    
                 }
-           }    
-       }
-       
-       return ans;
+            }
+        }
+        
+        return ans;
     }
 };
 
