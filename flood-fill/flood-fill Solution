@@ -1,35 +1,28 @@
 class   Solution   { 
   public : 
  
-      void   solve ( int  i , int  j , vector < vector < int >> &  image , int  ncol , int  pcol ) 
-      { 
+      void   dfs ( int  i , int  j , vector < vector < int >> &  image , int  pc , int  nc ) 
+      {    
           int  n = image . size ( ) ; 
           int  m = image [ 0 ] . size ( ) ; 
-          if ( i < 0   ||  i >= n  ||  j < 0   ||  j >= m  ||  image [ i ] [ j ] != pcol  || image [ i ] [ j ] == ncol  ) 
-          { 
+          if ( i < 0   ||  j < 0   ||  i >= n  ||  j >= m  || image [ i ] [ j ] != pc ) 
               return   ; 
-          } 
+          image [ i ] [ j ] = nc ; 
+          dfs ( i , j + 1 , image , pc , nc ) ; 
+          dfs ( i , j - 1 , image , pc , nc ) ; 
+          dfs ( i + 1 , j , image , pc , nc ) ; 
+          dfs ( i - 1 , j , image , pc , nc ) ; 
  
-         image [ i ] [ j ] = ncol ; 
- 
-          solve ( i - 1 , j , image , ncol , pcol ) ; 
-          solve ( i + 1 , j , image , ncol , pcol ) ; 
-          solve ( i , j - 1 , image , ncol , pcol ) ; 
-          solve ( i , j + 1 , image , ncol , pcol ) ; 
-         
- 
+        
       } 
  
- 
- 
- 
- 
      vector < vector < int >>   floodFill ( vector < vector < int >> &  image ,   int  sr ,   int  sc ,   int  color )   { 
-         
+          if ( image [ sr ] [ sc ] == color ) 
+              return  image ; 
  
-          int  pcol = image [ sr ] [ sc ] ; 
+          dfs ( sr , sc , image , image [ sr ] [ sc ] , color ) ; 
  
-          solve ( sr , sc , image , color , pcol ) ; 
           return  image ; 
+ 
       } 
   } ;
