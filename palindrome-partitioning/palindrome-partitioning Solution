@@ -1,0 +1,54 @@
+class   Solution   { 
+  public : 
+ 
+      bool   ispal ( int  i , int  j , string s ) 
+      { 
+          while ( i < j ) 
+          { 
+              if ( s [ i ] != s [ j ] ) 
+              { 
+                  return   false ; 
+              } 
+             i ++ ; 
+             j -- ; 
+          } 
+ 
+          return   true ; 
+      } 
+ 
+      void   solve ( int  i , string &  s ,  vector < vector < string >> &  res , vector < string > &  tmp ) 
+      { 
+ 
+          if ( i == s . size ( ) ) 
+          { 
+             res . push_back ( tmp ) ; 
+              return   ; 
+          } 
+ 
+ 
+          for ( int  j = i ; j < s . size ( ) ; j ++ ) 
+          {    
+              //  cout<<j; 
+              if ( ispal ( i , j , s ) ) 
+              { 
+                  // cout<<"a"; 
+                string ss = s . substr ( i , j - i + 1 ) ; 
+                 tmp . push_back ( ss ) ; 
+                  solve ( j + 1 , s , res , tmp ) ; 
+                 tmp . pop_back ( ) ; 
+ 
+              } 
+          } 
+      } 
+ 
+     vector < vector < string >>   partition ( string s )   { 
+         
+          //Backtrack  
+         vector < vector < string >>  res ; 
+ 
+        vector < string >  tmp ; 
+          solve ( 0 , s , res , tmp ) ; 
+ 
+          return  res ; 
+      } 
+  } ;
