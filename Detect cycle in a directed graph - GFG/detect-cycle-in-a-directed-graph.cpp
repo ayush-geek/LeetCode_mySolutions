@@ -9,8 +9,8 @@ class Solution {
     
     bool dfs(int i,vector<int>& vis,vector<int>& path,vector<int> adj[])
     {
-        vis[i]=1;
-        path[i]=1;
+        vis[i]=2;
+        // path[i]=1;
         
         
         for(auto ele: adj[i])
@@ -20,11 +20,11 @@ class Solution {
                         if(dfs(ele,vis,path,adj)==true)
                             return true;
                     }
-                else if(path[ele])
+                else if(vis[ele]==2)
                     return true;
             }
             
-        path[i]=0;
+        vis[i]=1;
         return false;
     }
     
