@@ -1,0 +1,55 @@
+class   Solution   { 
+  public : 
+ 
+       bool   dfs ( int  i , vector < int > &  vis , vector < int > &  path , vector < vector < int >> &  adj , vector < int > &  check ) 
+      { 
+         vis [ i ] = 1 ; 
+         path [ i ] = 1 ; 
+         check [ i ] = 0 ; 
+         
+         
+          for ( auto  ele :  adj [ i ] ) 
+              { 
+                  if ( ! vis [ ele ] ) 
+                      { 
+                          if ( dfs ( ele , vis , path , adj , check ) == true ) 
+                              return   true ; 
+                      } 
+                  else   if ( path [ ele ] ) 
+                      return   true ; 
+              } 
+ 
+         check [ i ] = 1 ;     
+         path [ i ] = 0 ; 
+          return   false ; 
+      } 
+     
+     vector < int >   eventualSafeNodes ( vector < vector < int >> &  graph )   { 
+         
+          //Dfs 
+ 
+          int  v = graph . size ( ) ; 
+          vector < int >   vis ( v , 0 ) ; 
+         vector < int >   path ( v , 0 ) ; 
+         vector < int >   check ( v , 0 ) ; 
+         
+         
+          for ( int  i = 0 ; i < v ; i ++ ) 
+          { 
+              if ( ! vis [ i ] ) 
+                  { 
+                     dfs ( i , vis , path , graph , check ) ; 
+                       
+                  } 
+          } 
+       
+       vector < int >  res ; 
+ 
+      for ( int  i = 0 ; i < v ; i ++ ) 
+      { 
+          if ( check [ i ] == 1 ) 
+             res . push_back ( i ) ; 
+      } 
+      return  res ; 
+      } 
+  } ;
