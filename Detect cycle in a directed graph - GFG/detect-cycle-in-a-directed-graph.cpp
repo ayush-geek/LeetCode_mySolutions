@@ -6,57 +6,42 @@ using namespace std;
 class Solution {
   public:
     // Function to detect cycle in a directed graph.
-    bool isCyclic(int V, vector<int> adj[]) {
+    
+    bool dfs(int i,vector<int>& vis,vector<int>& path,vector<int> adj[])
+    {
+        vis[i]=1;
+        path[i]=1;
         
         
-        //BFs -> Kahn Algorithm
-        
-       
-        
-        vector<int> indeg(V,0);
-      for(int i=0;i<V;i++)
-      {
-        for(auto it: adj[i])
-        {
-            // for(auto ele: it)
+        for(auto ele: adj[i])
             {
-                indeg[it]++;
+                if(!vis[ele])
+                    {
+                        if(dfs(ele,vis,path,adj)==true)
+                            return true;
+                    }
+                else if(path[ele])
+                    return true;
             }
-        }
-      }
-        queue<int> q;
-       int ct=0;
-        for(int i=0;i<V;i++)
+            
+        path[i]=0;
+        return false;
+    }
+    
+    bool isCyclic(int v, vector<int> adj[]) {
+            
+        vector<int> vis(v,0);
+        vector<int> path(v,0);
+        
+        
+        for(int i=0;i<v;i++)
         {
-            if(indeg[i]==0)
-                {q.push(i);
-                // vis[i]=1;
-                    ct++;
+            if(!vis[i])
+                {
+                    if(dfs(i,vis,path,adj)==true)
+                        return true;
                 }
         }
-        
-        while(!q.empty())
-        {
-            int node=q.front();
-            //int par=q.front().second;
-            
-            
-            q.pop();
-            
-            for(auto ele: adj[node])
-            {   
-               indeg[ele]--;
-               
-               if(indeg[ele]==0)
-               { q.push(ele);
-                   ct++;
-               }
-                
-            }
-        }
-        
-        if(ct!=V)
-            return true;
         return false;
     }
 };
