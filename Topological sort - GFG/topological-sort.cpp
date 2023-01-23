@@ -30,20 +30,41 @@ class Solution
 	    
 	    //dfs
 	    
-	   vector<int> vis(V,0);
-	   stack<int> st;
+	   vector<int> indeg(V,0);
+	
+	    vector<int> res;
+	    
 	    for(int i=0;i<V;i++)
 	    {
-	        if(!vis[i])
-	            dfs(i,adj,vis,st);
+	        for(auto ele: adj[i])
+	        {
+	            indeg[ele]++;
+	        }
 	    }
 	    
-	    vector<int> res;
-	    while(!st.empty())
+	    queue<int> q;
+	    
+	    for(int i=0;i<V;i++)
 	    {
-	        res.push_back(st.top());
-	        st.pop();
+	        if(indeg[i]==0)
+	            q.push(i);
 	    }
+	  
+	    while(!q.empty())
+	    {
+	        int nd=q.front();
+	        res.push_back(nd);
+	        q.pop();
+	        
+	        for(auto ele: adj[nd])
+	        {
+	            indeg[ele]--;
+	            
+	            if(indeg[ele]==0)
+	                q.push(ele);
+	        }
+	    }
+	  
 	    
 	    return res;
 	}
