@@ -2,49 +2,55 @@ class   Solution   {
   public : 
       bool   canFinish ( int  numCourses ,  vector < vector < int >> &  prerequisites )   { 
          
-          //b->a 
+ 
+          //qustion is of Toplogy Sort 
+ 
           int  n = numCourses ; 
-         vector < int >  res ; 
-         vector < int >   indeg ( n , 0 ) ; 
+ 
+ 
          vector < int >  adj [ n ] ; 
+         vector < int >   indeg ( n , 0 ) ; 
+ 
  
           for ( int  i = 0 ; i < prerequisites . size ( ) ; i ++ ) 
           { 
               int  a = prerequisites [ i ] [ 0 ] ; 
               int  b = prerequisites [ i ] [ 1 ] ; 
+ 
+ 
              adj [ b ] . push_back ( a ) ; 
              indeg [ a ] ++ ; 
+ 
           } 
+         
  
          queue < int >  q ; 
           for ( int  i = 0 ; i < n ; i ++ ) 
           { 
+ 
               if ( indeg [ i ] == 0 ) 
                  q . push ( i ) ; 
+ 
           } 
+ 
  
           while ( ! q . empty ( ) ) 
           { 
-              int  nd = q . front ( ) ; 
-             res . push_back ( nd ) ; 
+              int  z1 = q . front ( ) ; 
              q . pop ( ) ; 
- 
-              for ( auto  ele :  adj [ nd ] ) 
-              { 
-                 indeg [ ele ] -- ; 
- 
-                  if ( indeg [ ele ] == 0 ) 
+              for ( auto  ele :  adj [ z1 ] ) 
                   { 
-                     q . push ( ele ) ; 
+                     indeg [ ele ] -- ; 
+                      if ( indeg [ ele ] == 0 ) 
+                         q . push ( ele ) ; 
                   } 
- 
-              } 
           } 
  
-          if ( res . size ( ) != n ) 
-              return   false ; 
-         
+          for ( int  i = 0 ; i < n ; i ++ ) 
+          { 
+              if ( indeg [ i ] != 0 ) 
+                  return   false ; 
+          } 
           return   true ; 
- 
       } 
   } ;
