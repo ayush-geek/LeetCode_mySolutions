@@ -8,75 +8,73 @@ using namespace std;
 // User function Template for C++
 class Solution {
   public:
-  
-    void dfs(int i, vector<pair<int,int>> adj[],vector<int>& vis,stack<int>& st )
-    {
-        
-        
-        vis[i]=1;
-        
-        for(auto it: adj[i])
-        {
-            if(!vis[it.first])
-                dfs(it.first,adj,vis,st);
-        }
-        
-        
-        st.push(i);
-    }
-  
-  
      vector<int> shortestPath(int N,int M, vector<vector<int>>& edges){
-        // code here
+       
+       vector<int> dis(N,1e9);
+       
+       dis[0]=0;
         
         vector<pair<int,int>> adj[N];
-        
-        for(int i=0;i<edges.size();i++)
+        vector<int> indeg(N,0);
+        for(int i=0;i<M;i++)
         {
-            adj[edges[i][0]].push_back({edges[i][1],edges[i][2]});
+            int a=edges[i][0];
+            int b=edges[i][1];
+            int w=edges[i][2];
+            
+            adj[a].push_back({b,w});
+            indeg[b]++;
             
         }
         
-        //topo
+       queue<int> q;
+       vector<int> res;
+   
         
-        vector<int> vis(N,0);
-        stack<int> st;
+    for(int i=0;i<N;i++)
+    {
+        if(indeg[i]==0)
+            q.push(i);
+    }
+        // indeg[i]=0;
         
-        for(int i=0;i<N;i++)
+        while(!q.empty())
         {
-            if(!vis[i])
-                dfs(i,adj,vis,st);
-        }
-        
-        vector<int> dist(N,1e9);
-        
-        dist[0]=0;
-        
-        while(!st.empty())
-        {
-            int node=st.top();st.pop();
+            int nd=q.front();
+            res.push_back(nd);
+            q.pop();
             
             
-            for(auto it: adj[node])
+            for(auto ele: adj[nd])
             {
-                int v=it.first;
-                int w=it.second;
+                indeg[ele.first]--;
+                if(indeg[ele.first]==0)
+                    q.push(ele.first);
+            }
+        }
+        
+  
+        
+        for(int i=0;i<res.size();i++)
+        {   
+            int nd=res[i];
+            for(auto ele: adj[nd])
+            {
+                int v=ele.first;
+                int wt=ele.second;
                 
-                
-                if(dist[node]+w<dist[v])
-                {
-                    dist[v]=dist[node]+w;
-                }
+                if(dis[nd]+wt<dis[v])
+                    dis[v]=dis[nd]+wt;
             }
         }
         
         for(int i=0;i<N;i++)
         {
-            if(dist[i]==1e9)
-                dist[i]=-1;
+            if(dis[i]==1e9)
+                dis[i]=-1;
         }
-        
-        return dist;
+       
+       return dis;
     }
 };
 
