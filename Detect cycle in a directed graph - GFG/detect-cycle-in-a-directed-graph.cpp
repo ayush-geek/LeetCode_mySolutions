@@ -7,17 +7,17 @@ class Solution {
   public:
     // Function to detect cycle in a directed graph.
     
-    bool dfs(int i,vector<int>& vis,vector<int>& path,vector<int> adj[])
+    bool dfs(int i,vector<int>& vis,vector<int> adj[])
     {
         vis[i]=2;
-        // path[i]=1;
+       
         
         
         for(auto ele: adj[i])
             {
                 if(!vis[ele])
                     {
-                        if(dfs(ele,vis,path,adj)==true)
+                        if(dfs(ele,vis,adj)==true)
                             return true;
                     }
                 else if(vis[ele]==2)
@@ -31,14 +31,14 @@ class Solution {
     bool isCyclic(int v, vector<int> adj[]) {
             
         vector<int> vis(v,0);
-        vector<int> path(v,0);
+      
         
         
         for(int i=0;i<v;i++)
         {
             if(!vis[i])
                 {
-                    if(dfs(i,vis,path,adj)==true)
+                    if(dfs(i,vis,adj)==true)
                         return true;
                 }
         }
