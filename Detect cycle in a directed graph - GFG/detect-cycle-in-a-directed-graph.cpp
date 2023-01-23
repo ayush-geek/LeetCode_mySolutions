@@ -30,19 +30,44 @@ class Solution {
     
     bool isCyclic(int v, vector<int> adj[]) {
             
-        vector<int> vis(v,0);
-      
-        
-        
-        for(int i=0;i<v;i++)
-        {
-            if(!vis[i])
-                {
-                    if(dfs(i,vis,adj)==true)
-                        return true;
-                }
-        }
-        return false;
+        vector<int> indeg(v,0);
+	
+	    vector<int> res;
+	    
+	    for(int i=0;i<v;i++)
+	    {
+	        for(auto ele: adj[i])
+	        {
+	            indeg[ele]++;
+	        }
+	    }
+	    
+	    queue<int> q;
+	    
+	    for(int i=0;i<v;i++)
+	    {
+	        if(indeg[i]==0)
+	            q.push(i);
+	    }
+	  
+	    while(!q.empty())
+	    {
+	        int nd=q.front();
+	        res.push_back(nd);
+	        q.pop();
+	        
+	        for(auto ele: adj[nd])
+	        {
+	            indeg[ele]--;
+	            
+	            if(indeg[ele]==0)
+	                q.push(ele);
+	        }
+	    }
+	  
+	    if(res.size()==v)
+	        return false ;
+	       return true;
     }
 };
 
