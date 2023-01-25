@@ -13,32 +13,61 @@ class Solution
         
         vector<int> dis(V,INT_MAX);
         
-        //Min pq
         
-        priority_queue<pair<int,int> ,vector<pair<int,int>>,greater<pair<int,int>>> pq;
-        
+        set<pair<int,int>> st;
+        st.insert({0,S});
         dis[S]=0;
-        pq.push({0,S});
-        
-        while(!pq.empty())
+        while(!st.empty())
         {
-            auto it=pq.top();
-            int nd=it.second;
+            auto it=*(st.begin());
             int d=it.first;
-            pq.pop();
+            int nd=it.second;
+            st.erase(it);
             
             for(auto ele: adj[nd])
             {
-                int wt=ele[1];
                 int ne=ele[0];
+                int w=ele[1];
                 
-                if(dis[ne]>wt+d)
+                if(d+w<dis[ne])
                 {
-                    dis[ne]=d+wt;
-                    pq.push({dis[ne],ne});
+                    if(dis[ne]!=INT_MAX)
+                    {
+                        st.erase({dis[ne],ne});
+                        
+                    }
+                    dis[ne]=d+w;
+                    st.insert({dis[ne],ne});
                 }
             }
         }
+        
+        // //Min pq
+        
+        // priority_queue<pair<int,int> ,vector<pair<int,int>>,greater<pair<int,int>>> pq;
+        
+        // dis[S]=0;
+        // pq.push({0,S});
+        
+        // while(!pq.empty())
+        // {
+        //     auto it=pq.top();
+        //     int nd=it.second;
+        //     int d=it.first;
+        //     pq.pop();
+            
+        //     for(auto ele: adj[nd])
+        //     {
+        //         int wt=ele[1];
+        //         int ne=ele[0];
+                
+        //         if(dis[ne]>wt+d)
+        //         {
+        //             dis[ne]=d+wt;
+        //             pq.push({dis[ne],ne});
+        //         }
+        //     }
+        // }
         
         return dis;
     }
