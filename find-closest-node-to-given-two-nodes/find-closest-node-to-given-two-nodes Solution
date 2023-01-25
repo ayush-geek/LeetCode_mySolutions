@@ -1,0 +1,44 @@
+class   Solution   { 
+  public : 
+ 
+      void   solve ( int  i , vector < int > &  edges , vector < int > &  vis , vector < int > &  dis ) 
+      { 
+         vis [ i ] = 1 ; 
+ 
+          if ( edges [ i ] != - 1   &&   ! vis [ edges [ i ] ] ) { 
+             dis [ edges [ i ] ] = 1 + dis [ i ] ; 
+              solve ( edges [ i ] , edges , vis , dis ) ; 
+              } 
+      } 
+ 
+      int   closestMeetingNode ( vector < int > &  edges ,   int  node1 ,   int  node2 )   { 
+         
+          int  n = edges . size ( ) ; 
+         vector < int >   vis ( n , 0 ) ; 
+ 
+         vector < int >   dis1 ( n , INT_MAX ) ; 
+     
+         dis1 [ node1 ] = 0 ; 
+          solve ( node1 , edges , vis , dis1 ) ; 
+ 
+           vector < int >   vis1 ( n , 0 ) ; 
+         vector < int >   dis2 ( n , INT_MAX ) ; 
+          dis2 [ node2 ] = 0 ; 
+          solve ( node2 , edges , vis1 , dis2 ) ; 
+ 
+          int  mx = INT_MAX ; 
+          int  ans = - 1 ; 
+          for ( int   i = 0 ; i < n ; i ++ ) 
+          { 
+              if ( dis1 [ i ] != INT_MAX  &&  dis2 [ i ] != INT_MAX ) 
+              { 
+                  if ( mx > max ( dis1 [ i ] , dis2 [ i ] ) ) 
+                  { 
+                     mx = max ( dis1 [ i ] , dis2 [ i ] ) ; 
+                     ans = i ; 
+                  } 
+              } 
+          } 
+         return  ans ; 
+      } 
+  } ;
