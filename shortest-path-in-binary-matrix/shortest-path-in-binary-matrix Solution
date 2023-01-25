@@ -1,67 +1,45 @@
 class   Solution   { 
   public : 
       int   shortestPathBinaryMatrix ( vector < vector < int >> &  grid )   { 
-         
- 
-          //bfs 
           int  n = grid . size ( ) ; 
           int  m = grid [ 0 ] . size ( ) ; 
  
-          if ( grid [ 0 ] [ 0 ]   != 0   ||  grid [ n - 1 ] [ m - 1 ] != 0 ) 
+         vector < vector < int >>   dist ( n , vector < int >   ( m , INT_MAX ) ) ; 
+         dist [ 0 ] [ 0 ] = 0 ; 
+ 
+         queue < pair < int , int >>  q ; 
+         q . push ( { 0 , 0 } ) ; 
+          if ( grid [ 0 ] [ 0 ] != 0   ||  grid [ n - 1 ] [ m - 1 ] != 0 ) 
               return   - 1 ; 
- 
-          if ( grid . size ( ) == 1 ) 
-              return   1 ; 
- 
-         vector < vector < int >>   vis ( n , vector < int >   ( m , 0 ) ) ; 
- 
-         
-         queue < pair < pair < int , int > , int >>  q ; 
- 
-         q . push ( { { 0 , 0 } , 0 } ) ; 
-         vis [ 0 ] [ 0 ] = 1 ; 
-          int  ans = INT_MAX ; 
  
           while ( ! q . empty ( ) ) 
           { 
+              int  r = q . front ( ) . first ; 
+              int  c = q . front ( ) . second ; 
  
-              int  r = q . front ( ) . first . first ; 
-              int  c = q . front ( ) . first . second ; 
-              int  d = q . front ( ) . second ; 
- 
-             
              q . pop ( ) ; 
  
-              for ( int  ii = - 1 ; ii <= + 1 ; ii ++ ) 
+              for ( int  dr = - 1 ; dr <= 1 ; dr ++ ) 
               { 
-                  for   ( int  jj = - 1 ; jj <= 1 ; jj ++ ) 
+                  for ( int  dc = - 1 ; dc <= 1 ; dc ++ ) 
                   { 
-                      int  nr = r + ii ; 
-                      int  nc = c + jj ; 
-                     
-                      if ( nr >= 0   &&  nr < n  &&  nc >= 0   &&  nc < m  &&   ! vis [ nr ] [ nc ]   &&  grid [ nr ] [ nc ] == 0 ) 
-                          { 
-                             q . push ( { { nr , nc } , d + 1 } ) ; 
-                             vis [ nr ] [ nc ] = 1 ; 
-                         
-                               if ( nr == n - 1   &&  nc == m - 1   ) 
-                               { 
-                                 ans = min ( ans , d + 1 ) ; 
-                              } 
-                          } 
+                      int  nr = r + dr ; 
+                      int  nc = c + dc ; 
  
-                    
+                      if ( nr >= 0   &&  nr < n  &&  nc >= 0   &&  nc < m  &&  grid [ nr ] [ nc ] == 0 ) 
+                      { 
+                          if ( dist [ r ] [ c ] + 1 < dist [ nr ] [ nc ] ) 
+                          { 
+                             dist [ nr ] [ nc ] = 1 + dist [ r ] [ c ] ; 
+                             q . push ( { nr , nc } ) ; 
+                          } 
+                      } 
                   } 
               } 
- 
- 
           } 
  
-          if ( ans == INT_MAX ) 
+          if ( dist [ n - 1 ] [ m - 1 ] == INT_MAX ) 
               return   - 1 ; 
-          else 
-              return  ans + 1   ;    //nodes=path+1 
- 
- 
+          return  dist [ n - 1 ] [ m - 1 ] + 1 ; 
       } 
   } ;
