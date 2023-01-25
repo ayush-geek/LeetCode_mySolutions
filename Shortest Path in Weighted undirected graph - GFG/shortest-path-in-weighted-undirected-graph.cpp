@@ -6,72 +6,65 @@ using namespace std;
 class Solution {
   public:
     vector<int> shortestPath(int n, int m, vector<vector<int>>& edges) {
-        // Code here
+        
         
         vector<pair<int,int>> adj[n+1];
         
-        
-        for(int i=0;i<edges.size();i++)
+        for(int i=0;i<m;i++)
         {
-            adj[edges[i][0]].push_back({edges[i][1],edges[i][2]});
-            adj[edges[i][1]].push_back({edges[i][0],edges[i][2]});
+            int a=edges[i][0];
+            int b=edges[i][1];
+            int c=edges[i][2];
+            
+            adj[a].push_back({b,c});
+            adj[b].push_back({a,c});
         }
         
-        
-        vector<int> dist(n+1,INT_MAX);
-        
+        vector<int> dis(n+1,INT_MAX);
         vector<int> hash(n+1,0);
+        hash[1]=1;
         
-        for(int i=0;i<=n;i++)
-            hash[i]=i;
-            
-            
-        priority_queue<pair<int,int>,vector<pair<int,int>>, greater<pair<int,int>>> pq;
-        
-        
+        priority_queue<pair<int,int>,vector<pair<int,int>>,greater<pair<int,int>>> pq;
+        dis[1]=0;
         pq.push({0,1});
-        dist[1]=0;
-        
         
         while(!pq.empty())
         {
-            int d=pq.top().first;
-            int e=pq.top().second;
+            auto it =pq.top();
+            int nd=it.second;
+            int d=it.first;
             pq.pop();
             
-            for(auto it: adj[e])
+            for(auto ele: adj[nd])
             {
-                int v=it.first;
-                int wt=it.second;
+                int ne=ele.first;
+                int w=ele.second;
                 
-               if(d+wt<dist[v])
-               {
-                   dist[v]=d+wt;
-                   pq.push({dist[v],v});
-                   hash[v]=e;
-               }
-               
+                
+                if(dis[ne]>d+w)
+                {
+                    dis[ne]=d+w;
+                    hash[ne]=nd;
+                    pq.push({dis[ne],ne});
+                }
             }
-            
         }
         
-        int z=n;
         vector<int> res;
+        if(dis[n]==INT_MAX)
+            return {-1};
         
-        res.push_back(z);
-        
-        while(hash[z]!=z)
+        res.push_back(n);
+        int k=n;
+        while(hash[k]!=k)
         {
-            z=hash[z];
-            res.push_back(z);
-            
+            k=hash[k];
+            res.push_back(k);
         }
         
         reverse(res.begin(),res.end());
+        return res;
         
-        if(res.size()==1)
-            return {-1};
-        return res;        
     }
 };
 
