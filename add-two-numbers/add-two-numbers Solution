@@ -11,107 +11,90 @@
   class   Solution   { 
   public : 
      
-     
      ListNode *   reverse ( ListNode *  head ) 
       { 
-         ListNode *  prev = NULL ; 
+          if ( head == NULL ) 
+              return   NULL ; 
          
+         ListNode *  prev = NULL ; 
+ 
           while ( head != NULL ) 
-          { 
-             ListNode *  tmp = head -> next ; 
+          {    
              
+             ListNode *  tmp = head -> next ; 
              head -> next = prev ; 
              prev = head ; 
-             
              head = tmp ; 
           } 
           return  prev ; 
       } 
      
-     
-     
-     
-     
      ListNode *   addTwoNumbers ( ListNode *  l1 ,  ListNode *  l2 )   { 
          
-         
-          // l1=reverse(l1); 
-          // l2=reverse(l2); 
-         
-          //cout<<l1->val<<" "<<l2->val<<endl; 
-         
-         ListNode *  ans = new   ListNode ( 0 ) ; 
-         ListNode *  t = ans ; 
-         
+         // l1=reverse(l1); 
+          //l2=reverse(l2); 
+ 
+         ListNode *  p1 = NULL ; 
+         ListNode *  p2 = NULL ; 
+         ListNode *  tmp = l1 ; 
           int  carry = 0 ; 
-          while ( l1 != NULL   ||  l2 != NULL ) 
-          { 
-             
-              if ( l1 != NULL   &&  l2 != NULL ) 
+          while ( l1 != NULL   &&  l2 != NULL ) 
+          {    p1 = l1 ; 
+             p2 = l2 ; 
+              int  v = l1 -> val + l2 -> val + carry ; 
+ 
+              if ( v > 9 ) 
               { 
-                  int  z = l1 -> val + l2 -> val + carry ; 
-                 
-                  if ( z > 9 ) 
-                     carry = 1 ; 
-                  else 
-                     carry = 0 ; 
-                 
-                 t -> next = new   ListNode ( ( z ) % 10 ) ; 
-                 // t=t->next; 
-                 
-                 l1 = l1 -> next ; 
-                 l2 = l2 -> next ; 
-                 
-                 
+                 carry = 1 ; 
+                 v = v % 10 ; 
               } 
-             
-              else   if ( l1 == NULL ) 
-              { 
-                  int  z = l2 -> val + carry ; 
-                 
-                  if ( z > 9 ) 
-                     carry = 1 ; 
-                  else 
-                     carry = 0 ; 
-                 
-                t -> next = new   ListNode ( ( z ) % 10 ) ; 
-                //   t=t->next; 
-                 l2 = l2 -> next ; 
-                 
-              } 
-             
               else 
+                 carry = 0 ; 
+             l1 -> val = v ; 
+             l1 = l1 -> next ; 
+             l2 = l2 -> next ; 
+          } 
+ 
+          while ( l1 != NULL ) 
+          {    
+             p1 = l1 ; 
+                  int  v = l1 -> val + carry ; 
+ 
+              if ( v > 9 ) 
               { 
-                  int  z = l1 -> val + carry ; 
-                 
-                  if ( z > 9 ) 
-                     carry = 1 ; 
-                  else 
-                     carry = 0 ; 
-                 
-                  t -> next = new   ListNode ( ( z ) % 10 ) ; 
-                  // t=t->next; 
-                 
-                 l1 = l1 -> next ; 
+                 carry = 1 ; 
+                 v = v % 10 ; 
               } 
-           
-             
-              //cout<<t->val<<endl; 
-            t = t -> next ; 
-             
+               else 
+                 carry = 0 ; 
+             l1 -> val = v ; 
+             l1 = l1 -> next ; 
           } 
-         
-          //cout<<t->val<<endl; 
-         
-          if ( carry == 1 ) { 
-             t -> next = new   ListNode ( 1 ) ; 
-          } 
-         
  
          
-         
-         
-         
-          return  ans -> next ; 
+          while ( l2 != NULL ) 
+          { 
+                  int  v = l2 -> val + carry ; 
+ 
+              if ( v > 9 ) 
+              { 
+                 carry = 1 ; 
+                 v = v % 10 ; 
+              } 
+               else 
+                 carry = 0 ; 
+             l2 -> val = v ; 
+             p1 -> next = l2 ; 
+             p1 = p1 -> next ; 
+             l2 = l2 -> next ; 
+          } 
+ 
+          if ( carry == 1 ) 
+          { 
+             p1 -> next = new   ListNode ( 1 ) ; 
+          } 
+ 
+          return  tmp ; 
+ 
       } 
   } ;
