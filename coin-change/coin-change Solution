@@ -1,42 +1,45 @@
 class   Solution   { 
   public : 
  
-      int   solve ( int  i , int  j , vector < int > &  coins , vector < vector < int >> &  dp ) 
-      {    
+ 
+      int   solve ( int  i , int  j , vector < int > &  nums , vector < vector < int >> &  dp ) 
+      { 
           if ( j == 0 ) 
               return   0 ; 
-          if ( i < 0 ) 
+          if ( i == 0 ) 
+          { 
+              if ( j % nums [ i ] == 0 ) 
+                  return  j / nums [ i ] ; 
               return   1e9 ; 
+          } 
  
-         
-         
           if ( dp [ i ] [ j ] != - 1 ) 
               return  dp [ i ] [ j ] ; 
  
-          int  take = 1e9 ; 
-          if ( coins [ i ] <= j ) 
-          { 
-             take = 1 + solve ( i , j - coins [ i ] , coins , dp ) ; 
-          } 
+     
+          int  t = 1e9 , nt = 1e9 ; 
  
-          int  nt = solve ( i - 1 , j , coins , dp ) ; 
  
-          return  dp [ i ] [ j ] = min ( take , nt ) ; 
-         
+          if ( j - nums [ i ] >= 0 ) 
+             t = 1 + solve ( i , j - nums [ i ] , nums , dp ) ; 
+         nt = solve ( i - 1 , j , nums , dp ) ; 
+ 
+          return  dp [ i ] [ j ] = min ( t , nt ) ;     
       } 
  
       int   coinChange ( vector < int > &  coins ,   int  amount )   { 
          
-          int  ans = 0 ; 
-         
+ 
           int  n = coins . size ( ) ; 
-         vector < vector < int >>   dp ( n , vector < int >   ( amount + 1 , - 1 ) ) ; 
  
-         int  z =   solve ( n - 1 , amount , coins , dp ) ; 
+          sort ( coins . begin ( ) , coins . end ( ) ) ; 
  
-         if ( z >= 1e9 ) 
-          return   - 1 ; 
-          else 
-              return  z ; 
+         vector < vector < int >>   dp ( n , vector < int >   ( amount + 1 , - 1 )   ) ; 
+ 
+          int  ans = solve ( n - 1 , amount , coins , dp  ) ; 
+ 
+          if ( ans >= 1e9 ) 
+              return   - 1 ; 
+          return  ans ; 
       } 
   } ;
