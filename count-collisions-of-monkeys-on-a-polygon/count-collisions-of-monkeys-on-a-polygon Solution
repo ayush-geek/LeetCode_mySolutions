@@ -1,0 +1,28 @@
+class   Solution   { 
+  public : 
+       unsigned   long   long   int  mod = 1e9 + 7 ; 
+     
+      unsigned   long   long   pow ( unsigned   long   long  a ,   unsigned   long   long  b ) 
+  { 
+      unsigned   long   long  temp ; 
+      if   ( b  ==   0 ) 
+          return   1 ; 
+     temp  =   pow ( a ,  b  /   2 ) % mod ; 
+      if   ( b  %   2   ==   0 ) 
+          return   ( ( temp % mod ) *   ( temp % mod ) ) % mod ; 
+      else 
+          return   ( ( a % mod ) *   ( temp % mod )   *   ( temp % mod ) ) % mod ; 
+  } 
+     
+     
+      int   monkeyMove (   unsigned   int  n )   { 
+         
+       
+          // return pow(2,n)%mod-2; 
+            return   ( mod + pow ( 2 ,  n ) - 2 ) % mod ; 
+      } 
+  } ; 
+ 
+ 
+       
+ 
