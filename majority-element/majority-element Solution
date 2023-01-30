@@ -1,0 +1,36 @@
+class   Solution   { 
+  public : 
+      int   majorityElement ( vector < int > &  nums )   { 
+         
+ 
+          //element appearing maximum 
+ 
+          //Boyce Moore Voting Algo 
+ 
+          int  cur_ele = nums [ 0 ] ; 
+          int  cur_ct = 1 ; 
+ 
+          for ( int  i = 1   ; i < nums . size ( ) ; i ++ ) 
+          {    
+              if ( cur_ct == 0 ) 
+                  { 
+                     cur_ele = nums [ i ] ; 
+                 
+                  } 
+ 
+               if ( nums [ i ] != cur_ele ) 
+              { 
+                 cur_ct -- ; 
+              } 
+ 
+              else 
+                 cur_ct += 1 ; 
+ 
+ 
+          } 
+ 
+          return  cur_ele ; 
+ 
+ 
+      } 
+  } ;
