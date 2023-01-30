@@ -1,0 +1,42 @@
+class   Solution   { 
+  public : 
+      int   countTriplets ( vector < int > &  nums )   { 
+         
+          int  ans = 0 ; 
+          int  ct = 0 ; 
+ 
+          //Prefix  
+         vector < int >   pref ( nums . size ( ) , 0 ) ; 
+ 
+         pref [ 0 ] = nums [ 0 ] ; 
+ 
+          for ( int  i = 1 ; i < nums . size ( ) ; i ++ ) 
+          { 
+             pref [ i ] = pref [ i - 1 ] ^ nums [ i ] ; 
+          } 
+ 
+ 
+          for ( int  i = 0 ; i < nums . size ( ) ; i ++ ) 
+          { 
+              for ( int  j = i + 1 ; j < nums . size ( ) ; j ++ ) 
+              { 
+                  for ( int  k = j ; k < nums . size ( ) ; k ++ ) 
+                  { 
+                          int  l = 0 ; 
+                          int  r = 0 ; 
+                          if ( i != 0 )     
+                             l = pref [ j - 1 ] ^ pref [ i - 1 ] ; 
+                          else 
+                             l = pref [ j - 1 ] ; 
+                 
+                         r = pref [ k ] ^ pref [ j - 1 ] ; 
+ 
+                          if ( l == r ) 
+                             ct ++ ; 
+                  }    
+              } 
+             
+          } 
+          return  ct ; 
+      } 
+  } ;
