@@ -24,6 +24,10 @@ class Solution {
           tmp.append(A);
          
         }
+            
+        string tt=A+A;
+        if(tt.find(B)!=-1)
+            return 2;
         return -1;
     }
 };
