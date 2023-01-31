@@ -1,0 +1,55 @@
+class   Solution   { 
+  public : 
+ 
+      static   bool   cmp ( pair < int , int > &  a , pair < int , int > &  b ) 
+      { 
+          if ( a . second == b . second ) 
+              return  a . first < b . first ; 
+ 
+          return  a . second < b . second ; 
+      } 
+ 
+      int   solve ( int  i , vector < pair < int , int >> &  vp , vector < vector < int >> &  dp , pair < int , int > &  lst , int  j ) 
+      { 
+          if ( i == vp . size ( ) ) 
+              return   0 ; 
+          if ( dp [ i ] [ j + 1 ] != - 1 ) 
+              return  dp [ i ] [ j + 1 ] ; 
+         
+          int  t = 0 ; 
+          if ( j == - 1   ||  vp [ i ] . first > vp [ j ] . first  &&  vp [ i ] . second >= lst . second ) 
+          { 
+             t += vp [ i ] . second + solve ( i + 1 , vp , dp , vp [ i ] , i ) ; 
+            
+          } 
+          else   if ( vp [ i ] . first == lst . first ) { 
+              t = vp [ i ] . second + solve ( i + 1 , vp , dp , vp [ i ] , i ) ; 
+             
+              } 
+             
+ 
+          int  nt = solve ( i + 1 , vp , dp , lst , j ) ; 
+ 
+          return  dp [ i ] [ j + 1 ] = max ( t , nt ) ; 
+      } 
+ 
+ 
+      int   bestTeamScore ( vector < int > &  scores ,  vector < int > &  ages )   { 
+         
+         vector < pair < int , int >>  vp ; 
+          int  n = scores . size ( ) ; 
+          for ( int  i = 0 ; i < n ; i ++ ) 
+          { 
+             vp . push_back ( { ages [ i ] , scores [ i ] } ) ; 
+          } 
+ 
+          sort ( vp . begin ( ) , vp . end ( ) ) ; 
+         vector < vector < int >>   dp ( n + 1 , vector < int >    ( n , - 1 ) ) ; 
+         pair < int , int >  lst = { - 1 , - 1 } ; 
+          //-1 
+          return   solve ( 0 , vp , dp , lst , - 1 ) ; 
+ 
+ 
+       
+      } 
+  } ;
