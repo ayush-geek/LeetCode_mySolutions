@@ -1,0 +1,39 @@
+class   Solution   { 
+  public : 
+     string  gcdOfStrings ( string str1 ,  string str2 )   { 
+         
+         string res = "" ; 
+ 
+          for ( int  i = 0 ; i < str1 . size ( ) ; i ++ ) 
+          { 
+             string tmp = str1 . substr ( 0 , i + 1 ) ; 
+ 
+              //tmp can we construct str1 /str2; 
+ 
+             string tt1 = tmp ; 
+             string tt2 = tmp ; 
+              while ( tt1 . size ( ) < str1 . size ( ) ) 
+              { 
+                 tt1 += tmp ; 
+              } 
+ 
+              while ( tt2 . size ( ) < str2 . size ( ) ) 
+              { 
+                 tt2 += tmp ; 
+              } 
+ 
+              if ( tt1 == str1  &&  tt2 == str2 ) 
+              { 
+                  if ( tmp . size ( ) > res . size ( ) ) 
+                     res = tmp ; 
+              } 
+ 
+             
+          } 
+       
+          return  res ; 
+ 
+ 
+ 
+      } 
+  } ;
