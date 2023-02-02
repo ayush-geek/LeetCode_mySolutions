@@ -7,130 +7,122 @@ using namespace std;
 // } Driver Code Ends
 // User function Template for C++
 
-
-class DSU
+class dsu
 {
-private: 
-    vector<int> rank, parent, size;
-  
 public:
-    DSU(int n)
-    {
-        rank.resize(n+1,0);
-        parent.resize(n+1);
-        size.resize(n+1,1);
+	vector<int> rank,parent,size;
+	dsu(int n){
+		rank.resize(n+1,0);
+		parent.resize(n+1);
+		size.resize(n+1,1);
 
-        for(int i=0;i<=n;i++)
-            parent[i]=i;
-    };
-   
-    int findUPar(int u)
-    {
-        if(u==parent[u])
-            return u;
+		for(int i=0;i<=n;i++)
+			parent[i]=i;
+	}
 
-        return parent[u]=findUPar(parent[u]);
-    }
+	int findUpar(int node)
+	{
+		if(node==parent[node])
+			return node;
 
-    void unionByRank(int u,int v)
-    {
-        int ulp_u=findUPar(u);
-        int ulp_v=findUPar(v);
+		return parent[node]=findUpar(parent[node]);
 
-        if(ulp_u==ulp_v)   
-            return ;
+	}
 
-        if(rank[ulp_u]<rank[ulp_v])
-        {
-            parent[ulp_u]=ulp_v;
-            //rank[ulp_v]++;
-            
-        }
-        else  if(rank[ulp_u]>rank[ulp_v])
-        {
-            parent[ulp_v]=ulp_u;
-            // rank[ulp_u]++;
-        }
-        else{
-             parent[ulp_u]=ulp_v;
-            rank[ulp_v]++;
-        }
+	void unionByRank(int u,int v)
+	{	
+		int up_u=findUpar(u);
+		int up_v=findUpar(v);
+		if(up_u == up_v)
+			return ;
 
-    }
+		if(rank[up_u]<rank[up_v])
+			parent[up_u]=up_v;
+		else if(rank[up_v]<rank[up_u])
+			parent[up_v]=up_u;
+		else
+		{
+			parent[up_v]=up_u;
+			rank[up_u]++;
+		}
 
+	}
 
-     void unionBySize(int u,int v)
-    {
-        int ulp_u=findUPar(u);
-        int ulp_v=findUPar(v);
+	void unionBySize(int u,int v)
+	{	
+		int up_u=findUpar(u);
+		int up_v=findUpar(v);
+		if(up_u == up_v)
+			return ;
 
-        if(ulp_u==ulp_v)   
-            return ;
+		if(size[up_u]<size[up_v]){
+			parent[up_u]=up_v;
+			size[up_v]+=size[up_u];
+		}
+		
+		else
+		{
+			parent[up_v]=up_u;
+			size[up_u]+=size[up_v];
+		}
 
-        if(size[ulp_u]<=size[ulp_v])
-        {
-            parent[ulp_u]=ulp_v;
-            size[ulp_v]+=size[ulp_u];
-            
-        }
-        else
-        {
-            parent[ulp_v]=ulp_u;
-            size[ulp_u]+=size[ulp_v];
-        }
-
-    }
-
-
+	}
+	
+	
 };
 
 class Solution {
   public:
     vector<int> numOfIslands(int n, int m, vector<vector<int>> &operators) {
-    //   int n=grid.size();
-        DSU ds(n*m);
+        // code here
+        vector<int> ans;
+        dsu ds(n*m);
         
         vector<vector<int>> vis(n,vector<int> (m,0));
-        vector<int> res;
-        int dr[]={-1,0,1,0};
-        int dc[]={0,1,0,-1};
-        int cnt=0;
-        for(auto it : operators)
+        int ct=0;
+        
+        
+        for(auto it: operators)
         {
             int r=it[0];
             int c=it[1];
+            
             if(vis[r][c])
             {
-                res.push_back(cnt);
+               
+                ans.push_back(ct);
                 continue;
             }
             
             vis[r][c]=1;
-            cnt++;
+            ct++;
             
+            int dr[]={-1,0,1,0};
+            int dc[]={0,-1,0,1};
             
             for(int i=0;i<4;i++)
             {
                 int nr=r+dr[i];
                 int nc=c+dc[i];
                 
-                if(nr>=0 && nr<n && nc>=0 && nc<m && vis[nr][nc]) 
+                if(nr>=0 && nr<n && nc>=0 && nc<m && vis[nr][nc])
                 {
-                    int rowNum=r*m+c;
-                    int adjrowNum=nr*m+nc;
+                    int n_n=r*m+c;
+                    int nn_n=nr*m+nc;
                     
-                    if(ds.findUPar(rowNum)!=ds.findUPar(adjrowNum))
+                    if(ds.findUpar(n_n)!=ds.findUpar(nn_n))
                     {
-                        ds.unionBySize(rowNum,adjrowNum);
-                        cnt--;
+                        ct--;
+                        ds.unionBySize(n_n,nn_n);
                     }
                 }
             }
-             res.push_back(cnt);
             
+            ans.push_back(ct);
         }
         
-        return res;
+        
+        return ans;
     }
 };
 
