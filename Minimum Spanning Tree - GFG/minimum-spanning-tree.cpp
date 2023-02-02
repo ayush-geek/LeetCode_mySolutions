@@ -3,46 +3,92 @@
 using namespace std;
 
 // } Driver Code Ends
+
+class dsu
+{
+public:
+	vector<int> parent,size;
+	dsu(int n){
+	
+		parent.resize(n+1);
+		size.resize(n+1,1);
+
+		for(int i=0;i<=n;i++)
+			parent[i]=i;
+	}
+
+	int findUpar(int node)
+	{
+		if(node==parent[node])
+			return node;
+
+		return parent[node]=findUpar(parent[node]);
+
+	}
+
+	
+
+	void unionBySize(int u,int v)
+	{	
+		int up_u=findUpar(u);
+		int up_v=findUpar(v);
+		if(up_u == up_v)
+			return ;
+
+		if(size[up_u]<size[up_v]){
+			parent[up_u]=up_v;
+			size[up_v]+=size[up_u];
+		}
+		
+		else
+		{
+			parent[up_v]=up_u;
+			size[up_u]+=size[up_v];
+		}
+
+	}
+	
+	
+};
+
+
 class Solution
 {
 	public:
 	//Function to find sum of weights of edges of the Minimum Spanning Tree.
     int spanningTree(int V, vector<vector<int>> adj[])
     {
+        // code here
         
-    
-        priority_queue<pair<int,pair<int,int>>,vector<pair<int,pair<int,int>>>,greater<pair<int,pair<int,int>>> > pq;
+        dsu ds(V);
+        vector<pair<int,pair<int,int>>> edges;
         
-        pq.push({0,{0,-1}});
+        for(int i=0;i<V;i++)
+        {
+            for(auto ele: adj[i])
+            {
+                edges.push_back({ele[1],{ele[0],i}});
+            }
+        }
+        
+        sort(edges.begin(),edges.end());
         
         int ans=0;
-        vector<int> vis(V,0);
-        while(!pq.empty())
+        
+        for(auto ele: edges)
         {
-            auto it=pq.top();
-            int wt=it.first;
-            int node=it.second.first;
-            int par=it.second.second;
+            int wt=ele.first;
+            int u=ele.second.first;
+            int v=ele.second.second;
             
-            pq.pop();
             
-            if(vis[node])
-                continue;
-            ans+=wt;
-            vis[node]=1;
-            
-            for(auto ele: adj[node])
-            {   
-                int w=ele[1];
-                int nd=ele[0];
-                if(!vis[nd])
-                {
-                    pq.push({w,{nd,node}});
-                }
+            if(ds.findUpar(u)!=ds.findUpar(v))
+            {
+                ds.unionBySize(u,v);
+                ans+=wt;
             }
         }
         return ans;
-        
     }
 };
 
