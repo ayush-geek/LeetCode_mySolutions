@@ -8,75 +8,68 @@ using namespace std;
 //User function Template for C++
 
 class Solution {
-    
- private:
- int timer=1;
- 
- void dfs(int i,int parent, vector<int>&  vis,vector<int>& tin, vector<int>& low,vector<int>& mark,vector<int> adj[])
- {
-     
-     vis[i]=1;
-     
-     tin[i]=low[i]=timer;
-     timer++;
-     
-     
-     int child=0;
-     for(auto it: adj[i])
+  
+ private: 
+    int timer=0;
+
+    void dfs(int nd,int par,vector<int> adj[],vector<int>& vis,vector<int>& tin,vector<int>& lin,
+    vector<int>& mark)
     {
-            if(it==parent)
+        vis[nd]=1;
+        tin[nd]=lin[nd]=timer;
+        timer++;
+
+        int ch=0;
+        for(auto it: adj[nd])
+        {
+            if(it==par)
                 continue;
-                
-                if(!vis[it])
-                {
-                    dfs(it,i,vis,tin,low,mark,adj);
-                    
-                    low[i]=min(low[i],low[it]);
-                
-    
-                child++;
-            if(low[it]>=tin[i] && parent!=-1)
-                mark[i]=1;
-                }
+            else if(!vis[it])
+            {
+                dfs(it,nd,adj,vis,tin,lin,mark);
+                 lin[nd]=min(lin[nd],lin[it]);
+
+                 if(lin[it]>=tin[nd] && par!=-1)
+                   mark[nd]=1;
+                 ch++;
+            }
             else
             {
-                 low[i]=min(low[i],low[it]);
+                lin[nd]=min(lin[nd],tin[it]);
             }
+        }
+        
+        if(ch>1 && par==-1)
+            mark[nd]=1;
     }
-    
-    if(child>1 && parent==-1)
-        mark[i]=1;
- }
-    
-    
-    
-    
+
+ 
+  
   public:
     vector<int> articulationPoints(int V, vector<int>adj[]) {
         int n=V;
         vector<int> vis(n,0);
-        vector<int>  mark(n,0);
+         vector<int> mark(n,0);
+       vector<int> tin(n,0);
+       vector<int> lin(n,0);
+      
+      
+        vector<int> ans;
         
-        vector<int> tin(n,0);
-        vector<int> low(n,0);
-        vector<int> res;
         for(int i=0;i<n;i++)
         {
             if(!vis[i])
-                dfs(i,-1,vis,tin,low,mark,adj);
+                dfs(i,-1,adj,vis,tin,lin,mark);
         }
         
         for(int i=0;i<n;i++)
         {
-            if(mark[i]==1)
-                res.push_back(i);
+          if(mark[i])
+                ans.push_back(i);
         }
-        
-        if(res.size()==0)
+        if(ans.empty())
             return {-1};
-        return res;
-        
-        
+        return ans;
         
     }
 };
