@@ -8,76 +8,69 @@ using namespace std;
 class Solution
 {
     
-    private: 
-    void dfs(int i,vector<int> adj[],vector<int>& vis,stack<int>& st)
-    {
-        vis[i]=1;
-        
-        for(auto it: adj[i])
-        {
-            if(!vis[it])
-                dfs(it,adj,vis,st);
-        }
-        
-        st.push(i);
-    }
     
-    private: 
-    void dfs3(int i,vector<int> adj[],vector<int>& vis)
+    void dfs(int i,vector<int>& vis,vector<int> adj[],stack<int>& st)
     {
         vis[i]=1;
         
         for(auto it: adj[i])
         {
             if(!vis[it])
-                dfs3(it,adj,vis);
+                dfs(it,vis,adj,st);
         }
+        st.push(i);
+    }    
+    
+    
+    void dfs2(int i,vector<int>& vis,vector<int> adj[])
+    {
+        vis[i]=1;
         
-        
-    }
+        for(auto it: adj[i])
+        {
+            if(!vis[it])
+                dfs2(it,vis,adj);
+        }
+       
+    }    
 	public:
 	//Function to find number of strongly connected components in the graph.
     int kosaraju(int V, vector<int> adj[])
     {
-        
-        vector<int> vis(V,0);
-        stack<int> st;
-        for(int i=0;i<V;i++)
-        {
-            if(!vis[i])
-                dfs(i,adj,vis,st);
-        }
-        
-        
-        //Reverse
-        vector<int> adjT[V];
-        
-        for(int i=0;i<V;i++)
-        {   vis[i]=0;
-            for(auto itr: adj[i])
-            {
-                adjT[itr].push_back(i);
-            }
-        }
-        
-        
-       
-        //DFS
-        int ans=0;
-        while(!st.empty())
-        {
-            int i=st.top();
-            if(!vis[i]){
-                dfs3(i,adjT,vis);
-                ans++;
-            }
-            
-            st.pop();
-        }
-        
-       
-        return ans;
-        
+        //Sort
+      vector<int> vis(V,0);
+      stack<int> st;
+      for(int i=0;i<V;i++)
+      {
+          if(!vis[i])
+            dfs(i,vis,adj,st);
+      }
+      
+      
+      //rEVERSE
+      
+      vector<int> adjT[V];
+      for(int i=0;i<V;i++)
+      { vis[i]=0;
+          for(int j=0;j<adj[i].size();j++)
+          {
+              adjT[adj[i][j]].push_back(i);
+          }
+      }
+      int ct=0;
+      while(!st.empty())
+      {
+          int nd=st.top();
+          st.pop();
+          
+          if(!vis[nd])
+          {
+              dfs2(nd,vis,adjT);
+              ct++;
+          }
+      }
+      return ct;
+      
     }
 };
 
