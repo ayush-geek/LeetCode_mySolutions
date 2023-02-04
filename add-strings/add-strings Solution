@@ -1,0 +1,53 @@
+class   Solution   { 
+  public : 
+     string  addStrings ( string num1 ,  string num2 )   { 
+         
+         string v = "" ; 
+          reverse ( num1 . begin ( ) , num1 . end ( ) ) ; 
+          reverse ( num2 . begin ( ) , num2 . end ( ) ) ; 
+ 
+          int  n = num1 . size ( ) ; 
+          int  m = num2 . size ( ) ; 
+          int  carry = 0 ; 
+          int  i = 0 ; 
+          for ( i ; i < min ( n , m ) ; i ++ ) 
+          { 
+              int  z1 = num1 [ i ] - '0' ; 
+              int  z2 = num2 [ i ] - '0' ; 
+              int  num = z1 + z2 + carry ; 
+             carry = ( num ) / 10 ; 
+              char  z =   ( num % 10 )   + '0'   ; 
+              //cout<<z<<endl; 
+             v . push_back ( z ) ; 
+          } 
+ 
+          while ( i < n ) 
+          { 
+              int  z1 = num1 [ i ] - '0' ; 
+            
+              int  num = z1 + carry ; 
+             carry = ( num ) / 10 ; 
+               char  z =   ( num % 10 )    + '0' ; 
+             v . push_back ( z ) ; 
+             i ++ ; 
+          } 
+ 
+           while ( i < m ) 
+          { 
+              int  z1 = num2 [ i ] - '0' ; 
+            
+              int  num = z1 + carry ; 
+             carry = ( num ) / 10 ; 
+              char  z =   ( num % 10 )    + '0' ; 
+             v . push_back ( z ) ; 
+             i ++ ; 
+          } 
+ 
+          if ( carry == 1 ) 
+             v . push_back ( '1' ) ; 
+ 
+          reverse ( v . begin ( ) , v . end ( ) ) ; 
+          return  v ; 
+         
+      } 
+  } ;
