@@ -1,0 +1,50 @@
+class   Solution   { 
+  public : 
+ 
+      bool   dfs ( int  i , int  j , vector < vector < int >> &  grid , vector < vector < int >> &  vis ) 
+      { 
+           int  n = grid . size ( ) ; 
+          int  m = grid [ 0 ] . size ( ) ; 
+          if ( i < 0   ||  i >= n  ||  j < 0   ||  j >= m  || vis [ i ] [ j ]   ||  grid [ i ] [ j ] == 0 ) 
+              return   false ; 
+          if ( i == n - 1   &&  j == m - 1 ) 
+              return   true ; 
+         vis [ i ] [ j ] = 1 ; 
+         
+         bool  r = dfs ( i , j + 1 , grid , vis ) ; 
+ 
+         if ( r ) 
+         { 
+            grid [ i ] [ j ] = 0 ; 
+             return   true ; 
+         } 
+         bool  u = dfs ( i + 1 , j , grid , vis ) ; 
+         if ( u ) 
+         { 
+              { 
+            grid [ i ] [ j ] = 0 ; 
+             return   true ; 
+         } 
+         } 
+        grid [ i ] [ j ] = 0 ; 
+ 
+         return  r  ||  u ; 
+      } 
+ 
+      bool   isPossibleToCutPath ( vector < vector < int >> &  grid )   { 
+         
+          int  i = 0 , j = 0 ; 
+          int  n = grid . size ( ) ; 
+          int  m = grid [ 0 ] . size ( ) ; 
+         vector < vector < int >>   vis ( n , vector < int >   ( m , 0 ) ) ; 
+          bool  ans1 = dfs ( 0 , 0 , grid , vis ) ; 
+         grid [ 0 ] [ 0 ] = 1 ; 
+          vector < vector < int >>   vis1 ( n , vector < int >   ( m , 0 ) ) ; 
+         bool  ans2 = dfs ( 0 , 0 , grid , vis1 ) ; 
+          if ( ans1 == false   ||  ans2 == false ) 
+              return   true ; 
+         
+ 
+          return   false ; 
+      } 
+  } ;
