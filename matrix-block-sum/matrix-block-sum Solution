@@ -1,0 +1,35 @@
+class   Solution   { 
+  public : 
+     vector < vector < int >>   matrixBlockSum ( vector < vector < int >> &  mat ,   int  k )   { 
+ 
+         vector < vector < int >>  res ; 
+          int  n = mat . size ( ) ; 
+          int  m = mat [ 0 ] . size ( ) ; 
+ 
+         res . resize ( n , vector < int >   ( m , 0 ) ) ; 
+ 
+          for ( int  i = 0 ; i < n ; i ++ ) 
+          { 
+              for ( int  j = 0 ; j < m ; j ++ ) 
+              {       int  ans = 0 ; 
+                  for ( int  g = - k ; g <= k ; g ++   ) 
+                  { 
+                      int  nr = i + g ; 
+                      if ( nr >= 0   &&  nr < n ) { 
+                     
+                          for ( int  l = - k ; l <= k ; l ++ ) 
+                          { 
+                              int  nc = j + l ; 
+                   
+                              if (  nc >= 0   &&  nc < m ) 
+                                 ans += mat [ nr ] [ nc ] ; 
+                    
+                          } 
+                      }    
+                  } 
+                  res [ i ] [ j ] = ans ; 
+              } 
+          } 
+          return  res ;    
+      } 
+  } ;
