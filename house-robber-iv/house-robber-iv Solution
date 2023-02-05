@@ -1,0 +1,45 @@
+class   Solution   { 
+  public : 
+ 
+      bool   chk ( int  val , vector < int > &  nums , int  k ) 
+      {    
+              int  lp = INT_MIN ; 
+              int  ct = 0 ; 
+              for ( int  i = 0 ; i < nums . size ( ) ; i ++ ) 
+              { 
+                  if ( nums [ i ] > val )   continue ; 
+                  if ( lp + 1 == i )   continue ; 
+ 
+                 lp = i ; 
+                 ct ++ ; 
+ 
+ 
+              } 
+ 
+              if ( ct >= k ) 
+                  return   true ; 
+              return   false ; 
+      } 
+ 
+ 
+      int   minCapability ( vector < int > &  nums ,   int  k )   { 
+         
+          int  l = 0 ; 
+          int  h = 1e9 + 1 ; 
+          int  ans = 0 ; 
+          while ( l <= h ) 
+          { 
+              int  mid = ( l + h ) / 2 ; 
+ 
+ 
+              if ( chk ( mid , nums , k ) ) 
+                  {    ans = mid ; 
+                     h = mid - 1 ; 
+                  } 
+              else 
+                 l = mid + 1 ; 
+          } 
+ 
+          return  ans ; 
+      } 
+  } ;
