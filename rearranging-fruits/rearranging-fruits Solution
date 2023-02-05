@@ -1,0 +1,56 @@
+class   Solution   { 
+  public : 
+      long   long   minCost ( vector < int > &  basket1 ,  vector < int > &  basket2 )   { 
+         
+         
+          sort ( basket1 . begin ( ) , basket1 . end ( ) ) ; 
+         
+          sort ( basket2 . begin ( ) , basket2 . end ( ) ) ; 
+             
+          int  mn = INT_MAX ; 
+         unordered_map < int , int >  mp ; 
+         
+          for ( auto  ele :  basket1 ) 
+          { 
+             mp [ ele ] ++ ; 
+             mn = min ( ele , mn ) ; 
+          } 
+          for ( auto  ele :  basket2 ) 
+          { 
+             mp [ ele ] -- ; 
+              mn = min ( ele , mn ) ; 
+          } 
+         
+ 
+         vector < int >  ex ; 
+          for ( auto  it : mp ) 
+          { 
+              if ( it . second % 2 != 0 ) 
+              { 
+                  return   - 1 ; 
+              } 
+ 
+              for   ( int  i  =   0 ;  i  <   abs ( it . second )   /   2 ;  i ++ ) 
+              { 
+                     ex . push_back ( it . first ) ; 
+              } 
+          } 
+ 
+         ; 
+          long   long  ans = 0 ; 
+ 
+ 
+          sort ( ex . begin ( ) , ex . end ( ) ) ; 
+ 
+          for   ( int  i  =   0 ;  i  <  ex . size ( )   /   2 ;  i ++ ) 
+        { 
+         
+             ans  +=   min ( mn  *   2 ,  ex [ i ] ) ; 
+        } 
+     
+ 
+ 
+          return  ans ; 
+         
+      } 
+  } ;
