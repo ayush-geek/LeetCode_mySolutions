@@ -1,0 +1,49 @@
+class   Solution   { 
+  public : 
+      int   minimumSize ( vector < int > &  nums ,   int  k )   { 
+         
+          //mIN tHE max  
+          //Bs  
+      
+          int  l = 1 ; 
+          int  h = 1e9 + 1 ; 
+       
+     
+          int  ans = 0 ; 
+          while ( l <= h ) 
+          { 
+              int  mid = ( l + h ) / 2 ; 
+              // cout<<mid<<"s"; 
+              int  ct = 0 ; 
+           
+              for ( auto  ele :  nums ) 
+              { 
+                 
+                   if ( ele > mid ) 
+                  {       
+                      if ( ele % mid == 0 ) 
+                         ct += ( ele - 1 ) / mid ; 
+ 
+                      else 
+                         ct += ele / mid ; 
+ 
+                     
+                        
+                   
+                  
+                  } 
+              } 
+ 
+              if ( ct <= k ) 
+              { 
+                ans = mid ; 
+                 h = mid - 1 ; 
+                
+              } 
+              else 
+                 l = mid + 1 ; 
+             // cout<<mid<<" "<<ct<<endl; 
+          } 
+          return  ans ; 
+      } 
+  } ;
