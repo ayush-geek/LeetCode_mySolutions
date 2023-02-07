@@ -1,48 +1,32 @@
 class   Solution   { 
  public : 
-     
-     
-      int   solve ( int  i , int  target , vector < int > &  nums , vector < vector < int >> &  dp ) 
-      { 
+      int   findTargetSumWays ( vector < int > &  arr ,   int  target )   { 
          
-         
-          if ( i < 0 ) 
-          { 
-              if ( target == 0 ) 
-                  return   1 ; 
-              else 
-                  return   0 ; 
-          } 
-         
-          if ( dp [ i ] [ target + 2000 ] != - 1 ) 
-              return  dp [ i ] [ target + 2000 ] ; 
-         
-          //+1 
-         
-          int  pos = solve ( i - 1 , target - nums [ i ] , nums , dp ) ; 
-         
-         
-         
-          //-1 
+             target = abs ( target ) ; 
+           int  sm = accumulate ( arr . begin ( ) , arr . end ( ) , 0 ) ; 
  
-          int  neg = solve ( i - 1 , target + nums [ i ] , nums , dp ) ; 
-         
-        return    dp [ i ] [ target + 2000 ] = pos + neg ; 
-     
-      } 
-     
-     
-     
-     
-      int   findTargetSumWays ( vector < int > &  nums ,   int  target )   { 
-         
-         
-          int  n = nums . size ( ) ; 
-         
-         
-         vector < vector < int >>   dp ( n + 1 , vector < int >   ( 40001 , - 1 ) ) ; 
-         
-         
-          return   solve ( n - 1 , target , nums , dp ) ; 
+           if ( ( sm + target ) % 2 != 0   ||  sm < target ) 
+              return   false ; 
+ 
+           int  sum = ( sm + target ) / 2 ; 
+           int  n = arr . size ( ) ; 
+ 	    vector < vector < int >>   dp ( n + 1 , vector < int >    ( sum + 1 , 0 ) ) ; 
+             
+             // for(int i=0;i<=n;i++) 
+                 dp [ 0 ] [ 0 ] = 1 ; 
+                 
+             
+              for ( int  i = 1 ; i <= n ; i ++ ) 
+              { 
+                  for ( int  j = 0 ; j <= sum ; j ++ ) 
+                  { 
+                      if ( j >= arr [ i - 1 ] ) 
+                         dp [ i ] [ j ] = dp [ i - 1 ] [ j - arr [ i - 1 ] ] ; 
+                     
+                     dp [ i ] [ j ] = ( dp [ i ] [ j ]   +  dp [ i - 1 ] [ j ] ) ; 
+                  } 
+              } 
+ 
+          return  dp [ n ] [ sum ] ; 
       } 
  } ;
