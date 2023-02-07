@@ -1,30 +1,36 @@
 class   Solution   { 
  public : 
       int   totalFruit ( vector < int > &  fruits )   { 
+      
          
+          //sLIDING wINDOW 
          
-         unordered_map < int , int >  mp ; 
- 
- 
- 
+          //max wind  2 distinct fruits 
          
+         unordered_map < int , int >  mp ;   //Last Count Maintain 
+         
+          int  n = fruits . size ( ) ; 
           int  j = 0 ; 
           int  ans = 0 ; 
-          for ( int  i = 0 ; i < fruits . size ( ) ; i ++ ) 
+          for ( int  i = 0 ; i < n ; i ++ ) 
           { 
-             mp [ fruits [ i ] ] ++ ; 
- 
-              while ( mp . size ( ) > 2   &&  j <= i ) 
+              if ( mp . size ( ) < 2   ||  mp . find ( fruits [ i ] ) != mp . end ( ) ) 
+                 mp [ fruits [ i ] ] ++ ; 
+              else 
               { 
-                 mp [ fruits [ j ] ] -- ; 
-               
-                  if ( mp [ fruits [ j ] ] == 0 ) 
-                     mp . erase ( fruits [ j ] ) ; 
-                 j ++ ; 
-              }     
-              //cout<<mp.size()<<endl; 
-              if ( mp . size ( ) <= 2 ) 
-                 ans = max ( ans , i - j + 1 ) ; 
+                  for ( int  k = j ; k < i ; k ++ ) 
+                  { 
+                     mp [ fruits [ k ] ] -- ; 
+                      if ( mp [ fruits [ k ] ] == 0 ) { 
+                         mp . erase ( fruits [ k ] ) ; 
+                         j = k + 1 ; 
+                      break ; } 
+                  } 
+                 
+                 mp [ fruits [ i ] ] ++ ; 
+              } 
+             
+            ans = max ( ans , i - j + 1 ) ;  
           } 
          
           return  ans ; 
