@@ -8,8 +8,8 @@
   *     ListNode(int x, ListNode *next) : val(x), next(next) {}
   * };
   */ 
-  class   Solution   { 
-  public : 
+ class   Solution   { 
+ public : 
      
      ListNode *   reverse ( ListNode *  head ) 
       { 
@@ -97,4 +97,4 @@
           return  tmp ; 
  
       } 
-  } ;
+ } ;
