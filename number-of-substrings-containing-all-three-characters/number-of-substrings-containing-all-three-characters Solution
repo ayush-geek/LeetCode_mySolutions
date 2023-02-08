@@ -1,27 +1,26 @@
 class   Solution   { 
-  public : 
+ public : 
       int   numberOfSubstrings ( string s )   { 
          
-          int  i = 0 ; 
+ 
           int  j = 0 ; 
-         vector < int >   v ( 3 , 0 ) ; 
           int  n = s . size ( ) ; 
+ 
           int  ans = 0 ; 
-          for ( i = 0 ; i < n ; i ++ ) 
+         vector < int >   v ( 3 , 0 ) ; 
+          for ( int  i = 0 ; i < n ; i ++ ) 
           { 
              v [ s [ i ] - 'a' ] ++ ; 
  
+              while ( v [ 0 ]   &&  v [ 1 ]   &&  v [ 2 ] ) { 
+                  //cout<<i<<endl; 
+                 ans += n - i ; 
  
-              while ( v [ 0 ]   &&  v [ 1 ]   &&  v [ 2 ]   &&  j <= i ) 
-              { 
                  v [ s [ j ] - 'a' ] -- ; 
- 
-                 ans += ( n - i ) ; 
                  j ++ ; 
+ 
               } 
- 
           } 
- 
           return  ans ; 
       } 
-  } ;
+ } ;
