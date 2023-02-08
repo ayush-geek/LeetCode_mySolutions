@@ -1,0 +1,45 @@
+class   Solution   { 
+ public : 
+ 
+ 
+      int   solve ( vector < int > &  nums ,   int  k ) 
+      { 
+ 
+          int  j = 0 ; 
+          int  ans = 0 ; 
+          int  ct = 0 ; 
+          int  n = nums . size ( ) ; 
+          for ( int  i = 0 ; i < n ; i ++ ) 
+          { 
+                  if ( nums [ i ] % 2 != 0 ) 
+                     ct ++ ; 
+ 
+                  if ( ct > k ) 
+                  { 
+                      while ( ct > k  &&  j <= i ) 
+                      { 
+                          if ( nums [ j ] % 2 != 0 ) 
+                             ct -- ; 
+                         j ++ ; 
+                      } 
+                  } 
+ 
+                 ans += ( i - j + 1 )   ;   // Length having at most k char 
+          } 
+ 
+          return  ans ; 
+ 
+      } 
+ 
+ 
+ 
+      int   numberOfSubarrays ( vector < int > &  nums ,   int  k )   { 
+         
+ 
+          //Something like 
+          //Atmost(k) -atmost(k-1) will work 
+ 
+         cout << solve ( nums , k ) << endl ; 
+          return   solve ( nums , k ) - solve ( nums , k - 1 ) ; 
+      } 
+ } ;
