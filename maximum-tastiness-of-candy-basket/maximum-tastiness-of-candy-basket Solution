@@ -1,0 +1,45 @@
+class   Solution   { 
+ public : 
+ 
+      int   solve ( vector < int > &  price , int  m ,   int  k ) 
+      { 
+          int  j = 0 ; 
+          int  cnt = 1 ; 
+          for ( int  i = 1 ; i < price . size ( ) ; i ++ ) 
+          { 
+              if ( price [ i ] - price [ j ] >= m ) 
+              { 
+                 j = i ; 
+                 cnt ++ ; 
+              } 
+          } 
+ 
+          if ( cnt >= k ) 
+              return   true ; 
+          return   false ; 
+      } 
+ 
+      int   maximumTastiness ( vector < int > &  price ,   int  k )   { 
+         
+          sort ( price . begin ( ) , price . end ( ) ) ; 
+          //bs 
+          int  l = 0 ; 
+          int  h = 1e9 + 1 ; 
+          int  ans = 0 ; 
+          while ( l <= h ) 
+          { 
+              int  mid = ( l + h ) / 2 ; 
+ 
+              if ( solve ( price , mid , k ) ) 
+                  { 
+                     ans = mid ; 
+                     l = mid + 1 ; 
+                  } 
+              else 
+              { 
+                 h = mid - 1 ; 
+              } 
+          } 
+          return  ans ; 
+      } 
+ } ;
