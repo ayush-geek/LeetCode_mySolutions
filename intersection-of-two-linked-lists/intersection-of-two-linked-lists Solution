@@ -10,22 +10,63 @@
  public : 
      ListNode  * getIntersectionNode ( ListNode  * headA ,  ListNode  * headB )   { 
          
-             ListNode *  h1 = headA ; 
-             ListNode *  h2 = headB ; 
- 
-              while ( h1 != h2 ) 
-              { 
-                 h1 = h1 -> next ; 
-                 h2 = h2 -> next ; 
- 
-                  if ( h1 == NULL   &&  h2 == NULL )     
-                          return   NULL ; 
- 
-                  if ( h1 == NULL ) 
-                     h1 = headB ; 
-                  if ( h2 == NULL ) 
-                     h2 = headA ; 
-              } 
-              return  h1 ; 
+         
+          //approach 
+         
+          //make a map and fill all  
+         
+          //Values 
+     
+          // AND cHK 
+         
+         
+ //         unordered_set<ListNode* > st; 
+         
+         
+ //         while(headA!=NULL) 
+ //         { 
+            
+ //             st.insert(headA); 
+             
+ //             headA=headA->next; 
+ //         } 
+         
+         
+ //         while(headB!=NULL) 
+ //         { 
+ //             if(st.count(headB)==1) 
+ //             { 
+ //                 return headB; 
+ //             } 
+             
+ //             headB=headB->next; 
+ //         } 
+         
+         
+ //         return NULL; 
+         
+         
+          //M2 
+         
+         
+         ListNode *  ptr1 = headA ; 
+         ListNode *  ptr2 = headB ; 
+         
+          while ( ptr1 != ptr2 ) 
+          {   if ( ptr1 == NULL ) 
+                 ptr1 = headB ; 
+             else 
+             ptr1 = ptr1 -> next ; 
+          
+            if ( ptr2 == NULL ) 
+                 ptr2 = headA ; 
+              else 
+             ptr2 = ptr2 -> next ; 
+             
+             
+            
+          } 
+         
+          return  ptr1 ; 
       } 
  } ;
