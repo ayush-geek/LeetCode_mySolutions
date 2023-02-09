@@ -6,44 +6,26 @@
   *     ListNode(int x) : val(x), next(NULL) {}
   * };
   */ 
-  class   Solution   { 
-  public : 
+ class   Solution   { 
+ public : 
      ListNode  * getIntersectionNode ( ListNode  * headA ,  ListNode  * headB )   { 
          
-         
-          //approach 
-         
-          //make a map and fill all  
-         
-          //Values 
-     
-          // AND cHK 
-         
-         
-         unordered_set < ListNode *   >  st ; 
-         
-         
-          while ( headA != NULL ) 
-          { 
-            
-             st . insert ( headA ) ; 
-             
-             headA = headA -> next ; 
-          } 
-         
-         
-          while ( headB != NULL ) 
-          { 
-              if ( st . count ( headB ) == 1 ) 
+             ListNode *  h1 = headA ; 
+             ListNode *  h2 = headB ; 
+ 
+              while ( h1 != h2 ) 
               { 
-                  return  headB ; 
+                 h1 = h1 -> next ; 
+                 h2 = h2 -> next ; 
+ 
+                  if ( h1 == NULL   &&  h2 == NULL )     
+                          return   NULL ; 
+ 
+                  if ( h1 == NULL ) 
+                     h1 = headB ; 
+                  if ( h2 == NULL ) 
+                     h2 = headA ; 
               } 
-             
-             headB = headB -> next ; 
-          } 
-         
-         
-          return   NULL ; 
-         
+              return  h1 ; 
       } 
-  } ;
+ } ;
