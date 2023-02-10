@@ -1,0 +1,123 @@
+
+ class   Listnode { 
+      public : 
+          int  val ; 
+         Listnode *  next ; 
+ 
+      Listnode ( int  value ) 
+      { 
+          this -> val = value ; 
+          this -> next = NULL ; 
+      } 
+ } ; 
+ 
+ class   MyLinkedList   { 
+ public : 
+     Listnode *  ls = new   Listnode ( 1 ) ; 
+      MyLinkedList ( )   { 
+          // ls= 
+      } 
+     
+      int   get ( int  index )   { 
+         
+         Listnode *  tmp = ls -> next ; 
+ 
+          while ( tmp != NULL ) 
+          { 
+              if ( index == 0 ) 
+                  { 
+                      return  tmp -> val ; 
+                  } 
+             tmp = tmp -> next ; 
+             index -- ; 
+          } 
+          return   - 1 ; 
+      } 
+     
+      void   addAtHead ( int  val )   { 
+         Listnode *  nh = new   Listnode ( val ) ; 
+         nh -> next = ls -> next ; 
+ 
+         ls -> next = nh ; 
+      } 
+     
+      void   addAtTail ( int  val )   { 
+         Listnode *  tmp = ls -> next ; 
+         Listnode *  prev = NULL ; 
+          while ( tmp != NULL ) 
+          { 
+            prev = tmp ; 
+             tmp = tmp -> next ; 
+              // index--; 
+          } 
+          if ( prev == NULL ) 
+              return   addAtHead ( val ) ; 
+ 
+         prev -> next = new   Listnode ( val ) ; 
+      } 
+     
+      void   addAtIndex ( int  index ,   int  val )   { 
+         
+          if ( index == 0 ) 
+              return   addAtHead ( val ) ;  
+ 
+         Listnode *  tmp = ls -> next ; 
+         Listnode *  prev = NULL ; 
+          while ( tmp != NULL ) 
+          {    
+              if ( index == 0 ) 
+                  break ; 
+             prev = tmp ; 
+             tmp = tmp -> next ; 
+             index -- ; 
+          } 
+          if ( index == 0 ) { 
+         prev -> next = new   Listnode ( val ) ; 
+         prev -> next -> next = tmp ; 
+          } 
+      } 
+     
+      void   deleteAtIndex ( int  index )   { 
+           Listnode *  tmp = ls -> next ; 
+         Listnode *  prev = NULL ; 
+          while ( tmp != NULL ) 
+          {    
+              if ( index == 0 ) 
+                  break ; 
+ 
+              prev = tmp ; 
+ 
+             tmp = tmp -> next ; 
+             index -- ; 
+          } 
+ 
+     
+ 
+           if ( index == 0   &&  tmp != NULL ) { 
+ 
+               if ( prev == NULL ) 
+               { 
+                  Listnode *  tmp = ls -> next ; 
+                  ls -> next = ls -> next -> next ; 
+                   delete  tmp ; 
+               } 
+ 
+               else { 
+         prev -> next = tmp -> next ; 
+          // cout<<prev->val<<endl; 
+          delete  tmp ; } 
+ 
+           } 
+          
+      } 
+ } ; 
+ 
+ /**
+  * Your MyLinkedList object will be instantiated and called as such:
+  * MyLinkedList* obj = new MyLinkedList();
+  * int param_1 = obj->get(index);
+  * obj->addAtHead(val);
+  * obj->addAtTail(val);
+  * obj->addAtIndex(index,val);
+  * obj->deleteAtIndex(index);
+  */
