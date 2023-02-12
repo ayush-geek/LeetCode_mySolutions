@@ -1,0 +1,61 @@
+class   Solution   { 
+ public : 
+ 
+      vector < vector < int >>   solve ( string s ,  vector < vector < int >> &  queries ) 
+       { 
+          unordered_map < long   long , vector < int >>  mp ; 
+           int  n = s . size ( ) ; 
+ 
+           for ( int  i = 0 ; i < n ; i ++ ) 
+           { 
+               long   long  val = 0 ; 
+           
+               for ( int  j = 0 ; j < min ( 31 , n - i ) ; j ++ ) 
+               { 
+                  val = val << 1 ; 
+                  val += ( s [ i + j ] - '0' ) ; 
+     // cout<<cnt<<" "<<val<<endl; 
+                  if ( mp . find ( val ) == mp . end ( ) ) 
+                  { 
+                     mp [ val ] = { i , i + j } ; 
+                  } 
+                  // else 
+                  //     cout<<val<<endl; 
+                   else 
+              { 
+                  if   ( j  <  mp [ val ] [ 1 ]   -  mp [ val ] [ 0 ] ) 
+                  { 
+ 
+                     mp [ val ]   =   { i ,  i  +  j } ; 
+                  } 
+              } 
+                    
+               } 
+ 
+          
+           } 
+          //  cout<<mp[4^2][1]<<endl; 
+          vector < vector < int >>  ans ; 
+ 
+           for ( auto &  ele :  queries ) 
+           {   
+               int  z = ele [ 0 ] ^ ele [ 1 ] ; 
+              cout << z << endl ; 
+               if ( mp . find ( z ) == mp . end ( ) ) 
+               { 
+                  ans . push_back ( { - 1 , - 1 } ) ; 
+               } 
+               else 
+              ans . push_back ( mp [ z ] ) ; 
+           } 
+ 
+ 
+          return  ans ; 
+ 
+       } 
+ 
+     vector < vector < int >>   substringXorQueries ( string s ,  vector < vector < int >> &  queries )   { 
+         
+          return   solve ( s , queries ) ; 
+      } 
+ } ;
