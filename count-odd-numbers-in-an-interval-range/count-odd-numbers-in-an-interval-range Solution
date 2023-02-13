@@ -1,0 +1,13 @@
+class   Solution   { 
+ public : 
+      int   countOdds ( int  low ,   int  high )   { 
+         
+      // int diff=high-low; 
+      int  z = 0 ; 
+      if ( low % 2 != 0 ) 
+         z = 1 ; 
+      return   ( high + 1 ) / 2 - ( low + 1 ) / 2   +  z ; 
+     
+      } 
+ 
+ } ;
