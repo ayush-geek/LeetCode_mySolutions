@@ -1,0 +1,55 @@
+class   Solution   { 
+ public : 
+     string  addBinary ( string a ,  string b )   { 
+         
+ 
+          reverse ( a . begin ( ) , a . end ( ) ) ; 
+          reverse ( b . begin ( ) , b . end ( ) ) ; 
+ 
+         string res ; 
+          int  i = 0 ; 
+          int  carry = 0 ; 
+          for ( i ; i < min ( a . size ( ) , b . size ( ) ) ; i ++ ) 
+          { 
+              int  s1 = a [ i ] - '0' ; 
+              int  s2 = b [ i ] - '0' ; 
+              int  val = ( s1 + s2 + carry ) ; 
+             carry = val / 2 ; 
+             val = val % 2 ; 
+              char  nt = ( char ) val + '0' ; 
+             res . push_back ( nt ) ; 
+ 
+          } 
+ 
+          while ( i < a . size ( ) ) 
+          { 
+               int  s1 = a [ i ] - '0' ; 
+              //int s2=b[i]-'1'; 
+              int  val = ( s1 + carry ) ; 
+             carry = val / 2 ; 
+             val = val % 2 ; 
+              char  nt = ( char ) val + '0' ; 
+             res . push_back ( nt ) ; 
+             i ++ ; 
+          } 
+ 
+           while ( i < b . size ( ) ) 
+          { 
+              // int s1=a[i]-'1'; 
+              int  s2 = b [ i ] - '0' ; 
+              int  val = ( s2 + carry ) ; 
+             carry = val / 2 ; 
+             val = val % 2 ; 
+              char  nt = ( char ) val + '0' ; 
+             res . push_back ( nt ) ; 
+             i ++ ; 
+          } 
+         
+          if ( carry == 1 ) 
+         res . push_back ( '1' ) ; 
+ 
+          reverse ( res . begin ( ) , res . end ( ) ) ; 
+ 
+          return  res ; 
+      } 
+ } ;
