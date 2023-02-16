@@ -9,34 +9,26 @@
   *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
   * };
   */ 
-  class   Solution   { 
-  public : 
+ class   Solution   { 
+ public : 
  
-     TreeNode *   solve ( vector < int > &  nums , int  l , int  r ) 
+     TreeNode *   solve ( int  l , int  r ,  vector < int > &  nums ) 
       { 
           if ( l > r ) 
               return   NULL ; 
  
- 
           int  mid = ( l + r ) / 2 ; 
- 
-         TreeNode *  node = new   TreeNode ( nums [ mid ] ) ; 
- 
-         node -> left = solve ( nums , l , mid - 1 ) ; 
-         node -> right = solve ( nums , mid + 1 , r ) ; 
- 
-          return  node ; 
+         TreeNode *  rt = new   TreeNode ( nums [ mid ] ) ; 
+         rt -> left = solve ( l , mid - 1 , nums ) ; 
+         rt -> right = solve ( mid + 1 , r , nums ) ; 
+          return  rt ; 
       } 
  
      TreeNode *   sortedArrayToBST ( vector < int > &  nums )   { 
          
           int  n = nums . size ( ) ; 
  
- 
-          int  l = 0 ; 
-          int  r = nums . size ( ) - 1 ; 
- 
- 
-          return   solve ( nums , l , r ) ; 
+         
+          return   solve ( 0 , n - 1 , nums ) ; 
       } 
-  } ;
+ } ;
