@@ -1,32 +1,26 @@
 class   Solution   { 
-  public : 
+ public : 
       int   findJudge ( int  n ,  vector < vector < int >> &  trust )   { 
          
- 
-          //cONSIDER A GRAPG 
-          //WITH INDEG (N-1)  
- 
-          //AND oUTDEG 0 
- 
-          //jUDGE 
- 
- 
-         vector < int >   indeg ( n + 1 , 0 ) ; 
-           vector < int >   outdeg ( n + 1 , 0 ) ; 
+         vector < int >   ct ( n + 1 , 0 ) ; 
  
           for ( int  i = 0 ; i < trust . size ( ) ; i ++ ) 
           { 
-             indeg [ trust [ i ] [ 1 ] ] ++ ; 
-             outdeg [ trust [ i ] [ 0 ] ] ++ ; 
+              int  a = trust [ i ] [ 0 ] ; 
+              int  b = trust [ i ] [ 1 ] ; 
+             
+             ct [ a ] = - 1e9 ; 
+             ct [ b ] ++ ; 
+              // adj[b].push_back(a); 
           } 
  
           for ( int  i = 1 ; i <= n ; i ++ ) 
           { 
-              if ( indeg [ i ] == n - 1   &&  outdeg [ i ] == 0 ) 
+              if ( ct [ i ] == n - 1 ) 
+              { 
                   return  i ; 
- 
+              } 
           } 
- 
           return   - 1 ; 
       } 
-  } ;
+ } ;
