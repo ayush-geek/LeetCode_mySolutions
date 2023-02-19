@@ -1,0 +1,43 @@
+
+ 
+ class   Solution   { 
+ public : 
+      struct   cmp { 
+      bool   operator ( ) ( pair < char , int >   & a , pair < char , int >   & b ) { 
+              // if(a[1]==b[1]) 
+              //     return a[2]>b[2]; 
+              return  a . second < b . second ; 
+          } 
+ 
+ } ; 
+ 
+ 
+     string  frequencySort ( string s )   { 
+         
+         unordered_map < char , int >  mp ; 
+ 
+          for ( auto &  ele :  s ) 
+             mp [ ele ] ++ ; 
+ 
+         priority_queue < pair < char , int > , vector < pair < char , int >> , cmp >  pq ; 
+ 
+          for ( auto &  ele :  mp ) 
+          { 
+             pq . push ( { ele . first , ele . second } ) ; 
+          } 
+         string res ; 
+          while ( ! pq . empty ( ) ) 
+          { 
+              auto  it = pq . top ( ) ; 
+             pq . pop ( ) ; 
+              char  zz = it . first ; 
+              int  ct = it . second ; 
+ 
+              while ( ct -- ) 
+              { 
+                 res . push_back ( zz ) ; 
+              } 
+          } 
+          return  res ; 
+      } 
+ } ;
