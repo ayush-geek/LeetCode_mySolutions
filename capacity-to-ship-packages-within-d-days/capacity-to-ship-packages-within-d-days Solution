@@ -1,0 +1,65 @@
+class   Solution   { 
+ public : 
+ 
+      int   chk ( int  k , vector < int > &  weights ) 
+      {    
+         
+          int  ct = 0 ; 
+          int  cs = 0 ; 
+           int  ts = 0 ; 
+          for ( int  i = 0 ; i < weights . size ( ) ; i ++ ) 
+          {    
+              if ( weights [ i ] > k ) 
+                  return  INT_MAX ; 
+             ts += weights [ i ] ; 
+             cs += weights [ i ] ; 
+              if ( cs > k ) 
+              { 
+                 ct ++ ; 
+                 cs = weights [ i ] ; 
+              } 
+              else   if ( cs == k ) 
+                  { 
+                     cs = 0 ; 
+                     ct ++ ; 
+                  } 
+             
+          } 
+          if ( cs > 0 ) 
+             ct ++ ; 
+          if ( ts <= k ) 
+              return   1 ; 
+         
+     
+             // cout<<cs<< "dd"<<endl; 
+          return  ct ; 
+      } 
+ 
+      int   shipWithinDays ( vector < int > &  weights ,   int  days )   { 
+         
+              int  l = 1 ; 
+              int  h = 500 * 50000 ; 
+              int  ans = 0 ; 
+              while ( l <= h ) 
+              { 
+                  int  mid = ( l + ( h - l ) / 2 ) ; 
+ 
+                  int  z = chk ( mid , weights ) ; 
+                 cout << z << " " << mid << " " << l << " " << h << endl ; 
+                  if ( z <= days ) 
+                  { 
+                     ans = mid ; 
+                     h = mid - 1 ; 
+                  } 
+                  // else if(z<days) 
+                  // { 
+                  //     h=mid-1; 
+                    
+                  // } 
+                  else 
+                      l = mid + 1 ; 
+ 
+              } 
+              return  ans ; 
+      } 
+ } ;
