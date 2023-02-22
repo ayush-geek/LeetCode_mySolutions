@@ -1,0 +1,39 @@
+# define   ll   long   long 
+ class   Solution   { 
+ public : 
+ 
+     ll  chk ( ll mid , vector < int > &  quantities ) 
+      { 
+         ll ans = 0 ; 
+          for ( auto &  ele :  quantities ) 
+          { 
+             ans += ( ele + mid - 1 ) / mid ; 
+          } 
+          return  ans ; 
+      } 
+ 
+      int   minimizedMaximum ( int  n ,  vector < int > &  quantities )   { 
+         
+ 
+          //bs 
+         ll l = 1 ; 
+         ll h = 1e10 ; 
+         ll ans = 0 ; 
+          while ( l <= h ) 
+          { 
+             ll mid = ( l + ( h - l ) / 2 ) ; 
+ 
+             ll z = chk ( mid , quantities ) ; 
+              //cout<<z<< " "<<mid<<endl; 
+              if ( z <= n ) 
+              { 
+                 ans = mid ; 
+                 h = mid - 1 ; 
+              } 
+              else 
+                 l = mid + 1 ; 
+          } 
+          return  ans ; 
+     
+      } 
+ } ;
