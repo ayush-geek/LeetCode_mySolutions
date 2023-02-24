@@ -1,0 +1,44 @@
+class   Solution   { 
+ public : 
+      int   minimumDeviation ( vector < int > &  nums )   { 
+         
+         
+          int  mx = 0 ; 
+          int  n = nums . size ( ) ; 
+          sort ( nums . begin ( ) , nums . end ( ) ) ; 
+          int  ans = nums [ n - 1 ] - nums [ 0 ] ; 
+          int  mn = 1e9 ; 
+          for ( int  i = 0 ; i < nums . size ( ) ; i ++ ) 
+          {    
+            
+              if ( nums [ i ] % 2 != 0 ) 
+               nums [ i ] *= 2 ; 
+             
+             mn = min ( mn , nums [ i ] ) ; 
+          } 
+ 
+         priority_queue < int >   pq ( nums . begin ( ) , nums . end ( ) ) ; 
+ 
+     // cout<<mn<<endl; 
+      // int ans=1e9; 
+          while ( ! pq . empty ( ) ) 
+          { 
+              int  z = pq . top ( ) ; 
+              if ( z % 2 != 0 ) 
+                  break ; 
+          
+             pq . pop ( ) ; 
+ 
+             z = z / 2 ; 
+ 
+             pq . push ( z ) ; 
+         mn = min ( mn , z ) ; 
+         ans = min ( ans , pq . top ( ) - mn ) ; 
+         // cout<<z<<" "<<mn<<endl; 
+          } 
+ 
+      return  ans ; 
+ 
+        
+      } 
+ } ;
