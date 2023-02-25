@@ -1,0 +1,53 @@
+class   Solution   { 
+ public : 
+      int   sumOfBeauties ( vector < int > &  nums )   { 
+         
+          //chk if sorted array 
+          int  n = nums . size ( ) ; 
+     
+          int  ct = 0 ; 
+          int  maxct = 0 ; 
+        
+ 
+         vector < int >   pref ( n , 0 ) ; 
+         vector < int >   suf ( n , 0 ) ; 
+          for ( int  i = 0 ; i < nums . size ( ) ; i ++ ) 
+          { 
+              if ( i == 0 ) 
+                 pref [ i ] = nums [ 0 ] ; 
+              else 
+                 pref [ i ] = max ( pref [ i - 1 ] , nums [ i ] ) ; 
+          } 
+ 
+           for ( int  i = n - 1 ; i >= 0 ; i -- ) 
+          { 
+              if ( i == n - 1 ) 
+                 suf [ i ] = nums [ i ] ; 
+              else 
+                 suf [ i ] = min ( suf [ i + 1 ] , nums [ i ] ) ; 
+          } 
+ 
+         for ( int  i = 1 ; i < nums . size ( ) - 1 ; i ++ ) 
+          { 
+             
+ 
+              if ( pref [ i - 1 ] < nums [ i ]   &&  nums [ i ] < suf [ i + 1 ] ) 
+                 maxct ++ ; 
+              else   if ( nums [ i ] > nums [ i - 1 ]   &&  nums [ i ] < nums [ i + 1 ] ) { 
+                 ct ++ ; 
+                 
+          } 
+           
+            
+            
+          }    
+          // if(maxct==n-2) 
+              return   2 * maxct  + ct ; 
+        
+             // return ct ; 
+       
+         
+ 
+     
+      } 
+ } ;
