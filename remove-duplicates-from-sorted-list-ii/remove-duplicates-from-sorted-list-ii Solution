@@ -11,40 +11,35 @@
  class   Solution   { 
  public : 
      ListNode *   deleteDuplicates ( ListNode *  head )   { 
-         
-          if ( head == NULL ) 
-              return   NULL ; 
-           //2 pointers 
  
-         ListNode *  dummy  = new   ListNode ( 1 ) ; 
-         ListNode *  nh = dummy ; 
-      
+      //n2 will work 
+      //write iterative 
+      //luv the way u lie 
+ 
+ 
+         ListNode *  tmp = new   ListNode ( 0 ) ; 
+         ListNode *  nh = tmp ; 
+ 
           while ( head != NULL ) 
-          {    
-              int  pst = head -> val ; 
-             ListNode *  tmp = head -> next ; 
-              int  ct = 1 ; 
-              while ( tmp != NULL   &&  tmp -> val == pst ) 
+          { 
+             ListNode *  tt = head ; 
+              int  ct = 0 ; 
+              while ( tt != NULL   &&  tt -> val == head -> val ) 
               { 
-                 tmp = tmp -> next ; 
+                 tt = tt -> next ; 
                  ct ++ ; 
- 
               } 
-             cout << ct << endl ; 
-              if ( ct == 1 ) 
-              { 
-                  dummy -> next = head ; 
-                 dummy  = dummy -> next ; 
-              } 
-            
-                
-               
-             
  
-             head = tmp ; 
+              if ( ct == 1 )    { 
+                 tmp -> next = head ; 
+                 tmp = tmp -> next ; 
+              }  
+                 
+             head = tt ; 
           } 
-         dummy -> next = NULL ; 
+         tmp -> next = NULL ; 
  
           return  nh -> next ; 
+ 
       } 
  } ;
