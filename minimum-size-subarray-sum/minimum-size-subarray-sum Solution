@@ -1,5 +1,5 @@
 class   Solution   { 
-  public : 
+ public : 
       int   minSubArrayLen ( int  target ,  vector < int > &  nums )   { 
          
               int  j = 0 ; 
@@ -31,4 +31,4 @@ class   Solution   {
  
               return  ans ; 
       } 
-  } ;
+ } ;
