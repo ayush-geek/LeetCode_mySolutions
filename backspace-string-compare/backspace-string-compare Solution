@@ -1,5 +1,5 @@
 class   Solution   { 
-  public : 
+ public : 
       bool   backspaceCompare ( string s ,  string t )   { 
          
           // //Without Space 
@@ -72,4 +72,4 @@ class   Solution   {
  
           return   true ; 
       } 
-  } ;
+ } ;
