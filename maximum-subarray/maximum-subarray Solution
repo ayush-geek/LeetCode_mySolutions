@@ -1,23 +1,18 @@
 class   Solution   { 
-  public : 
+ public : 
       int   maxSubArray ( vector < int > &  nums )   { 
          
- 
-          //Kadane's Algor 
- 
-          int  n = nums . size ( ) ; 
+          //kadane algo 
           int  mx = nums [ 0 ] ; 
-          int  sm = nums [ 0 ] ; 
+          int  cs = nums [ 0 ] ; 
+          int  n = nums . size ( ) ; 
           for ( int  i = 1 ; i < n ; i ++ ) 
           { 
-             sm = max ( sm + nums [ i ] , nums [ i ] ) ; 
-             
-             mx = max ( mx , sm ) ; 
- 
+             cs = max ( nums [ i ] , cs + nums [ i ] ) ; 
+             mx = max ( mx , cs ) ; 
  
              
           } 
- 
           return  mx ; 
       } 
-  } ;
+ } ;
