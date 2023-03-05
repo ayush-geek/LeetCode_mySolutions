@@ -1,51 +1,28 @@
 class   Solution   { 
-  public : 
-     
-     vector < string >  fin ; 
-     
-     
-      void   generate ( string &  res , int  open , int  close ) 
+ public : 
+ 
+      void   solve ( int  i , int  j , int  n , string tmp , vector < string > &  res ) 
       { 
-         
-          if ( open == 0   &&  close == 0 ) 
+          if ( i == n  &&  j == n ) 
           { 
-             fin . push_back ( res ) ; 
-              return ; 
+             res . push_back ( tmp ) ; 
+              return   ; 
           } 
-         
-         
-          if ( open > 0 ) 
-          { 
-             res . push_back ( '(' ) ; 
-              generate ( res , open - 1 , close ) ; 
-             res . pop_back ( ) ; 
-          } 
-         
-         
-          if ( close > 0 ) 
-          { 
-              if ( open < close ) 
-              { 
-                  res . push_back ( ')' ) ; 
-                  generate ( res , open , close - 1 ) ; 
-                 res . pop_back ( ) ; 
-              } 
-          } 
-         
-         
+ 
+          if ( i < n ) 
+              solve ( i + 1 , j , n , tmp + '(' , res ) ; 
+          if ( j < i ) 
+              solve ( i , j + 1 , n , tmp + ')' , res ) ; 
       } 
-     
-     
-     
-     
-     
+ 
      vector < string >   generateParenthesis ( int  n )   { 
          
+ 
+         vector < string >  res ; 
+         string tmp = "" ; 
+          solve ( 0 , 0 , n , tmp , res ) ; 
+ 
+          return  res ; 
          
-      string res ; 
-         
-          generate ( res , n , n ) ; 
-         
-          return  fin ; 
       } 
-  } ;
+ } ;
