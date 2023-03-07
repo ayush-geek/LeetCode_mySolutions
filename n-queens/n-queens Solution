@@ -1,0 +1,66 @@
+class   Solution   { 
+ public : 
+     
+      void   solve ( int  i , vector < vector < string >> & ans , vector < string >   & board , vector < int > &  lrow , vector < int > &  up , vector < int > &  down , int  n ) 
+      { 
+          if ( i == n ) 
+          { 
+             ans . push_back ( board ) ; 
+              return   ; 
+          } 
+         
+          for ( int  row = 0 ; row < n ; row ++ ) 
+          { 
+             
+              int  col = i ; 
+              if ( lrow [ row ] == 0   &&  up [ row + col ] == 0   &&  down [ n - 1 + col - row ] == 0 ) 
+              { 
+                 lrow [ row ] = 1 ; 
+                 up [ row + col ] = 1 ; 
+                 down [ n - 1 + col - row ] = 1 ; 
+                 
+                 board [ row ] [ i ] = 'Q' ; 
+                 
+                 
+                 
+                  solve ( i + 1 , ans , board , lrow , up , down , n ) ; 
+                 
+                 board [ row ] [ i ] = '.' ; 
+                 
+                 lrow [ row ] = 0 ; 
+                 up [ row + col ] = 0 ; 
+                 down [ n - 1 + col - row ] = 0 ; 
+              } 
+          } 
+         
+         
+         
+      } 
+     
+     
+     vector < vector < string >>   solveNQueens ( int  n )   { 
+      
+         
+         vector < vector < string >>  ans ; 
+         
+         
+         vector < string >   board ( n ) ; 
+         
+         string  s ( n , '.' ) ; 
+         
+          for ( int  i = 0 ; i < n ; i ++ ) 
+          { 
+             board [ i ] = s ; 
+          } 
+         
+         
+         vector < int >   lrow ( n , 0 ) ; 
+         vector < int >   up ( 2 * n - 1 , 0 ) ; 
+         vector < int >   down ( 2 * n - 1 , 0 ) ; 
+         
+           solve ( 0 , ans , board , lrow , up , down , n ) ; 
+         
+          return  ans ; 
+         
+      } 
+ } ;
