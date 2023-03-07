@@ -1,0 +1,38 @@
+class   Solution   { 
+ public : 
+ 
+      long   long   solve ( vector < int > &  time , long   long  mid ) 
+      { 
+          long   long  tmp = 0 ; 
+          for ( auto &  ele :  time ) 
+          { 
+             tmp += ( long   long ) mid / ( long   long ) ele ; 
+          } 
+          return  tmp ; 
+      } 
+ 
+      long   long   minimumTime ( vector < int > &  time ,   int  totalTrips )   { 
+         
+          int  n = time . size ( ) ; 
+          long   long  low = 1 ; 
+          long   long  high = 1e14 ; 
+          long   long  res = - 1 ; 
+ 
+          while ( low <= high ) 
+          { 
+              long   long  mid = ( low + high ) / 2 ; 
+ 
+              long   long  ans = solve ( time , mid ) ; 
+         cout << mid << " " << ans << endl ; 
+              if ( ans >= totalTrips ) 
+              { 
+                 res = mid ; 
+                 high = mid - 1 ; 
+              } 
+              else 
+                 low = mid + 1 ; 
+          } 
+ 
+          return  res ; 
+      } 
+ } ;
