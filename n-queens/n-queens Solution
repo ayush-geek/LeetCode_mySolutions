@@ -1,66 +1,65 @@
 class   Solution   { 
  public : 
-     
-      void   solve ( int  i , vector < vector < string >> & ans , vector < string >   & board , vector < int > &  lrow , vector < int > &  up , vector < int > &  down , int  n ) 
+ 
+      void   solve ( int  i , int  n , vector < string > &  tmp , vector < vector < string >> &  res ) 
       { 
           if ( i == n ) 
           { 
-             ans . push_back ( board ) ; 
+             res . push_back ( tmp ) ; 
               return   ; 
           } 
-         
-          for ( int  row = 0 ; row < n ; row ++ ) 
+ 
+          for ( int  l = 0 ; l < n ; l ++ ) 
           { 
-             
-              int  col = i ; 
-              if ( lrow [ row ] == 0   &&  up [ row + col ] == 0   &&  down [ n - 1 + col - row ] == 0 ) 
+              if ( valid ( i , l , tmp , n ) ) 
               { 
-                 lrow [ row ] = 1 ; 
-                 up [ row + col ] = 1 ; 
-                 down [ n - 1 + col - row ] = 1 ; 
-                 
-                 board [ row ] [ i ] = 'Q' ; 
-                 
-                 
-                 
-                  solve ( i + 1 , ans , board , lrow , up , down , n ) ; 
-                 
-                 board [ row ] [ i ] = '.' ; 
-                 
-                 lrow [ row ] = 0 ; 
-                 up [ row + col ] = 0 ; 
-                 down [ n - 1 + col - row ] = 0 ; 
+                 tmp [ i ] [ l ] = 'Q' ; 
+                  solve ( i + 1 , n , tmp , res ) ; 
+                  tmp [ i ] [ l ] = '.' ; 
               } 
           } 
-         
-         
-         
       } 
-     
-     
-     vector < vector < string >>   solveNQueens ( int  n )   { 
-      
-         
-         vector < vector < string >>  ans ; 
-         
-         
-         vector < string >   board ( n ) ; 
-         
-         string  s ( n , '.' ) ; 
-         
+ 
+      bool   valid ( int  r , int  c ,  vector < string > &  tmp , int  n ) 
+      { 
+          //col 
+ 
           for ( int  i = 0 ; i < n ; i ++ ) 
           { 
-             board [ i ] = s ; 
+              if ( tmp [ i ] [ c ] == 'Q' &&  i != r ) 
+                  return   false ; 
           } 
+ 
+ 
+          //-45  degree 
+ 
+ 
+          for ( int  i = r - 1 , j = c - 1 ; i >= 0   &&  j >= 0   ; i -- , j -- ) 
+          { 
+              if ( tmp [ i ] [ j ] == 'Q' ) 
+                  return   false ; 
+          } 
+ 
+ 
+ 
+          //+45 degree 
+ 
+           for ( int  i = r - 1 , j = c + 1 ; i >= 0   &&  j < n  ; i -- , j ++ ) 
+          { 
+              if ( tmp [ i ] [ j ] == 'Q' ) 
+                  return   false ; 
+          } 
+ 
+          return   true ; 
+      } 
+ 
+     vector < vector < string >>   solveNQueens ( int  n )   { 
+         vector < vector < string >>  res ; 
+         vector < string >   tmp ( n , string ( n , '.' ) ) ; 
+ 
          
-         
-         vector < int >   lrow ( n , 0 ) ; 
-         vector < int >   up ( 2 * n - 1 , 0 ) ; 
-         vector < int >   down ( 2 * n - 1 , 0 ) ; 
-         
-           solve ( 0 , ans , board , lrow , up , down , n ) ; 
-         
-          return  ans ; 
-         
+          solve ( 0 , n , tmp , res ) ; 
+ 
+          return  res ; 
       } 
  } ;
