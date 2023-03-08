@@ -1,0 +1,45 @@
+class   Solution   { 
+ public : 
+ 
+       long   long   solve ( vector < int > &  piles , int  mid ) 
+      { 
+          long   long  ans = 0 ; 
+          for ( auto &  ele :  piles ) 
+          { 
+ 
+              // if(mid>ele) 
+              //     return 0; 
+             ans += ( ele ) / mid ; 
+          } 
+          return  ans ; 
+      } 
+ 
+      int   maximumCandies ( vector < int > &  candies ,   long   long  k )   { 
+           //max the min time 
+ 
+ 
+          //binary search 
+ 
+          int  low = 1 ; 
+          int  high = 1e9 ; 
+          long   long  ans = 0 ; 
+          while ( low <= high ) 
+          { 
+              int  mid = ( low )   + ( high - low ) / 2 ; 
+ 
+              long   long  z1 = solve ( candies , mid ) ; 
+ 
+              if ( z1 >= ( long   long ) k ) 
+              { 
+                 ans = mid ; 
+                 low = mid + 1 ; 
+              } 
+              else 
+                 high = mid - 1 ; 
+ 
+          } 
+ 
+          return  ans ; 
+     
+      } 
+ } ;
