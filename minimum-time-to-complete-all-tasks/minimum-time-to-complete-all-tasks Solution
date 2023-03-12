@@ -1,0 +1,47 @@
+class   Solution   { 
+ public : 
+      int   findMinimumTime ( vector < vector < int >> &  tasks )   { 
+         
+ 
+          //Greedy approach 
+ 
+          //try to think how 
+          //to handle it 
+ 
+          sort ( tasks . begin ( ) , tasks . end ( ) , [ ] ( vector < int > &  a , vector < int > &  b ) { 
+ 
+              return  a [ 1 ] != b [ 1 ] ? a [ 1 ] < b [ 1 ] : a [ 0 ] < b [ 0 ] ; 
+          } ) ; 
+ 
+          int  n = tasks . size ( ) ; 
+         unordered_set < int >  st ; 
+          int  cnt = 0 ; 
+          for ( int  i = 0 ; i < n ; i ++ ) 
+          { 
+             
+              for ( int  j = tasks [ i ] [ 0 ] ; j <= tasks [ i ] [ 1 ] ; j ++ ) 
+              {    
+                  if ( st . count ( j ) ) 
+                     tasks [ i ] [ 2 ] -- ; 
+              } 
+ 
+              if ( tasks [ i ] [ 2 ] <= 0 ) 
+                  continue ; 
+ 
+              for ( int  j = tasks [ i ] [ 1 ] ; j >= tasks [ i ] [ 0 ] ; j -- ) 
+              {    
+                  if ( tasks [ i ] [ 2 ] <= 0 ) 
+                      break ; 
+ 
+                  if ( st . count ( j ) == 0 ) 
+                  {    
+                     cnt ++ ; 
+                     st . insert ( j ) ; 
+                     tasks [ i ] [ 2 ] -- ; 
+                  } 
+              } 
+          } 
+ 
+          return  cnt ; 
+      } 
+ } ;
