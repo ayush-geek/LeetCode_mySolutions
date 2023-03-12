@@ -1,0 +1,26 @@
+class   Solution   { 
+ public : 
+      long   long   beautifulSubarrays ( vector < int > &  nums )   { 
+         
+ 
+          long   long  ans = 0 ; 
+          int  n = nums . size ( ) ; 
+          // vector<int> pref(n,0); 
+         unordered_map < int , int >  mp ; 
+         mp [ 0 ] = 1 ; 
+          int  pref = 0 ; 
+          //subarray with xor K 
+          //same as subarray with sum K 
+          for ( int  i = 0 ; i < n ; i ++ ) 
+          {    
+             pref = pref ^ nums [ i ] ; 
+ 
+             ans += mp [ pref ] ; 
+ 
+             // cout<<pref<<" "<<mp[pref]<<endl; 
+             mp [ pref ] ++ ;         
+          } 
+ 
+          return  ans ; 
+      } 
+ } ;
