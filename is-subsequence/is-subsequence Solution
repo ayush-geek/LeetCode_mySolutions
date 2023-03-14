@@ -1,0 +1,47 @@
+class   Solution   { 
+ public : 
+      bool   isSubsequence ( string s ,  string t )   { 
+         
+         
+          //S to match 
+         
+          if ( t . size ( ) < s . size ( ) ) 
+              return   false ; 
+         
+         
+          if ( s . size ( ) == t . size ( ) ) 
+          { 
+              if ( s == t ) 
+                  return   true ; 
+              else 
+                  return   false ; 
+          } 
+         
+          int  n = s . size ( ) ; 
+          int  m = t . size ( ) ; 
+         vector < vector < int >>   dp ( n + 1 , vector < int >   ( m + 1 , 0 ) ) ; 
+         
+         
+         
+          for ( int  i = n - 1 ; i >= 0 ; i -- ) 
+          { 
+              for ( int  j = m - 1 ; j >= 0 ; j -- ) 
+              { 
+                  //Take 
+                  if ( s [ i ] == t [ j ] ) 
+                     dp [ i ] [ j ] = 1 + dp [ i + 1 ] [ j + 1 ] ; 
+                  else 
+                     dp [ i ] [ j ] = dp [ i ] [ j + 1 ] ; 
+             
+              } 
+             
+          } 
+         
+          if ( dp [ 0 ] [ 0 ] == n ) 
+              return   true ; 
+          else 
+              return   false ; 
+         
+         
+      } 
+ } ;
