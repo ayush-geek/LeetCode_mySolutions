@@ -1,34 +1,57 @@
 class   Solution   { 
  public : 
       int   minSubArrayLen ( int  target ,  vector < int > &  nums )   { 
+ 
+       //sw 
+       //Linear Solution 
+ 
+ 
+      //  int j=0; 
+      //  int cs=0; 
+      //  int ans=1e9; 
+      //  for(int i=0;i<nums.size();i++) 
+      //  {   
+      //      cs+=nums[i]; 
+ 
+      //     while(cs>target){ 
+      //         ans=min(ans,i-j+1); 
+      //         cs-=nums[j++]; 
          
-              int  j = 0 ; 
-              int  n = nums . size ( ) ; 
-              int  sm = 0 ; 
-              int  ans = INT_MAX ; 
-              for ( int  i = 0 ; i < n ; i ++ ) 
-              { 
-                 sm += nums [ i ] ; 
+      
+             
+      //     } 
  
-                  if ( sm < target ) 
-                      continue ; 
-                  else 
-                  { 
-                      while ( j <= i  &&  sm >= target ) { 
-                         
-                         ans = min ( ans , i - j + 1 ) ; 
-                         sm -= nums [ j ++ ] ; 
-                         
-                      } 
-                  } 
+      //     if(cs>=target) 
+      //         ans=min(ans,i-j+1); 
  
-              
-                 
-              } 
+      //  }   
+      //  if(ans==1e9) 
+      //     return 0;  
+      //  return ans; 
  
-              if ( ans == INT_MAX ) 
-                  return   0 ; 
  
-              return  ans ; 
+ //cODING nLOGN SOLUTION 
+ 
+      //SPACE 
+      int  n = nums . size ( ) ; 
+      int  ans = 1e9 ; 
+         vector < int >   pref ( n + 1 , 0 ) ; 
+ 
+          for ( int  i = 0 ; i < n ; i ++ ) 
+          { 
+             pref [ i + 1 ] = pref [ i ] + nums [ i ] ; 
+          } 
+ 
+          for ( int  i = 0 ; i < n ; i ++ ) 
+          { 
+              int  tgt = target + pref [ i ] ; 
+              int  lb = lower_bound ( pref . begin ( ) , pref . end ( ) , tgt ) - pref . begin ( ) ; 
+              if ( lb <= n ) 
+                 ans = min ( ans , lb - i ) ; 
+          } 
+ 
+          if ( ans > n ) 
+              return   0 ;  
+       return  ans ; 
       } 
  } ;
