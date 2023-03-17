@@ -1,35 +1,33 @@
 class   Solution   { 
-  public : 
+ public : 
      vector < int >   partitionLabels ( string s )   { 
          
  
-          //sliding Window q 
+          //agar kisi element ki 
+          //mapping  
+          //index hogi toh increse 
  
          unordered_map < char , int >  mp ; 
-         vector < int >  res ; 
-          int  n = s . size ( ) ; 
  
-          for ( int  i = 0 ; i < n ; i ++ ) 
+          for ( int  i = 0 ; i < s . size ( ) ; i ++ ) 
           { 
              mp [ s [ i ] ] = i ; 
           } 
+          int  mx = 0 ; 
+         vector < int >  res ; 
+          int  j = 0 ; 
+          for ( int  i = 0 ; i < s . size ( ) ; i ++ ) 
+          {    
+             mx = max ( mx , mp [ s [ i ] ] ) ;    
+         
+           if ( i >= mx ) 
+           { 
+              res . push_back ( mp [ s [ i ] ] - j + 1 ) ; 
+              j = i + 1 ; 
+           } 
+             
  
-         int  mx = 0 ; 
-         int  prev = - 1 ; 
- 
-          for ( int  i = 0 ; i < n ; i ++ ) 
-          { 
-            mx = max ( mx , mp [ s [ i ] ] ) ; 
- 
-             if ( i == mx ) 
-             { 
-                res . push_back ( mx - prev ) ; 
-                prev = mx ; 
-             } 
           } 
- 
           return  res ; 
- 
- 
       } 
-  } ;
+ } ;
