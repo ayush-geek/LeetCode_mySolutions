@@ -2,17 +2,17 @@ class   Solution   {
  public : 
       int   maxSubArray ( vector < int > &  nums )   { 
          
-          //kadane algo 
-          int  mx = nums [ 0 ] ; 
-          int  cs = nums [ 0 ] ; 
-          int  n = nums . size ( ) ; 
-          for ( int  i = 1 ; i < n ; i ++ ) 
-          { 
-             cs = max ( nums [ i ] , cs + nums [ i ] ) ; 
-             mx = max ( mx , cs ) ; 
  
-             
+          int  mxs = nums [ 0 ] ; 
+          int  csum = nums [ 0 ] ; 
+ 
+          for ( int  i = 1 ; i < nums . size ( ) ; i ++ ) 
+          { 
+             csum = max ( csum + nums [ i ] , nums [ i ] ) ; 
+ 
+             mxs = max ( mxs , csum ) ; 
           } 
-          return  mx ; 
+ 
+          return  mxs ; 
       } 
  } ;
