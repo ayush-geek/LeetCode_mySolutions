@@ -2,31 +2,26 @@ class   Solution   {
  public : 
      vector < int >   partitionLabels ( string s )   { 
          
- 
-          //agar kisi element ki 
-          //mapping  
-          //index hogi toh increse 
- 
-         unordered_map < char , int >  mp ; 
- 
+         vector < int >  res ; 
+         unordered_map < int , int >  mp ; 
+          int  l = 0 ; 
+          for ( auto &  ele :  s ) 
+          { 
+             mp [ ele - '0' ] = l ; 
+             l ++ ; 
+          } 
+          int  j = 0 ; 
+          int  mx = 0 ; 
           for ( int  i = 0 ; i < s . size ( ) ; i ++ ) 
           { 
-             mp [ s [ i ] ] = i ; 
-          } 
-          int  mx = 0 ; 
-         vector < int >  res ; 
-          int  j = 0 ; 
-          for ( int  i = 0 ; i < s . size ( ) ; i ++ ) 
-          {    
-             mx = max ( mx , mp [ s [ i ] ] ) ;    
-         
-           if ( i >= mx ) 
-           { 
-              res . push_back ( mp [ s [ i ] ] - j + 1 ) ; 
-              j = i + 1 ; 
-           } 
              
- 
+             mx = max ( mx , mp [ s [ i ] - '0' ] ) ; 
+             
+          if ( i == mx ) { 
+                 res . push_back ( mx - j + 1 ) ; 
+                 j = mx + 1 ; 
+              } 
+            
           } 
           return  res ; 
       } 
