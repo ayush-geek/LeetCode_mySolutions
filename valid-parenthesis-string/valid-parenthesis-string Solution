@@ -1,0 +1,30 @@
+class   Solution   { 
+ public : 
+      bool   checkValidString ( string s )   { 
+         
+          int  lft = 0 ; 
+          for ( int  i = 0 ; i < s . size ( ) ; i ++ ) 
+          { 
+              if ( s [ i ] == '('   ||  s [ i ] == '*' ) 
+                 lft ++ ; 
+              else 
+                 lft -- ; 
+              if ( lft < 0   ) 
+                  return   false ; 
+          } 
+ 
+          int  rgt = 0 ; 
+ 
+           for ( int  i = s . size ( ) - 1 ; i >= 0 ; i -- ) 
+          { 
+              if ( s [ i ] == ')'   ||  s [ i ] == '*' ) 
+                 rgt ++ ; 
+              else 
+                 rgt -- ; 
+              if ( rgt < 0   ) 
+                  return   false ; 
+          } 
+ 
+          return   true ; 
+      } 
+ } ;
