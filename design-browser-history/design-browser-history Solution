@@ -1,0 +1,50 @@
+class   BrowserHistory   { 
+ public : 
+ 
+     vector < string >  st ; 
+      int  pos = 0 ; 
+      int  sz = 0 ; 
+      BrowserHistory ( string homepage )   { 
+         st . push_back ( homepage ) ;  
+         sz ++ ;  
+      } 
+     
+      void   visit ( string url )   { 
+          // st.clear(); 
+ 
+          if ( pos + 1 == st . size ( ) ) { 
+         st . push_back ( url ) ; 
+          //sz=st.size(); 
+          } 
+          else 
+             st [ pos + 1 ] = url ; 
+         
+         pos ++ ; 
+ 
+         sz = pos + 1 ; 
+ 
+      } 
+     
+     string  back ( int  steps )   { 
+         
+          // int z1=st.size()-1 
+          int  z2 = max ( pos - steps , 0 ) ; 
+         pos = z2 ; 
+          return  st [ z2 ] ; 
+      } 
+     
+     string  forward ( int  steps )   { 
+           int  z1 = sz - 1 ; 
+          int  z2 = min ( pos + steps , z1 ) ; 
+         pos = z2 ; 
+          return  st [ z2 ] ; 
+      } 
+ } ; 
+ 
+ /**
+  * Your BrowserHistory object will be instantiated and called as such:
+  * BrowserHistory* obj = new BrowserHistory(homepage);
+  * obj->visit(url);
+  * string param_2 = obj->back(steps);
+  * string param_3 = obj->forward(steps);
+  */
