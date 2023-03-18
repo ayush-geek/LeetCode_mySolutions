@@ -1,5 +1,5 @@
 class   Solution   { 
-  public : 
+ public : 
       int   canCompleteCircuit ( vector < int > &  gas ,  vector < int > &  cost )   { 
          
  
@@ -38,4 +38,4 @@ class   Solution   {
           return   - 1 ; 
           
       } 
-  } ;
+ } ;
