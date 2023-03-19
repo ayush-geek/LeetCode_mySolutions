@@ -1,0 +1,107 @@
+struct   Node { 
+ 
+     Node *  link [ 26 ] ; 
+      bool  flag = false ; 
+ 
+      bool   containsKey ( char  ch ) 
+      { 
+          return  link [ ch - 'a' ] != NULL ; 
+      } 
+ 
+      void   put ( char  ch , Node *  node ) 
+      { 
+         link [ ch - 'a' ] = node ; 
+      } 
+ 
+     Node *   get ( char  ch ) 
+      { 
+          return  link [ ch - 'a' ] ; 
+      } 
+ 
+      void   setEnd ( ) 
+      { 
+         flag = true ; 
+      } 
+ 
+      bool   isEnd ( ) 
+      { 
+          return  flag == true ; 
+      } 
+ } ; 
+ 
+ class   WordDictionary   { 
+ public : 
+ 
+   Node *  root ; 
+      WordDictionary ( )   { 
+         
+         root = new   Node ( ) ; 
+      } 
+     
+      void   addWord ( string word )   { 
+         Node *  tmp = root ; 
+          for ( int  i = 0 ; i < word . size ( ) ; i ++ ) 
+          { 
+              if ( ! tmp -> containsKey ( word [ i ] ) ) 
+              { 
+                 tmp -> put ( word [ i ] , new   Node ( ) ) ; 
+              } 
+             tmp = tmp -> get ( word [ i ] ) ; 
+          } 
+         tmp -> setEnd ( ) ; 
+      } 
+     
+      bool   search ( string word )   { 
+       Node *  tmp = root ; 
+       
+        return   solve ( word , root , 0 ) ; 
+      } 
+ 
+      bool   solve ( string word , Node *  tmp , int  k ) 
+      { 
+          //cout<<k<<endl; 
+          //cout<<"a"<<tmp->flag<<endl; 
+          for ( int  i = k ; i < word . size ( ) ; i ++ ) 
+        { 
+            if ( word [ i ] != '.' ) 
+            { 
+                if ( ! tmp -> containsKey ( word [ i ] ) ) 
+                  return   false ; 
+              else 
+              { 
+                 tmp = tmp -> get ( word [ i ] ) ; 
+              } 
+            } 
+            else { 
+             
+              for ( int  j = 0 ; j < 26 ; j ++ ) 
+              {    
+                 Node *  nd = tmp ; 
+                  if ( tmp -> containsKey ( j + 'a' ) ) 
+                  {    
+                     nd = tmp -> get ( j + 'a' ) ; 
+                      if ( solve ( word , nd , i + 1 ) ) 
+                          return   true ; 
+ 
+                      //cout<<j<<endl; 
+                  } 
+ 
+            
+              } 
+                 return   false ; 
+            } 
+        } 
+        if ( tmp -> isEnd ( ) ) 
+          return   true ; 
+ 
+      return   false ; 
+ 
+      } 
+ } ; 
+ 
+ /**
+  * Your WordDictionary object will be instantiated and called as such:
+  * WordDictionary* obj = new WordDictionary();
+  * obj->addWord(word);
+  * bool param_2 = obj->search(word);
+  */
