@@ -1,0 +1,26 @@
+class   Solution   { 
+ public : 
+      bool   isPalindrome ( string s )   { 
+         
+          int  low = 0 ; 
+         
+          int  e = s . size ( ) - 1 ; 
+         
+         
+          while ( low < e ) 
+          { 
+              while ( ! isalpha ( s [ low ] )   && ! isdigit ( s [ low ] )    &&  low < e ) 
+                 low ++ ; 
+              while ( ! isalpha ( s [ e ] )   && ! isdigit ( s [ e ] )   && e > low ) 
+                 e -- ; 
+              // if(low>=e) 
+              //     break; 
+             
+              if ( tolower ( s [ low ] ) != tolower ( s [ e ] ) ) 
+                  return   false ; 
+               low ++ ; 
+             e -- ; 
+          } 
+          return   true ; 
+      } 
+ } ;
