@@ -1,0 +1,26 @@
+class   Solution   { 
+ public : 
+      int   findSmallestInteger ( vector < int > &  nums ,   int  value )   { 
+         
+          int  n = nums . size ( ) ; 
+         
+      
+        map < int , int >  mp ; 
+          for ( int  i = 0 ; i < nums . size ( ) ; i ++ ) 
+          { 
+              int  z = ( nums [ i ] % value  + value ) % value ; 
+              //res.push_back(z); 
+             
+             mp [ z ] ++ ; 
+          } 
+         
+       
+          for ( int  i = 0 ; i <= nums . size ( ) ; i ++ ) 
+          { 
+              if ( mp [ i % value ] == 0 ) 
+                      return  i ; 
+             mp [ i % value ] -- ; 
+          } 
+          return   0 ; 
+      } 
+ } ;
