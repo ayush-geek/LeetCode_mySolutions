@@ -1,41 +1,33 @@
 class   Solution   { 
  public : 
  
-      long   long   solve ( vector < int > &  piles , int  mid ) 
-      { 
+      long   long   solve ( vector < int > &  piles , int  md ) 
+      {    
           long   long  ans = 0 ; 
-          for ( auto &  ele :  piles ) 
+          for ( int  i = 0 ; i < piles . size ( ) ; i ++ ) 
           { 
-             ans += ( ele + mid - 1 ) / mid ; 
+             ans += ( long   long ) ( piles [ i ] + md - 1 ) / md ; 
           } 
           return  ans ; 
       } 
  
       int   minEatingSpeed ( vector < int > &  piles ,   int  h )   { 
          
- 
-          //min the max time 
- 
- 
-          //binary search 
- 
           int  low = 1 ; 
           int  high = 1e9 ; 
-          long   long  ans = - 1 ; 
+          int  ans = 0 ; 
           while ( low <= high ) 
           { 
-              int  mid = ( low )   + ( high - low ) / 2 ; 
+              int  mid = ( low ) + ( high - low ) / 2 ; 
  
-              long   long  z1 = solve ( piles , mid ) ; 
- 
-              if ( z1 <= ( long   long ) h ) 
-              { 
+              long   long  z = solve ( piles , mid ) ; 
+              //cout<<z<<" "<<mid<<endl; 
+              if ( z <= ( long   long ) h ) { 
                  ans = mid ; 
                  high = mid - 1 ; 
- 
-              } 
+                  } 
               else 
-             low = mid + 1 ; 
+                 low = mid + 1 ; 
           } 
  
           return  ans ; 
