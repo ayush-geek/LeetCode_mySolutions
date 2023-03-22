@@ -1,30 +1,40 @@
 class   Solution   { 
  public : 
+     
+       int   solve ( int  i , int  j ,  vector < vector < int >> &  dp , vector < vector < int >> &  matrix ) 
+       { 
+             int  n = matrix . size ( ) ; 
+          int  m = matrix [ 0 ] . size ( ) ; 
+          
+           if ( i == n ) 
+               return   0 ; 
+           if ( j < 0   ||  j >= m ) 
+              return   1e9 ; 
+          
+           if ( dp [ i ] [ j ] != - 1 ) 
+                  return  dp [ i ] [ j ] ; 
+          
+           int  l = solve ( i + 1 , j - 1 , dp , matrix ) ; 
+           int  b = solve ( i + 1 , j , dp , matrix ) ; 
+           int  r = solve ( i + 1 , j + 1 , dp , matrix ) ; 
+          
+           return  dp [ i ] [ j ] = matrix [ i ] [ j ] + min ( l , min ( b , r ) ) ; 
+       } 
+     
       int   minFallingPathSum ( vector < vector < int >> &  matrix )   { 
+         
           int  n = matrix . size ( ) ; 
           int  m = matrix [ 0 ] . size ( ) ; 
-          int  ans = INT_MAX ; 
-         vector < vector < int >>   dp ( n + 1 , vector < int >   ( m + 2 , 1e9 ) ) ; 
- 
-          for ( int  i = 1 ; i <= n ; i ++ ) 
-          { 
-              for ( int  j = 1 ; j <= m ; j ++ ) 
-              { 
-                  if ( i == 1 ) 
-                     dp [ i ] [ j ] = matrix [ i - 1 ] [ j - 1 ] ; 
-                  else 
-                  { 
-                     dp [ i ] [ j ] = matrix [ i - 1 ] [ j - 1 ] ; 
-                     dp [ i ] [ j ] += min ( dp [ i - 1 ] [ j - 1 ]   , min ( dp [ i - 1 ] [ j ]   , dp [ i - 1 ] [ j + 1 ] ) ) ; 
-                  } 
-              } 
+         
+          int  mn = INT_MAX ; 
+         vector < vector < int >>   dp ( n , vector < int >   ( m , - 1 ) ) ; 
+          for ( int  i = 0 ; i < m ; i ++ ) 
+          {    
+              int  z = solve ( 0 , i , dp , matrix ) ; 
+              //cout<<z<<endl; 
+             mn = min ( mn , z ) ; 
           } 
- 
-          for ( int  j = 1 ; j <= m ; j ++ ) 
-          { 
-             ans = min ( ans , dp [ n ] [ j ] ) ; 
-          } 
- 
-          return  ans ; 
+         
+          return  mn ; 
       } 
  } ;
