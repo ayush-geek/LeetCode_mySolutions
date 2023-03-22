@@ -10,23 +10,19 @@ class Solution{
 public:	
 	// calculate the maximum sum with out adjacent
 	int findMaxSum(int *arr, int n) {
-	    // code here
-	   
-	   if(n==1)
+	    
+	    if(n==1)
 	        return arr[0];
-	    if(n==2)
-	        return max(arr[0],arr[1]);
-	        
-	   int prev2=0;
-	   int prev=arr[0];
+	   vector<int> dp(n+1,0);
 	   
-	   for(int i=1;i<n;i++)
+	   dp[0]=arr[0];
+	   dp[1]=max(arr[1],arr[0]);
+	   for(int i=2;i<n;i++)
 	   {
-	       int cur=max(arr[i]+prev2,prev);
-	       prev2=prev;
-	       prev=cur;
+	       dp[i]=max(arr[i]+dp[i-2],dp[i-1]);
 	   }
-	   return prev;
+	   
+	   return dp[n-1];
 	}
 };
 
