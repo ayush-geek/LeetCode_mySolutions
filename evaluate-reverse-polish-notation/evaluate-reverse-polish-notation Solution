@@ -1,0 +1,52 @@
+class   Solution   { 
+ public : 
+      int   evalRPN ( vector < string > &  tokens )   { 
+         
+ 
+         stack < int >  st ; 
+ 
+          for ( int  i = 0 ; i < tokens . size ( ) ; i ++ ) 
+          {    
+              if ( tokens [ i ] == "+" ) 
+                  { 
+                      int  z1 = st . top ( ) ;  st . pop ( ) ; 
+                      int  z2 = st . top ( ) ;  st . pop ( ) ; 
+ 
+ 
+                     st . push ( z1 + z2 ) ; 
+                  } 
+ 
+                  else   if ( tokens [ i ] == "-" ) 
+                  { 
+                          int  z1 = st . top ( ) ;  st . pop ( ) ; 
+                          int  z2 = st . top ( ) ;  st . pop ( ) ; 
+ 
+ 
+                     st . push ( z2 - z1 ) ; 
+ 
+                  } 
+                  else   if ( tokens [ i ] == "*" ) 
+                  { 
+                      int  z1 = st . top ( ) ;  st . pop ( ) ; 
+                      int  z2 = st . top ( ) ;  st . pop ( ) ; 
+ 
+ 
+                     st . push ( z2 * z1 ) ; 
+                  } 
+                  else   if ( tokens [ i ] == "/" ) 
+                  { 
+                      int  z1 = st . top ( ) ;  st . pop ( ) ; 
+                      int  z2 = st . top ( ) ;  st . pop ( ) ; 
+ 
+ 
+                     st . push ( z2 / z1 ) ; 
+                  } 
+              else 
+              { 
+                 st . push ( stoi ( tokens [ i ] ) ) ; 
+              } 
+          } 
+ 
+          return  st . top ( ) ; 
+      } 
+ } ;
