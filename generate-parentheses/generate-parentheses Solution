@@ -1,41 +1,33 @@
 class   Solution   { 
  public : 
  
-      void   solve ( int  o , int  c , string tmp , vector < string > &  res , int  n ) 
+      void   solve ( int  o , int  c , string tmp , vector < string > &  res ) 
       { 
-          if ( o == 0   &&  c == 0   ) 
-          {    
-             
+          if ( o == 0   &&  c == 0 ) 
+          { 
              res . push_back ( tmp ) ; 
               return   ; 
           } 
  
-          if ( o >= 0 ) 
-          { 
-             tmp . push_back ( '(' ) ; 
-               solve ( o - 1 , c , tmp , res , n ) ; 
-             tmp . pop_back ( ) ; 
-            
+          if ( o > 0 ) 
+              { 
+                 tmp . push_back ( '(' ) ; 
+                  solve ( o - 1 , c , tmp , res ) ; 
+                 tmp . pop_back ( ) ; 
+              } 
+          if ( c > o ) { 
+         tmp . push_back ( ')' ) ; 
+          solve ( o , c - 1 , tmp , res ) ; 
+         tmp . pop_back ( ) ; 
           } 
  
-           if ( o < c ) 
-          { 
-              tmp . push_back ( ')' ) ; 
-               solve ( o , c - 1 , tmp , res , n ) ; 
-             tmp . pop_back ( ) ; 
-          } 
- 
-        
-         
-       
       } 
  
- 
      vector < string >   generateParenthesis ( int  n )   { 
-         
-         vector < string >  res ; 
-         string tmp = "" ; 
-          solve ( n , n , tmp , res , n ) ; 
+ 
+      vector < string >  res ; 
+     string tmp = "" ; 
+       solve ( n , n , tmp , res ) ;    
           return  res ; 
       } 
  } ;
