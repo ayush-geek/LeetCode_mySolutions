@@ -1,0 +1,44 @@
+class   Solution   { 
+ public : 
+ 
+      bool   solve ( long   long  i , int  d1 , int  d2 , int  uc1 , int  uc2 ) 
+      { 
+          long   long  z1 = i - i / ( 1ll * d1 ) ; 
+          long   long  z2 = i - i / ( 1ll * d2 ) ; 
+          long   long  z3 = i - i / ( lcm ( 1ll * d1 , 1ll * d2 ) ) ; 
+          if ( z1 >= ( long   long )  uc1  &&  z2 >=   ( long   long ) uc2  &&  z3 >=   ( ( long   long ) uc1 + ( long   long ) uc2 ) ) 
+              return   true ; 
+          return   false ; 
+      } 
+ 
+      int   minimizeSet ( int  d1 ,   int  d2 ,   int  uc1 ,   int  uc2 )   { 
+         
+ 
+          //Binary Search 
+ 
+          long   long  low = 2 ; 
+          long   long  high = 1e18 ; 
+ 
+          long   long  ans = 0 ; 
+          while ( low <= high ) 
+          { 
+              long   long  mid = low + ( high - low ) / 2 ; 
+ 
+              bool  z = solve ( mid , d1 , d2 , uc1 , uc2 ) ; 
+             // cout<<mid<<" "<<z<<endl; 
+ 
+              if ( z ) 
+                  { 
+                     ans = mid ; 
+                     high = mid - 1 ; 
+                  } 
+              else 
+              { 
+                 low = mid + 1 ; 
+              } 
+             
+          } 
+ 
+          return  ans ; 
+      } 
+ } ;
