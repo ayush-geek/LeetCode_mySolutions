@@ -1,0 +1,26 @@
+class   Solution   { 
+ public : 
+     vector < int >   asteroidCollision ( vector < int > &  asteroids )   { 
+         vector < int >  stack ; 
+          int  curr ; 
+          for   ( int  i = 0 ;  i < asteroids . size ( ) ;  i ++ )   { 
+             curr  =  asteroids [ i ] ; 
+           
+              if   ( ( curr  >   0 )   ||   ( stack . empty ( ) )   ||   ( stack . back ( )   <   0 ) ) 
+                 stack . push_back ( curr ) ; 
+             
+           
+              else   if   ( abs ( curr )   ==  stack . back ( ) )   { 
+                 stack . pop_back ( ) ; 
+                  continue ; 
+              } 
+             
+           
+              else   if   ( abs ( curr )   >  stack . back ( ) )   { 
+                 stack . pop_back ( ) ; 
+                 i -- ; 
+              } 
+          } 
+          return  stack ; 
+      } 
+ } ;
