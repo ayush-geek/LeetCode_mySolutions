@@ -1,48 +1,45 @@
 class   Solution   { 
-  public : 
+ public : 
       int   ladderLength ( string beginWord ,  string endWord ,  vector < string > &  wordList )   { 
-         
-         unordered_set < string >  st ; 
+         unordered_set < string >   st ( wordList . begin ( ) , wordList . end ( ) ) ; 
  
-          for ( auto  ele :  wordList ) 
-          { 
-             st . insert ( ele ) ; 
-          } 
- 
-         queue < pair < string , int >>  q ; 
- 
-         q . push ( { beginWord , 1 } ) ; 
-         st . erase ( beginWord ) ; 
- 
+         queue < pair < int , string >>  q ; 
+         q . push ( { 0 , beginWord } ) ; 
  
           while ( ! q . empty ( ) ) 
           { 
-              auto  itr = q . front ( ) ; 
+              auto  nd = q . front ( ) ; 
              q . pop ( ) ; 
  
  
+         string z = nd . second ; 
+          int  d = nd . first ; 
+              if ( z == endWord ) 
+              { 
+                  return  d + 1 ; 
+              } 
  
-             string tmp = itr . first ; 
-              int  step = itr . second ; 
  
-              if ( tmp == endWord ) 
-                  return  step ; 
+              for ( int  i = 0 ; i < z . size ( ) ; i ++ ) 
+              { 
+                  char  old = z [ i ] ; 
  
-              for ( int  i = 0 ; i < tmp . size ( ) ; i ++ ) 
-              {     char  org = tmp [ i ] ; 
-                  for ( char  zz = 'a' ; zz <= 'z' ; zz ++ ) 
+                  for ( char  alp = 'a' ; alp <= 'z' ; alp ++ ) 
                   { 
-                     tmp [ i ] = zz ; 
+                     z [ i ] = alp ; 
  
-                      if ( st . find ( tmp ) != st . end ( ) ) 
+                      if ( st . find ( z ) != st . end ( ) ) 
                       { 
-                         st . erase ( tmp ) ; 
-                         q . push ( { tmp , step + 1 } ) ; 
+                         q . push ( { d + 1 , z } ) ; 
+                         st . erase ( z ) ; 
                       } 
-                     tmp [ i ] = org ; 
+ 
                   } 
+                 z [ i ] = old ; 
               } 
           } 
+ 
           return   0 ; 
+         
       } 
-  } ;
+ } ;
