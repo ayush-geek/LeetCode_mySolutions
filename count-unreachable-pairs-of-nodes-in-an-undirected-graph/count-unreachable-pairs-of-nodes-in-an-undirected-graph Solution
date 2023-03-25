@@ -1,0 +1,73 @@
+class   DSU { 
+      public : 
+     vector < int >  parent , size ; 
+ 
+      DSU ( int  n ) 
+      { 
+         parent . resize ( n + 1 , 0 ) ; 
+         size . resize ( n + 1 , 1 ) ; 
+ 
+          for ( int  i = 0 ; i <= n ; i ++ ) 
+         parent [ i ] = i ; 
+      } 
+ 
+      int   findUpar ( int  nd ) 
+      { 
+          if ( parent [ nd ] == nd ) 
+              return  nd ; 
+         
+          return  parent [ nd ] = findUpar ( parent [ nd ] ) ; 
+      } 
+ 
+      void   unionBySize ( int  a , int  b ) 
+      { 
+          int  ua = findUpar ( a ) ; 
+          int  ub = findUpar ( b ) ; 
+ 
+          if ( ua == ub ) 
+              return   ; 
+         
+          if ( size [ ua ] < size [ ub ] ) 
+          { 
+             size [ ub ] += size [ ua ] ; 
+             parent [ ua ] = ub ; 
+          } 
+          else 
+          { 
+             size [ ua ] += size [ ub ] ; 
+             parent [ ub ] = ua ; 
+          } 
+      } 
+ } ; 
+ 
+ class   Solution   { 
+ public : 
+ 
+ 
+ 
+      long   long   countPairs ( int  n ,  vector < vector < int >> &  edges )   { 
+         
+          //dsu 
+ 
+         DSU  ds ( n ) ; 
+ 
+          for ( int  i = 0 ; i < edges . size ( ) ; i ++ ) 
+          { 
+              int  a = edges [ i ] [ 0 ] ; 
+              int  b = edges [ i ] [ 1 ] ; 
+ 
+ 
+             ds . unionBySize ( a , b ) ; 
+          } 
+          long   long  cnt = 0 ; 
+          for ( int  i = 0 ; i < n ; i ++ ) 
+          {    
+              //cout<<ds.parent[i]<<" "<<ds.size[i]<<endl; 
+              int  z = ds . findUpar ( i ) ; 
+             cnt += ( long   long ) ( n - ds . size [ z ] ) ; 
+          } 
+ 
+          return  cnt / 2 ; 
+ 
+      } 
+ } ;
