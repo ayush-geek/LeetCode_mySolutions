@@ -1,0 +1,109 @@
+class   Solution   { 
+ public : 
+     
+      void   dfs ( int  nr  , int  nc , vector < vector < int >> &  grid , vector < vector < int >> &  vis ,   queue <  pair < pair < int , int > , int >> &  q ) { 
+            int  n = grid . size ( ) ; 
+          int  m = grid [ 0 ] . size ( ) ; 
+         
+            if ( nr >= 0   &&  nc >= 0   &&  nr < n  &&  nc < m  &&  grid [ nr ] [ nc ] == 1   &&  vis [ nr ] [ nc ] == 0   ) 
+            { 
+               q . push ( { { nr , nc } , 0 } ) ; 
+               
+               
+               vis [ nr ] [ nc ] = 1 ; 
+               
+               
+                 dfs ( nr - 1 , nc , grid , vis , q ) ; 
+                 dfs ( nr , nc - 1 , grid , vis , q ) ; 
+                 dfs ( nr + 1 , nc , grid , vis , q ) ; 
+                 dfs ( nr , nc + 1 , grid , vis , q ) ; 
+            } 
+         
+          else 
+              return   ; 
+         
+      } 
+     
+      int   shortestBridge ( vector < vector < int >> &  grid )   { 
+         
+         
+          //Similar To Min dist b/w  0 and 1 
+         
+          int  n = grid . size ( ) ; 
+          int  m = grid [ 0 ] . size ( ) ; 
+         
+         vector < vector < int >>   vis ( n , vector < int >   ( m , 0 ) ) ; 
+          int  fg = 0 ; 
+       
+         queue <  pair < pair < int , int > , int >>  q ; 
+          for ( int  i = 0 ; i < n ; i ++ ) 
+          { 
+              for ( int  j = 0 ; j < m ; j ++ ) 
+              { 
+                  if ( grid [ i ] [ j ] == 1 ) 
+                  {   //q.push({{i,j},0}); 
+                   //vis[i][j]=1; 
+                  
+                   dfs ( i , j , grid , vis , q ) ; 
+                  fg = 1 ; 
+                   break ; 
+                   } 
+                 
+              } 
+              if ( fg == 1 ) 
+                  break ; 
+             
+            
+          } 
+          int  ans = 1e9 ; 
+          while ( ! q . empty ( ) ) 
+          { 
+              int  r = q . front ( ) . first . first ; 
+              int  c = q . front ( ) . first . second ; 
+             
+              int  t = q . front ( ) . second ; 
+             
+ //             ans=max(ans,t); 
+             
+             q . pop ( ) ; 
+             
+             
+              int  dr [ ] = { - 1 , 0 , + 1 , 0 } ; 
+              int  dc [ ] = { 0 , - 1 , 0 , + 1 } ; 
+             
+             
+              for ( int  i = 0 ; i < 4 ; i ++ ) 
+              { 
+                  int  nr = r + dr [ i ] ; 
+                  int  nc = c + dc [ i ] ; 
+                 
+                 
+                    if ( nr >= 0   &&  nc >= 0   &&  nr < n  &&  nc < m  &&  grid [ nr ] [ nc ] == 1   &&  vis [ nr ] [ nc ] == 0   ) 
+                  { 
+                     ans = min ( ans , t ) ; 
+                  } 
+                 
+                  if ( nr >= 0   &&  nc >= 0   &&  nr < n  &&  nc < m  &&  vis [ nr ] [ nc ] == 0   ) 
+                  { 
+                      //cout<<nr<<" "<<nc<<endl; 
+                  
+                      if ( grid [ nr ] [ nc ] == 0 ) 
+                      { 
+                     vis [ nr ] [ nc ] = 1 ; 
+                     q . push ( { { nr , nc } , t + 1 } ) ; 
+                      } 
+                     
+                    
+                  } 
+                 
+                   
+             
+                 
+               
+                     
+              } 
+          } 
+         
+          return  ans ; 
+      } 
+ } ;
