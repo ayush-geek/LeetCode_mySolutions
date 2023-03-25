@@ -1,0 +1,71 @@
+class   DSU { 
+      public : 
+     vector < int >  parent , size ; 
+ 
+ 
+      DSU ( int  n ) 
+      { 
+         parent . resize ( n + 1 , 0 ) ; 
+         size . resize ( n + 1 , 1 ) ; 
+ 
+          for ( int  i = 0 ; i <= n ; i ++ ) 
+             parent [ i ] = i ; 
+      } 
+ 
+ 
+      int   findUpar ( int  nd ) 
+      { 
+          if ( nd == parent [ nd ] ) 
+              return  nd ; 
+         
+          return  parent [ nd ] = findUpar ( parent [ nd ] ) ; 
+      } 
+ 
+      void   unionBySize ( int  a , int  b ) 
+      { 
+          int  pa = findUpar ( a ) ; 
+          int  pb = findUpar ( b ) ; 
+ 
+          if ( pa == pb ) 
+              return   ; 
+         
+          if ( size [ pa ] < size [ pb ] ) 
+          { 
+             size [ pb ] += size [ pa ] ; 
+             parent [ pa ] = pb ; 
+          } 
+          else 
+          { 
+             size [ pa ] += size [ pb ] ; 
+             parent [ pb ] = pa ; 
+          } 
+ 
+      } 
+ 
+ } ; 
+ 
+ class   Solution   { 
+ public : 
+ 
+ 
+     vector < int >   findRedundantConnection ( vector < vector < int >> &  edges )   { 
+          int  n = edges . size ( ) ; 
+ 
+         DSU  ds ( n ) ; 
+ 
+          for ( int  i = 0 ; i < edges . size ( ) ; i ++ ) 
+          { 
+              int  a = edges [ i ] [ 0 ] ; 
+              int  b = edges [ i ] [ 1 ] ; 
+ 
+          int  pa = ds . findUpar ( a ) ; 
+          int  pb = ds . findUpar ( b ) ; 
+ 
+          if ( pa == pb ) 
+              return   { a , b } ; 
+ 
+             ds . unionBySize ( a , b ) ; 
+          } 
+          return   { - 1 , - 1 } ; 
+      } 
+ } ;
