@@ -1,0 +1,39 @@
+class   Solution   { 
+ public : 
+      int   maxSatisfaction ( vector < int > &  satisfaction )   { 
+         
+          sort ( satisfaction . begin ( ) , satisfaction . end ( ) ) ; 
+ 
+ 
+          //Approach-> 
+          //Hmm just try all cases 
+          //max when big +ve with big +ve if to be taken 
+ 
+          //dp[i][k] redeems max reward from that day corrsnding to k 
+ 
+          /*
+ 
+         if(i>=n)
+             return 0;
+         //use
+         nums[i-1]*k +solve(i+1,k+1);
+ 
+         //not
+         solve(i+1,k)
+ 
+         return max(a,b);
+         */ 
+          int  mx = 0 ; 
+      int  n = satisfaction . size ( ) ; 
+     vector < vector < int >>   dp ( n + 1 , vector < int >   ( n + 1 , 0 ) ) ; 
+          for ( int  i = 1 ; i <= n ; i ++ ) 
+          { 
+              for ( int  k = 1 ; k <= ( i ) ; k ++   ) 
+              { 
+                 dp [ i ] [ k ] = ( satisfaction [ i - 1 ] * k  + dp [ i - 1 ] [ k - 1 ] ) ; 
+                 mx = max ( mx , dp [ i ] [ k ] ) ; 
+              } 
+          } 
+          return  mx ; 
+      } 
+ } ;
