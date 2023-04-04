@@ -1,0 +1,31 @@
+class   Solution   { 
+ public : 
+      int   partitionString ( string s )   { 
+         
+ 
+         
+ 
+          int  n = s . size ( ) ; 
+         vector < int >   v ( 26 , 0 ) ; 
+          int  ct = 1 ; 
+          int  mx = - 1 ; 
+     
+          for ( int  i = 0 ; i < s . size ( ) ; i ++ ) 
+          {    
+            
+              if ( v [ s [ i ] - 'a' ] == 1 ) 
+              {    
+                
+                  for ( int  i = 0 ; i < 26 ; i ++ ) 
+                     v [ i ] = 0 ; 
+                 ct ++ ; 
+                
+              } 
+             v [ s [ i ] - 'a' ] ++ ; 
+          } 
+         
+           
+           return  ct ; 
+      } 
+    
+ } ;
