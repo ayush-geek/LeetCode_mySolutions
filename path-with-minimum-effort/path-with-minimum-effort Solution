@@ -1,58 +1,52 @@
 class   Solution   { 
-  public : 
+ public : 
       int   minimumEffortPath ( vector < vector < int >> &  heights )   { 
          
+          //Map a Problem to aLGORITHM 
+ 
+          //dIJKSTRA aLGO 
  
           int  n = heights . size ( ) ; 
+ 
           int  m = heights [ 0 ] . size ( ) ; 
+         vector < vector < int >>   dis ( n , vector < int > ( m , INT_MAX ) ) ; 
+         dis [ 0 ] [ 0 ] = 0 ; 
+         priority_queue <  pair < int , pair < int , int >> >  pq ; 
+          //dif ,r,c 
+         pq . push ( { 0 , { 0 , 0 } } ) ; 
  
- 
-     priority_queue <  pair < int , pair < int , int >>   , vector < pair < int , pair < int , int >> >   , greater < pair < int , pair < int , int >> >   >  pq ; 
-   vector < vector < int >>   dist ( n , vector < int >   ( m , INT_MAX ) ) ; 
- 
-     dist [ 0 ] [ 0 ] = 0 ; 
-     pq . push ( { 0 , { 0 , 0 , } } ) ; 
- 
-    int  dr [ ] = { - 1 , 0 , 1 , 0 } ; 
+          int  dr [ ] = { - 1 , 0 , 1 , 0 } ; 
           int  dc [ ] = { 0 , - 1 , 0 , 1 } ; 
-      while ( ! pq . empty ( ) ) 
-      { 
-          auto  it = pq . top ( ) ; 
-          int  d = it . first ; 
-          int  r = it . second . first ; 
-          int  c = it . second . second ; 
  
-         pq . pop ( ) ; 
- 
-           if ( r == n - 1   &&  c == m - 1 ) 
-                  { 
-                      return   d ; 
-                  } 
- 
-           for ( int  i = 0 ; i < 4 ; i ++ ) 
+          while ( ! pq . empty ( ) ) 
+          { 
+              auto  it = pq . top ( ) ; 
+              int  dif = abs ( it . first ) ; 
+              int  r = it . second . first ; 
+              int  c = it . second . second ; 
+             cout << r << " " << c << endl ; 
+             pq . pop ( ) ; 
+              if ( r == n - 1   &&  c == m - 1 ) 
+                  return  dif ; 
+              for ( int  i = 0 ; i < 4 ; i ++ ) 
               { 
                   int  nr = r + dr [ i ] ; 
                   int  nc = c + dc [ i ] ; 
  
-                
+ 
                   if ( nr >= 0   &&  nr < n  &&  nc >= 0   &&  nc < m  ) 
+                  { 
+                      int  ne = max ( abs ( heights [ r ] [ c ] - heights [ nr ] [ nc ] ) , dif ) ; 
+                     // cout<<ne<<endl; 
+                      if ( dis [ nr ] [ nc ] > ne ) 
                       { 
-                              int  nef = max ( dist [ r ] [ c ] , abs ( heights [ nr ] [ nc ] - heights [ r ] [ c ] ) ) ; 
- 
-                          if ( nef < dist [ nr ] [ nc ] ) 
-                          { 
-                             dist [ nr ] [ nc ] = nef ; 
- 
-                             pq . push ( { nef , { nr , nc } } ) ; 
-                          } 
+                         dis [ nr ] [ nc ] = ne ; 
+                         pq . push ( { - dis [ nr ] [ nc ] , { nr , nc } } ) ; 
                       } 
-             
-             
+                  } 
               } 
-         
  
+          } 
+          return   - 1 ; 
       } 
- 
-          return   0 ; 
-      } 
-  } ;
+ } ;
