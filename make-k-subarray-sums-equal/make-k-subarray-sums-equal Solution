@@ -1,0 +1,29 @@
+class   Solution   { 
+ public : 
+      long   long   makeSubKSumEqual ( vector < int > &  arr ,   int  k )   { 
+          int  n = arr . size ( ) ; 
+      
+         
+         k = __gcd ( n , k ) ; 
+         
+        
+          long   long  ans = 0 ; 
+          for ( int  i = 0 ; i < k ; i ++ ) 
+          { 
+             vector < int >  tmp ; 
+              for ( int  j = i ; j < n ; j += k ) 
+              { 
+                 tmp . push_back ( arr [ j ] ) ; 
+              } 
+ 
+              sort ( tmp . begin ( ) , tmp . end ( ) ) ; 
+          int  md = tmp [ tmp . size ( ) / 2 ] ; 
+              for ( auto &   ele :  tmp ) 
+              { 
+                 ans += abs ( ele - md ) ; 
+              } 
+          } 
+         
+          return  ans ; 
+      } 
+ } ;
