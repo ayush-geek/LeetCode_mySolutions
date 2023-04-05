@@ -10,64 +10,33 @@ class Solution
     //from the source vertex S.
     vector <int> dijkstra(int V, vector<vector<int>> adj[], int S)
     {
+        //Dijkstra
         
-        vector<int> dis(V,INT_MAX);
-        
-        
-        set<pair<int,int>> st;
-        st.insert({0,S});
+        priority_queue<pair<int,int>> pq;
+        pq.push({0,S});
+        vector<int> dis(V,1e9);
         dis[S]=0;
-        while(!st.empty())
+        
+        while(!pq.empty())
         {
-            auto it=*(st.begin());
-            int d=it.first;
-            int nd=it.second;
-            st.erase(it);
+            auto nd=pq.top();
+            pq.pop();
             
-            for(auto ele: adj[nd])
+            for(auto &ele: adj[nd.second])
             {
-                int ne=ele[0];
                 int w=ele[1];
+                int e=ele[0];
                 
-                if(d+w<dis[ne])
+                int z=nd.first+w;
+                
+                //Relaxation
+                if(z<dis[e])
                 {
-                    if(dis[ne]!=INT_MAX)
-                    {
-                        st.erase({dis[ne],ne});
-                        
-                    }
-                    dis[ne]=d+w;
-                    st.insert({dis[ne],ne});
+                    dis[e]=z;
+                    pq.push({z,e});
                 }
             }
         }
-        
-        // //Min pq
-        
-        // priority_queue<pair<int,int> ,vector<pair<int,int>>,greater<pair<int,int>>> pq;
-        
-        // dis[S]=0;
-        // pq.push({0,S});
-        
-        // while(!pq.empty())
-        // {
-        //     auto it=pq.top();
-        //     int nd=it.second;
-        //     int d=it.first;
-        //     pq.pop();
-            
-        //     for(auto ele: adj[nd])
-        //     {
-        //         int wt=ele[1];
-        //         int ne=ele[0];
-                
-        //         if(dis[ne]>wt+d)
-        //         {
-        //             dis[ne]=d+wt;
-        //             pq.push({dis[ne],ne});
-        //         }
-        //     }
-        // }
         
         return dis;
     }
