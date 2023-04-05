@@ -9,72 +9,42 @@ using namespace std;
 class Solution {
   public:
      vector<int> shortestPath(int N,int M, vector<vector<int>>& edges){
-       
-       vector<int> dis(N,1e9);
-       
-       dis[0]=0;
         
         vector<pair<int,int>> adj[N];
-        vector<int> indeg(N,0);
-        for(int i=0;i<M;i++)
+        
+        for(auto&ele: edges)
         {
-            int a=edges[i][0];
-            int b=edges[i][1];
-            int w=edges[i][2];
-            
-            adj[a].push_back({b,w});
-            indeg[b]++;
-            
+            adj[ele[0]].push_back({ele[1],ele[2]});
         }
         
-       queue<int> q;
-       vector<int> res;
-   
-        
-    for(int i=0;i<N;i++)
-    {
-        if(indeg[i]==0)
-            q.push(i);
-    }
-        // indeg[i]=0;
-        
+        vector<int> dis(N,1e9);
+        queue<int> q;
+        q.push(0);
+        dis[0]=0;
         while(!q.empty())
         {
             int nd=q.front();
-            res.push_back(nd);
             q.pop();
             
-            
-            for(auto ele: adj[nd])
-            {
-                indeg[ele.first]--;
-                if(indeg[ele.first]==0)
-                    q.push(ele.first);
+            for(auto&ele: adj[nd])
+            {   
+                int w=ele.second;
+                int node=ele.first;
+                if(dis[nd]+w<dis[node])
+                {
+                    //upadte
+                    dis[node]=w+dis[nd];
+                    q.push(node);
+                }
             }
         }
-        
-  
-        
-        for(int i=0;i<res.size();i++)
-        {   
-            int nd=res[i];
-            for(auto ele: adj[nd])
-            {
-                int v=ele.first;
-                int wt=ele.second;
-                
-                if(dis[nd]+wt<dis[v])
-                    dis[v]=dis[nd]+wt;
-            }
-        }
-        
         for(int i=0;i<N;i++)
         {
             if(dis[i]==1e9)
                 dis[i]=-1;
         }
-       
-       return dis;
+        
+        return dis;
     }
 };
 
