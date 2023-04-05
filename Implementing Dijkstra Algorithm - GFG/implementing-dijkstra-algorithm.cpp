@@ -12,7 +12,7 @@ class Solution
     {
         //Dijkstra
         
-        priority_queue<pair<int,int>> pq;
+        priority_queue<pair<int,int>,vector<pair<int,int>>,greater<pair<int,int>>> pq;
         pq.push({0,S});
         vector<int> dis(V,1e9);
         dis[S]=0;
