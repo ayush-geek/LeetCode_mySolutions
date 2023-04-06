@@ -1,5 +1,5 @@
 class   Solution   { 
-  public : 
+ public : 
       int  m = 1e9 + 7 ; 
       int   countPaths ( int  n ,  vector < vector < int >> &  roads )   { 
          
@@ -55,4 +55,4 @@ class   Solution   {
           return  path [ n - 1 ] ; 
  
       } 
-  } ;
+ } ;
