@@ -11,36 +11,40 @@ using namespace std;
 class Solution {
   public:
     int minimumMultiplications(vector<int>& arr, int start, int end) {
+      
+      //min operations
+    int mod=1e5;
+    queue<pair<int,int>> pq;
+      pq.push({0,start});
+      vector<int> dis(100000,1e9);
+      dis[0]=0;
+      while(!pq.empty())
+      {
+          auto node=pq.front();
+          int d=abs(node.first);
+          int nd=node.second;
+          pq.pop();
         
-        int mod=100000;
-        
-        queue<pair<int,int>> q;
-        
-        q.push({start,0});
-        vector<int> dis(100001,INT_MAX);
-        dis[start]=0;
+            if (nd == end)
+                return d ;
+          
+          for(auto& ele: arr)
+          {
+              long long z=(ele*nd)%mod;
+              
+              if(dis[z]>d+1)
+              {
+                  dis[z]=d+1;
+                    pq.push({-1*(d+1),z});
+                  
+              }
             
-        while(!q.empty())
-        {
-            int node=q.front().first;
-            int step=q.front().second;
-            q.pop();
-            
-            for(auto it: arr)
-            {
-                int num=(it*node)%mod;
-                if(step+1<dis[num])
-                {
-                    dis[num]=step+1;
-                    if(num==end)
-                     return dis[num];
-                     q.push({num,step+1});
-                    
-
-                }
-            }
-        }
+          }
+          
+      }
+      if(dis[end]==1e9) 
         return -1;
+      return dis[end];
     }
 };
 
