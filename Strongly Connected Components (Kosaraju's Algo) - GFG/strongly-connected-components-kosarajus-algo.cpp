@@ -4,73 +4,71 @@ using namespace std;
 
 // } Driver Code Ends
 
-
 class Solution
-{
-    
-    
-    void dfs(int i,vector<int>& vis,vector<int> adj[],stack<int>& st)
+{   
+    private:
+    void dfs(int i,vector<vector<int>>& adj,vector<int>& vis,stack<int>& st)
     {
         vis[i]=1;
-        
-        for(auto it: adj[i])
+        for(auto& ele: adj[i])
         {
-            if(!vis[it])
-                dfs(it,vis,adj,st);
+            if(!vis[ele])
+            dfs(ele,adj,vis,st);
+            
         }
+        
         st.push(i);
-    }    
+    }
     
-    
-    void dfs2(int i,vector<int>& vis,vector<int> adj[])
+    private: 
+    void dfs3(int i,vector<int> adj[],vector<int>& vis)
     {
-        vis[i]=1;
-        
-        for(auto it: adj[i])
-        {
-            if(!vis[it])
-                dfs2(it,vis,adj);
+         vis[i]=1;
+        for(auto& ele: adj[i])
+        {   
+            if(!vis[ele])
+            dfs3(ele,adj,vis);
+            
         }
-       
-    }    
+    }
+    
 	public:
 	//Function to find number of strongly connected components in the graph.
-    int kosaraju(int V, vector<int> adj[])
+    int kosaraju(int V, vector<vector<int>>& adj)
     {
-        //Sort
-      vector<int> vis(V,0);
-      stack<int> st;
-      for(int i=0;i<V;i++)
-      {
-          if(!vis[i])
-            dfs(i,vis,adj,st);
-      }
-      
-      
-      //rEVERSE
-      
-      vector<int> adjT[V];
-      for(int i=0;i<V;i++)
-      { vis[i]=0;
-          for(int j=0;j<adj[i].size();j++)
-          {
-              adjT[adj[i][j]].push_back(i);
-          }
-      }
-      int ct=0;
-      while(!st.empty())
-      {
-          int nd=st.top();
-          st.pop();
-          
-          if(!vis[nd])
-          {
-              dfs2(nd,vis,adjT);
-              ct++;
-          }
-      }
-      return ct;
-      
+        //s1
+        vector<int> vis(V,0);
+        stack<int> st;
+        
+        for(int i=0;i<V;i++)
+        {
+            if(!vis[i])
+                dfs(i,adj,vis,st);
+        }
+        
+        vector<int> adjT[V];
+        //s2 reverse
+        for(int i=0;i<V;i++)
+        {   
+            vis[i]=0;
+            for(auto& ele: adj[i])
+            {
+                adjT[ele].push_back(i);
+            }
+        }
+        int scc=0;
+        
+       while(!st.empty())
+        {       
+            int z=st.top();
+            st.pop();
+            if(!vis[z])
+            {
+                dfs3(z,adjT,vis);
+                scc++;
+            }
+        }
+        return scc;
     }
 };
 
@@ -87,7 +85,7 @@ int main()
     	int V, E;
     	cin >> V >> E;
 
-    	vector<int> adj[V];
+    	vector<vector<int>> adj(V);
 
     	for(int i = 0; i < E; i++)
     	{
