@@ -1,0 +1,118 @@
+class   dsu 
+ { 
+ public : 
+ 	vector < int >  parent , size ; 
+ 	 dsu ( int  n ) { 
+ 		
+ 		parent . resize ( n + 1 ) ; 
+ 		size . resize ( n + 1 , 1 ) ; 
+ 
+ 		 for ( int  i = 0 ; i <= n ; i ++ ) 
+ 			parent [ i ] = i ; 
+ 	 } 
+ 
+ 	 int   findUpar ( int  node ) 
+ 	 { 
+ 		 if ( node == parent [ node ] ) 
+ 			 return  node ; 
+ 
+ 		 return  parent [ node ] = findUpar ( parent [ node ] ) ; 
+ 
+ 	 } 
+ 
+ 	
+ 	 void   unionBySize ( int  u , int  v ) 
+ 	 { 	
+ 		 int  up_u = findUpar ( u ) ; 
+ 		 int  up_v = findUpar ( v ) ; 
+ 		 if ( up_u  ==  up_v ) 
+ 			 return   ; 
+ 
+ 		 if ( size [ up_u ] < size [ up_v ] ) { 
+ 			parent [ up_u ] = up_v ; 
+ 			size [ up_v ] += size [ up_u ] ; 
+ 		 } 
+ 		
+ 		 else 
+ 		 { 
+ 			parent [ up_v ] = up_u ; 
+ 			size [ up_u ] += size [ up_v ] ; 
+ 		 } 
+ 
+ 	 } 
+ 	
+ 	
+ } ; 
+ class   Solution   { 
+ public : 
+      int   largestIsland ( vector < vector < int >> &  grid )   { 
+          int  n = grid . size ( ) ; 
+          int  m = grid [ 0 ] . size ( ) ; 
+ 
+         dsu  ds ( n * m ) ; 
+          int  dr [ ] = { - 1 , 0 , 1 , 0 } ; 
+          int  dc [ ] = { 0 , - 1 , 0 , 1 } ; 
+          int  mx = 0 ; 
+          for ( int  i = 0 ; i < n ; i ++ ) 
+          { 
+              for ( int  j = 0 ; j < m ; j ++ ) 
+              { 
+                      if ( grid [ i ] [ j ] == 1 ) 
+                          { 
+                              for ( int  k = 0 ; k < 4 ; k ++ ) 
+                              { 
+                                  int   nr = i + dr [ k ] ; 
+                                  int  nc = j + dc [ k ] ; 
+ 
+                                  if ( nr >= 0   &&  nr < n  &&  nc >= 0   &&  nc < m  &&  grid [ nr ] [ nc ] ) 
+                                  {    
+                                      int  p = i * n + j ; 
+                                      int  np = nr * n + nc ; 
+                                     ds . unionBySize ( p , np ) ; 
+                                  } 
+ 
+                              } 
+                          } 
+              } 
+          } 
+        
+          for ( int  i = 0 ; i < n ; i ++ ) 
+          { 
+              for ( int  j = 0 ; j < m ; j ++ ) 
+              { 
+                  if ( grid [ i ] [ j ] == 0 ) 
+                  { 
+                         set < int >  st ; 
+                      int  ans = 0 ; 
+                       for ( int  k = 0 ; k < 4 ; k ++ ) 
+                              { 
+                                  int   nr = i + dr [ k ] ; 
+                                  int  nc = j + dc [ k ] ; 
+ 
+                                  if ( nr >= 0   &&  nr < n  &&  nc >= 0   &&  nc < m  &&  grid [ nr ] [ nc ] ) 
+                                  {    
+                                       int  npp = nr * n + nc ; 
+                                      npp = ds . findUpar ( npp ) ; 
+                                    st . insert ( npp ) ; 
+                                  } 
+ 
+                              }   
+ 
+                          for ( auto & ele :  st ) 
+                          { 
+                             ans += ds . size [ ele ] ; 
+                          }     
+                         ans ++ ; 
+                     mx = max ( mx , ans ) ;  
+                  } 
+                  else 
+                  {    
+                       int  pp = i * n + j ; 
+                     mx = max ( mx , ds . size [ pp ] ) ; 
+                  } 
+               
+              } 
+          } 
+          return  mx ; 
+      } 
+ } ;
