@@ -6,7 +6,6 @@ using namespace std;
 
 // } Driver Code Ends
 // User function Template for C++
-
 class dsu
 {
 public:
@@ -29,24 +28,6 @@ public:
 
 	}
 
-	void unionByRank(int u,int v)
-	{	
-		int up_u=findUpar(u);
-		int up_v=findUpar(v);
-		if(up_u == up_v)
-			return ;
-
-		if(rank[up_u]<rank[up_v])
-			parent[up_u]=up_v;
-		else if(rank[up_v]<rank[up_u])
-			parent[up_v]=up_u;
-		else
-		{
-			parent[up_v]=up_u;
-			rank[up_u]++;
-		}
-
-	}
 
 	void unionBySize(int u,int v)
 	{	
@@ -74,55 +55,51 @@ public:
 class Solution {
   public:
     vector<int> numOfIslands(int n, int m, vector<vector<int>> &operators) {
-        // code here
-        vector<int> ans;
-        dsu ds(n*m);
         
+        dsu ds(n*m);
         vector<vector<int>> vis(n,vector<int> (m,0));
         int ct=0;
-        
-        
-        for(auto it: operators)
+        int dr[]={-1,0,1,0};
+        int dc[]={0,-1,0,1};
+        vector<int> res;
+        for(auto& ele: operators)
         {
-            int r=it[0];
-            int c=it[1];
+            int u=ele[0];
+            int v=ele[1];
             
-            if(vis[r][c])
+            if(vis[u][v]==0)
             {
-               
-                ans.push_back(ct);
-                continue;
-            }
-            
-            vis[r][c]=1;
-            ct++;
-            
-            int dr[]={-1,0,1,0};
-            int dc[]={0,-1,0,1};
-            
-            for(int i=0;i<4;i++)
-            {
-                int nr=r+dr[i];
-                int nc=c+dc[i];
+                vis[u][v]=1;
                 
-                if(nr>=0 && nr<n && nc>=0 && nc<m && vis[nr][nc])
+                ct++;
+             
+                for(int i=0;i<4;i++)
                 {
-                    int n_n=r*m+c;
-                    int nn_n=nr*m+nc;
+                    int nr=u+dr[i];
+                    int nc=v+dc[i];
                     
-                    if(ds.findUpar(n_n)!=ds.findUpar(nn_n))
+                    if(nr>=0 && nr<n && nc>=0 && nc<m && vis[nr][nc])
                     {
-                        ct--;
-                        ds.unionBySize(n_n,nn_n);
+                        int npos=nr*m+nc;
+                        int pos=u*m+v;
+                        
+                        
+                        
+                        if(ds.findUpar(npos)!=ds.findUpar(pos))
+                        {
+                            ct--;
+                            ds.unionBySize(pos,npos);
+                        }
+                      
                     }
                 }
+                
+                
             }
             
-            ans.push_back(ct);
+            res.push_back(ct);
         }
-        
-        
-        return ans;
+        return res;
     }
 };
 
