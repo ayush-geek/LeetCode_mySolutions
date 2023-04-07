@@ -1,6 +1,6 @@
 class   Solution   { 
  
-  private :  
+ private :  
       int  timer = 0 ; 
  
       void   dfs ( int  nd , int  par , vector < int >  adj [ ] , vector < int > &  vis , vector < int > &  tin , vector < int > &  lin ) 
@@ -30,7 +30,7 @@ class   Solution   {
       } 
  
  
-  public : 
+ public : 
       vector < vector < int >>  bridges ; 
  
      vector < vector < int >>   criticalConnections ( int  n ,  vector < vector < int >> &  connections )   { 
@@ -53,4 +53,4 @@ class   Solution   {
          return  bridges ; 
  
       } 
-  } ;
+ } ;
