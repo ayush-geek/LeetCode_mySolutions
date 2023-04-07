@@ -1,98 +1,127 @@
-class   dsu 
-  { 
-  public : 
- 	vector < int >  rank , parent , size ; 
- 	 dsu ( int  n ) { 
- 		rank . resize ( n + 1 , 0 ) ; 
- 		parent . resize ( n + 1 ) ; 
- 		size . resize ( n + 1 , 1 ) ; 
+class   DSU { 
+      public : 
+     vector < int >  parent , size ; 
  
- 		 for ( int  i = 0 ; i <= n ; i ++ ) 
- 			parent [ i ] = i ; 
- 	 } 
- 
- 	 int   findUpar ( int  node ) 
- 	 { 
- 		 if ( node == parent [ node ] ) 
- 			 return  node ; 
- 
- 		 return  parent [ node ] = findUpar ( parent [ node ] ) ; 
- 
- 	 } 
- 
- 	 void   unionBySize ( int  u , int  v ) 
- 	 { 	
- 		 int  up_u = findUpar ( u ) ; 
- 		 int  up_v = findUpar ( v ) ; 
- 		 if ( up_u  ==  up_v ) 
- 			 return   ; 
- 
- 		 if ( size [ up_u ] < size [ up_v ] ) { 
- 			parent [ up_u ] = up_v ; 
- 			size [ up_v ] += size [ up_u ] ; 
- 		 } 
- 		
- 		 else 
- 		 { 
- 			parent [ up_v ] = up_u ; 
- 			size [ up_u ] += size [ up_v ] ; 
- 		 } 
- 
- 	 } 
- 	
- 	
-  } ; 
- 
-  class   Solution   { 
-  public : 
-     vector < vector < string >>   accountsMerge ( vector < vector < string >> &  accounts )   { 
- 
-      int  n = accounts . size ( ) ; 
-     dsu  ds ( n ) ; 
-     unordered_map < string , int >  mp ; 
- 
-      for ( int  i = 0 ; i < n ; i ++ ) 
+      DSU ( int  n ) 
       { 
-          for ( int  j = 1 ; j < accounts [ i ] . size ( ) ; j ++ ) 
+         parent . resize ( n + 1 ) ; 
+         size . resize ( n + 1 , 1 ) ; 
+          iota ( parent . begin ( ) , parent . end ( ) , 0 ) ; 
+      } 
+ 
+      int   findUpar ( int  x ) 
+      { 
+          if ( parent [ x ] == x ) 
+              return  x ; 
+         
+          return  parent [ x ] = findUpar ( parent [ x ] ) ; 
+      } 
+ 
+      void   unionBySize ( int  u , int  v ) 
+      { 
+          int  pu = findUpar ( u ) ; 
+          int  pv = findUpar ( v ) ; 
+ 
+          if ( pu == pv ) 
+              return   ; 
+         
+          if ( size [ pu ] < size [ pv ] ) 
           { 
-              if ( mp . find ( accounts [ i ] [ j ] ) == mp . end ( ) ) 
-              { 
-                 mp [ accounts [ i ] [ j ] ] = i ; 
-              } 
-              else 
-              { 
-                 ds . unionBySize (   mp [ accounts [ i ] [ j ] ] , i ) ; 
-              } 
+             size [ pv ] += size [ pu ] ; 
+             parent [ pu ] = pv ; 
+ 
+          } 
+          else { 
+              size [ pu ] += size [ pv ] ; 
+             parent [ pv ] = pu ; 
  
           } 
       } 
+ } ; 
  
-     vector < string >  mail [ n ] ; 
-      for ( auto  ele :  mp ) 
-      { 
-          int  z = mp [ ele . first ] ; 
-          int  up = ds . findUpar ( z ) ; 
-         mp [ ele . first ] = up ; 
+ class   Solution   { 
+ public : 
+     vector < vector < string >>   accountsMerge ( vector < vector < string >> &  accounts )   { 
+         vector < vector < string >>  rs ; 
+          int  n = accounts . size ( ) ; 
+         DSU  ds ( n ) ; 
  
-         mail [ up ] . push_back ( ele . first ) ; 
+         unordered_map < int , string >  mp1 ;   
+          // unordered_map<int,vector<string>> mp2; 
+         unordered_map < string , int >  mp2 ; 
+          int  k = 0 ; 
+          for ( auto &  ele :  accounts ) 
+          {    
+             mp1 [ k ] = ele [ 0 ] ; 
+             for ( int  i = 1 ; i < ele . size ( ) ; i ++ ) 
+             { 
+              
+                 
+                  if ( mp2 . find ( ele [ i ] ) == mp2 . end ( ) ) 
+                  { 
+                   
+                    mp2 [ ele [ i ] ] = k ; 
+                 
+                 
+                  } 
+                  else 
+                  { 
+                     ds . unionBySize ( mp2 [ ele [ i ] ] , k ) ; 
+                  } 
+                 
+             } 
+            k ++ ; 
+          } 
+ 
+        unordered_map < int , set < string >>  mp ; 
+          k = 0 ; 
+          for ( auto &  ele :  accounts ) 
+          {    
+              int  ind = k ; 
+             ind = ds . findUpar ( ind ) ; 
+ 
+              set < string >  tmp ; 
+         
+              if ( ind == k ) 
+              { 
+                for ( int  i = 1 ; i < ele . size ( ) ; i ++ ) 
+                  { 
+                     tmp . insert ( ele [ i ] ) ; 
+                  } 
+              } 
+ 
+              else 
+              { 
+                  for ( int  i = 1 ; i < ele . size ( ) ; i ++ ) 
+                  { 
+                      if ( mp2 [ ele [ i ] ] != ind ) 
+                         tmp . insert ( ele [ i ] ) ; 
+                  } 
+ 
+                 
+              } 
+ 
+              for ( auto &  ele :  tmp  ) 
+                 mp [ ind ] . insert ( ele ) ; 
+ 
+            
+ 
+             k ++ ; 
+          } 
+ 
+          for ( auto   &  ele :  mp ) 
+          {    
+              int  z = ele . first ; 
+             vector < string >  tmp ; 
+             tmp . push_back ( mp1 [ z ] ) ; 
+              //sort(tmp.begin(),tmp.end()); 
+              //tmp.insert(tmp.begin(),mp1[z]); 
+ 
+              for ( auto &  it :  ele . second ) 
+                 tmp . push_back ( it ) ; 
+             rs . push_back ( tmp ) ; 
+          } 
+         
+          return  rs ; 
       } 
- 
-     vector < vector < string >>  ans ; 
- 
-      for ( int  i = 0 ; i < n ; i ++ ) 
-      { 
-          if ( mail [ i ] . size ( ) == 0 ) 
-              continue ; 
-          sort ( mail [ i ] . begin ( ) , mail [ i ] . end ( ) ) ; 
- 
- 
-         mail [ i ] . insert ( mail [ i ] . begin ( ) , accounts [ i ] [ 0 ] ) ; 
-         ans . push_back ( mail [ i ] ) ; 
- 
-      } 
- 
- 
-      return  ans ; 
- 
-      } 
-  } ;
+ } ;
