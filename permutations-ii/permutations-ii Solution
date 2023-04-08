@@ -1,5 +1,5 @@
 class   Solution   { 
-  public : 
+ public : 
   vector < vector < int >>  res ; 
      set < vector < int >>  st ; 
       void   solve ( int  i , vector < int > &  nums , vector < int > &  tmp ) 
@@ -29,4 +29,4 @@ class   Solution   {
           solve ( 0 , nums , tmp ) ; 
           return  res ; 
       } 
-  } ;
+ } ;
