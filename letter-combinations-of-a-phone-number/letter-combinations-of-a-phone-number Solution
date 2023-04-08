@@ -1,5 +1,5 @@
 class   Solution   { 
-  public : 
+ public : 
   map < int , string >  mp ; 
       void   solve ( int  i , string digits , vector < string > &  res , string &  tmp ) 
       { 
@@ -41,4 +41,4 @@ class   Solution   {
           return  res ; 
      
       } 
-  } ;
+ } ;
