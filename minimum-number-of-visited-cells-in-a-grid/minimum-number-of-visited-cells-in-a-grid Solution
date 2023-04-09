@@ -1,0 +1,58 @@
+class   Solution   { 
+ public : 
+      int   minimumVisitedCells ( vector < vector < int >> &  grid )   { 
+          int  n = grid . size ( ) ; 
+          int  m = grid [ 0 ] . size ( ) ; 
+           if ( n == 1   &&  m == 1 ) 
+              return   1 ; 
+ 
+          //bfs 
+          int  steps = 0 ; 
+         queue < pair < int , int >>  q ; 
+         q . push ( { 0 , 0 } ) ; 
+ 
+        
+         vector < vector < int >>   vis ( n , vector < int > ( m , 0 ) ) ; 
+         vis [ 0 ] [ 0 ] = 1 ; 
+          while ( ! q . empty ( ) ) 
+          { 
+              int  sz = q . size ( ) ; 
+             steps ++ ; 
+ 
+              while ( sz -- ) 
+              { 
+                  auto  nd = q . front ( ) ; 
+                 q . pop ( ) ; 
+                  int  z = grid [ nd . first ] [ nd . second ] ; 
+                  for ( int  k = nd . second + 1 ; k <= nd . second  + z  &&  k < m  ; k ++ ) 
+                  { 
+                      if ( ! vis [ nd . first ] [ k ] ) 
+                      { 
+                         vis [ nd . first ] [ k ] = 1 ; 
+                         q . push ( { nd . first , k } ) ; 
+                      } 
+ 
+                      if ( nd . first == n - 1   &&  k == m - 1 ) 
+                          return  steps + 1 ; 
+ 
+                  } 
+ 
+                  for ( int  k = nd . first + 1 ; k <= nd . first + z  &&  k < n  ; k ++ ) 
+                  { 
+                      if ( ! vis [ k ] [ nd . second ] ) 
+                      { 
+                         vis [ k ] [ nd . second ] = 1 ; 
+                         q . push ( { k , nd . second } ) ; 
+                      } 
+ 
+                      if ( k == n - 1   &&  nd . second == m - 1 ) 
+                          return  steps + 1 ; 
+ 
+                  } 
+                    
+              } 
+ 
+          } 
+          return   - 1 ; 
+      } 
+ } ;
