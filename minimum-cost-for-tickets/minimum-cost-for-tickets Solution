@@ -10,7 +10,7 @@ class   Solution   {
               return  dp [ i ] [ j ] ; 
          
           if ( j > days [ i ] ) 
-                  return   solve ( i + 1 , j , dp , days , costs ) ; 
+                  return  dp [ i ] [ j ] = solve ( i + 1 , j , dp , days , costs ) ; 
  
           return  dp [ i ] [ j ] = min ( 
           { 
@@ -25,10 +25,36 @@ class   Solution   {
  
           int  n = days . size ( ) ; 
  
-         vector < vector < int >>   dp ( n + 1 , vector < int >   ( 400 , - 1 ) ) ; 
+          // vector<vector<int>> dp(n+1,vector<int> (400,-1)); 
  
           // dp[i][j] ->tell ki from i till which j 
  
-          return   solve ( 0 , 0 , dp , days , costs ) ; 
+          // return solve(0,0,dp,days,costs); 
+ 
+ 
+ 
+          // M2  
+ 
+         vector < int >   dp ( 366 , 1e9 ) ; 
+         dp [ 0 ] = 0 ; 
+         unordered_set < int >   st ( days . begin ( ) , days . end ( ) ) ; 
+          for ( int  i = 1 ; i < 366 ; i ++ ) 
+          {    
+              if ( st . count ( i ) == 1 ) 
+              { 
+          
+                 dp [ i ] = min ( dp [ i ] , dp [ i - 1 ] + costs [ 0 ] ) ; 
+             
+            
+                 dp [ i ] = min ( dp [ i ] , dp [ max ( i - 7 , 0 ) ] + costs [ 1 ] ) ; 
+ 
+      
+                 dp [ i ] = min ( dp [ i ] , dp [ max ( i - 30 , 0 ) ] + costs [ 2 ] ) ; 
+              } 
+              else 
+                 dp [ i ] = dp [ i - 1 ] ; 
+             
+          } 
+          return  dp [ 365 ] ; 
       } 
  } ;
