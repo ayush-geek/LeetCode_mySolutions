@@ -1,5 +1,5 @@
 class   Solution   { 
-  public : 
+ public : 
  
  
       int   solve ( int  i , int  j , vector < int > &  nums , vector < vector < int >> &  dp ) 
@@ -42,4 +42,4 @@ class   Solution   {
               return   - 1 ; 
           return  ans ; 
       } 
-  } ;
+ } ;
