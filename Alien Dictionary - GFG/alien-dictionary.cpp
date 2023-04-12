@@ -9,65 +9,56 @@ using namespace std;
 
 class Solution{
     public:
-    string findOrder(string dict[], int N, int K) {
+    string findOrder(string dict[], int N, int k) {
+        //code here
+        
+        string res="";
+        vector<int>  adj[k];
+         vector<int> indeg(k,0);
+        
+        for(int i=0;i<N-1;i++)
+        {
+            for(int j=0;j<min(dict[i].size(),dict[i+1].size());j++)
+            {
+                if(dict[i][j]!=dict[i+1][j])
+                {
+                    adj[dict[i][j]-'a'].push_back(dict[i+1][j]-'a');
+                    indeg[dict[i+1][j]-'a']++;
+                    break;
+                }
+                
+            }
+        }
+        
+       queue<int> q;
+       // vector<int> vis(k,0);
+        
+        for(int i=0;i<k;i++)
+        {
+            if(indeg[i]==0)
+            {
+                q.push(i);
+                
+            }
+        }
        
-       vector<int> adj[K];
-       
-       
-       for(int i=0;i<N-1;i++)
-       {
-           string s1=dict[i];
-           string s2=dict[i+1];
-           
-           for(int k=0;k<min(s1.size(),s2.size());k++)
-           {  //cout<<s1[k]<<" "<<s2[k]<<endl;
-               if(s1[k]!=s2[k])
-               {
-                   //cout<<s1[k]<<" "<<s2[k]<<endl;
-                   adj[s1[k]-'a'].push_back(s2[k]-'a');
-                   break;
-               }
-           }
-           
-       }   
-            vector<int> indeg(K,0);
-	
-	   string res;
-	    
-	    for(int i=0;i<K;i++)
-	    {
-	        for(auto ele: adj[i])
-	        {
-	            indeg[ele]++;
-	        }
-	    }
-	    
-	    queue<int> q;
-	    
-	    for(int i=0;i<K;i++)
-	    {
-	        if(indeg[i]==0)
-	            q.push(i);
-	    }
-	  
-	    while(!q.empty())
-	    {
-	        int nd=q.front();
-	        res.push_back(char(nd+'a'));
-	        q.pop();
-	        
-	        for(auto ele: adj[nd])
-	        {
-	            indeg[ele]--;
-	            
-	            if(indeg[ele]==0)
-	                q.push(ele);
-	        }
-	    }
-	  
-	    //cout<<res<<endl;
-	    return res;
-       
+        
+        while(!q.empty())
+        {
+            int nd=q.front();
+            q.pop();
+            
+            res.push_back(nd+'a');
+            
+            for(auto& ele: adj[nd])
+            {
+                indeg[ele]--;
+                if(indeg[ele]==0)
+                    q.push(ele);
+            }
+        }
+       // cout<<res<<endl;
+        return res;   
     }
 };
 
