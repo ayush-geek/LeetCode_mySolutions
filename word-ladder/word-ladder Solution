@@ -2,45 +2,40 @@ class   Solution   {
  public : 
       int   ladderLength ( string beginWord ,  string endWord ,  vector < string > &  wordList )   { 
          
-         unordered_set < string >  st ; 
+         unordered_set < string >   st ( wordList . begin ( ) , wordList . end ( ) ) ; 
  
-          for ( auto  ele :  wordList ) 
-          { 
-             st . insert ( ele ) ; 
-          } 
- 
+          //bfs 
          queue < pair < string , int >>  q ; 
+         q . push ( { beginWord , 0 } ) ; 
  
-         q . push ( { beginWord , 1 } ) ; 
-         st . erase ( beginWord ) ; 
- 
+          if ( beginWord == endWord ) 
+              return   1 ; 
+          if ( st . count ( beginWord ) == 1 ) 
+             st . erase ( beginWord ) ; 
  
           while ( ! q . empty ( ) ) 
           { 
-              auto  itr = q . front ( ) ; 
+              auto  nd = q . front ( ) ; 
              q . pop ( ) ; 
  
+             string cur = nd . first ; 
+              int  step = nd . second ; 
  
+              if ( cur == endWord ) 
+                  return  step + 1 ; 
  
-             string tmp = itr . first ; 
-              int  step = itr . second ; 
- 
-              if ( tmp == endWord ) 
-                  return  step ; 
- 
-              for ( int  i = 0 ; i < tmp . size ( ) ; i ++ ) 
-              {     char  org = tmp [ i ] ; 
+              for ( int  i = 0 ; i < cur . size ( ) ; i ++ ) 
+              {     char  alpha = cur [ i ] ; 
                   for ( char  zz = 'a' ; zz <= 'z' ; zz ++ ) 
                   { 
-                     tmp [ i ] = zz ; 
- 
-                      if ( st . find ( tmp ) != st . end ( ) ) 
-                      { 
-                         st . erase ( tmp ) ; 
-                         q . push ( { tmp , step + 1 } ) ; 
-                      } 
-                     tmp [ i ] = org ; 
+                    cur [ i ] = zz ; 
+                     if ( st . count ( cur ) == 1 ) 
+                          { 
+                             q . push ( { cur , step + 1 } ) ; 
+                               st . erase ( cur ) ; 
+                          } 
                   } 
+                 cur [ i ] = alpha ; 
               } 
           } 
           return   0 ; 
