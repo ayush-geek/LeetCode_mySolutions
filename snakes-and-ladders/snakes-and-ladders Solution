@@ -1,5 +1,5 @@
 class   Solution   { 
-  public : 
+ public : 
       int   snakesAndLadders ( vector < vector < int >> &  board )   { 
          
           int  n = board . size ( ) ; 
@@ -51,4 +51,4 @@ class   Solution   {
      
           return   - 1 ; 
       } 
-  } ;
+ } ;
