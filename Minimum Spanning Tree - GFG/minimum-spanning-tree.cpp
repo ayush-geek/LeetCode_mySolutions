@@ -5,47 +5,45 @@ using namespace std;
 // } Driver Code Ends
 
 class DSU{
-     public:
-  vector<int> parent,size;
-  
- 
+    public:
+    vector<int> size,parent;
+    
     DSU(int n)
     {
-        parent.resize(n+1);
         size.resize(n+1,1);
+        parent.resize(n+1);
         iota(parent.begin(),parent.end(),0);
     }
     
-    
-    int findUpar(int x)
+    int findUpar(int nd)
     {
-        if(parent[x]==x)
-            return x;
-        return parent[x]=findUpar(parent[x]);
+        if(parent[nd]==nd)
+            return nd;
+        return parent[nd]=findUpar(parent[nd]);
     }
     
-    
-    void unionBySize(int u,int v)
+    bool unionBySize(int u,int v)
     {
         int pu=findUpar(u);
         int pv=findUpar(v);
         
         if(pu==pv)
-            return ;
-        
-        if(size[pu]>size[pv])
+            return false;
+        if(size[pu]<size[pv])
         {
-           
-            size[pu]+=size[pv];
-             parent[pv]=pu;
+            size[pv]+=size[pu];
+            parent[pu]=pv;
         }
         else
         {
-             size[pv]+=size[pu];
-             parent[pu]=pv;
+            size[pu]+=size[pv];
+            parent[pv]=pu;
         }
+        return true;
+        
     }
 };
+
 
 class Solution
 {
@@ -53,45 +51,33 @@ class Solution
 	//Function to find sum of weights of edges of the Minimum Spanning Tree.
     int spanningTree(int V, vector<vector<int>> adj[])
     {
+        //sort the edge by w8
+        int ans=0;
         DSU ds(V);
-        int sm=0;
-        vector<vector<int>> edges;
-        
+        vector<vector<int>> v;
         
         for(int i=0;i<V;i++)
         {
             for(auto& ele: adj[i])
             {
-                int u=i;
-                int v=ele[0];
-                int w=ele[1];
-                
-                edges.push_back({w,u,v});
+                v.push_back({ele[1],i,ele[0]});
             }
         }
         
+        sort(v.begin(),v.end());
         
-        sort(edges.begin(),edges.end());
-        
-        for(auto& ele: edges)
+        for(int i=0;i<v.size();i++)
         {
-              int u=ele[1];
-              int v=ele[2];
-              int w=ele[0];
-              
-              int pu=ds.findUpar(u);
-              int pv=ds.findUpar(v);
+            int a=v[i][1];
+            int b=v[i][2];
+            int w=v[i][0];
+            if(ds.unionBySize(a,b))
+            {
+                ans+=w;
+            }
             
-          
-              if(pu!=pv)
-              {
-                  ds.unionBySize(u,v);
-                  sm+=w;
-                  //cout<<sm<<endl;
-              }
-                
         }
-        return sm;
+        return ans;
     }
 };
 
