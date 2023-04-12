@@ -1,0 +1,20 @@
+class   Solution   { 
+ public : 
+      int  mod = 1e9 + 7 ; 
+      int   numOfWays ( int  n )   { 
+         
+          long   long  ca = 6 ; 
+          long   long  cb = 6 ; 
+        
+          for ( int  i = 2 ; i <= n ; i ++ ) 
+          { 
+              long   long  na = ( ca * 3 + cb * 2 ) % mod ; 
+              long   long  nb = ( ca * 2 + cb * 2 ) % mod ; 
+ 
+             ca = na % mod ; 
+             cb = nb % mod ; 
+          } 
+ 
+          return   ( ca + cb ) % mod ; 
+      } 
+ } ;
