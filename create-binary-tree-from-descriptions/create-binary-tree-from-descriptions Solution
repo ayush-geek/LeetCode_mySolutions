@@ -1,0 +1,56 @@
+/**
+  * Definition for a binary tree node.
+  * struct TreeNode {
+  *     int val;
+  *     TreeNode *left;
+  *     TreeNode *right;
+  *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+  *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+  *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+  * };
+  */ 
+ class   Solution   { 
+ public : 
+ 
+     TreeNode *   solve ( int  rt ,  unordered_map < int , vector < pair < int , int >> > &  adj ) 
+      { 
+         TreeNode *  node = new   TreeNode ( rt ) ; 
+ 
+          for ( auto &  ele :  adj [ rt ] ) 
+          { 
+              int  nd = ele . first ; 
+              int  isleft = ele . second ; 
+              if ( isleft == 1 ) 
+                 node -> left = solve ( ele . first , adj ) ; 
+              else 
+                   node -> right = solve ( ele . first , adj ) ; 
+          }    
+          return  node ; 
+      } 
+ 
+     TreeNode *   createBinaryTree ( vector < vector < int >> &  descriptions )   { 
+          //parent or root node ??? 
+          //find it by using the concept indeg of root node=0 in tree 
+ 
+          //first create adj list 
+         unordered_map < int , vector < pair < int , int >> >  adj ; 
+         unordered_set < int >  indeg ; 
+          for ( auto &  ele :  descriptions ) 
+          { 
+             adj [ ele [ 0 ] ] . push_back ( { ele [ 1 ] , ele [ 2 ] } ) ; 
+             indeg . insert ( ele [ 1 ] ) ; 
+          } 
+          int  rt = - 1 ; 
+          for ( auto &  ele :  adj ) 
+          { 
+              if ( indeg . count ( ele . first ) == 0 ) 
+              { 
+                 rt = ele . first ; 
+                  break ; 
+              } 
+          } 
+ 
+          //now just tree Construction using dfs 
+          return   solve ( rt , adj ) ; 
+      } 
+ } ;
