@@ -1,0 +1,57 @@
+class   Solution   { 
+ public : 
+ 
+      void   dfs ( int  i , vector < int >  adj [ ] , vector < int > &  vis , vector < int > &  vals , int &  ans , int  k ) 
+      { 
+         vis [ i ] = 1 ; 
+          int  cur = vals [ i ] ; 
+         priority_queue < int , vector < int >   , greater < int >>  pq ; 
+          for ( auto &  ele :  adj [ i ] ) 
+          {    
+             
+             pq . push ( vals [ ele ] ) ; 
+              if ( pq . size ( ) > k ) 
+                 pq . pop ( ) ; 
+ 
+              if ( ! vis [ ele ] ) 
+                  dfs ( ele , adj , vis , vals , ans , k ) ; 
+          } 
+ 
+          while ( ! pq . empty ( ) ) 
+          { 
+              if ( pq . top ( ) < 0 ) 
+                 { 
+                    pq . pop ( ) ; 
+                     continue ; 
+                 } 
+             cur += pq . top ( ) ; 
+             pq . pop ( ) ; 
+          } 
+         // cout<<i<<" "<<cur<<endl; 
+         ans = max ( ans , cur ) ; 
+      } 
+ 
+      int   maxStarSum ( vector < int > &  vals ,  vector < vector < int >> &  edges ,   int  k )   { 
+          int  n = vals . size ( ) ; 
+         vector < int >  adj [ n ] ; 
+         int  ans = 0 ; 
+ 
+        ans = * max_element ( vals . begin ( ) , vals . end ( ) ) ; 
+          for ( auto &  ele :  edges ) 
+          { 
+             adj [ ele [ 0 ] ] . push_back ( ele [ 1 ] ) ; 
+             adj [ ele [ 1 ] ] . push_back ( ele [ 0 ] ) ; 
+ 
+          } 
+         vector < int >   vis ( n , 0 ) ; 
+          for ( int  i = 0 ; i < n ; i ++ ) 
+          { 
+              if ( ! vis [ i ] ) 
+                    dfs ( i , adj , vis , vals , ans ,  k ) ; 
+          } 
+       
+          return  ans ; 
+ 
+ 
+      } 
+ } ;
