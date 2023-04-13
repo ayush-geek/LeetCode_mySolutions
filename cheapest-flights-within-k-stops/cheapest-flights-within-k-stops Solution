@@ -1,44 +1,47 @@
 class   Solution   { 
  public : 
       int   findCheapestPrice ( int  n ,  vector < vector < int >> &  flights ,   int  src ,   int  dst ,   int  k )   { 
-          // k stops 
-          //tries to create a barrier 
+         queue < pair < int , pair < int , int >> >  q ; 
+          //k dist src 
+         q . push ( { 0 , { 0 , src } } ) ; 
+         vector < int >   dis ( n , 1e9 ) ; 
+         dis [ src ] = 0 ; 
  
-          //k,src  
-         vector < pair < int , int >>  adj [ n ] ; 
+         vector < vector < int >>  adj [ n ] ; 
+ 
           for ( auto &  ele :  flights ) 
           { 
              adj [ ele [ 0 ] ] . push_back ( { ele [ 1 ] , ele [ 2 ] } ) ; 
           } 
-         vector < int >   dist ( n , 1e9 ) ; 
-         dist [ src ] = 0 ; 
- 
-         queue < vector < int >>  pq ; 
-         pq . push ( { 0 , src , 0 } ) ; 
-          int  ans = 1e9 ; 
-          while ( ! pq . empty ( ) ) 
+          while ( ! q . empty ( ) )  
           { 
-              auto  nd = pq . front ( ) ; 
-             pq . pop ( ) ; 
-              int  stop = nd [ 0 ] ; 
-              int  node = nd [ 1 ] ; 
-              int  d = nd [ 2 ] ; 
+              auto  nd = q . front ( ) ; 
+             q . pop ( ) ; 
+              int  steps = nd . first ; 
+              int  d = nd . second . first ; 
+              int  node = nd . second . second ; 
  
-              if ( stop > k ) 
+              if ( steps > k ) 
                   continue ; 
-             
+ 
+           
+ 
               for ( auto &  ele :  adj [ node ] ) 
-              {    
-                  int  el = ele . first ; 
-                  int  w = ele . second ; 
-                  if ( stop <= k  &&  d + w < dist [ el ] ) { 
-                     pq . push ( { stop + 1 , el , d + w } ) ; 
-                     dist [ el ] = d + w ; 
+              { 
+                  int  nwnode = ele [ 0 ] ; 
+                  int  w = ele [ 1 ] ; 
+ 
+                  if ( steps <= k  &&  d + w < dis [ nwnode ] ) 
+                  { 
+                     q . push ( { steps + 1 , { d + w , nwnode } } ) ; 
+                     dis [ nwnode ] = d + w ; 
                   } 
               } 
-          } 
-          if ( dist [ dst ] == 1e9 ) 
-              return   - 1 ; 
-          return  dist [ dst ] ; 
+          }   
+ 
+          if ( dis [ dst ] != 1e9 ) 
+              return  dis [ dst ] ; 
+ 
+          return   - 1 ; 
       } 
  } ;
