@@ -20,13 +20,13 @@ class   DSU
           return  parent [ node ] = findUpar ( parent [ node ] ) ; 
       } 
  
-      void   unionBySize ( int  u , int  v ) 
+      bool   unionBySize ( int  u , int  v ) 
       { 
           int  up = findUpar ( u ) ; 
           int  vp = findUpar ( v ) ; 
  
           if ( up == vp ) 
-              return   ; 
+              return   false ; 
  
           if ( size [ up ] < size [ vp ] ) 
           { 
@@ -38,6 +38,7 @@ class   DSU
               size [ vp ] += size [ up ] ; 
              parent [ vp ] = up ; 
           } 
+          return   true ; 
       } 
  
  
@@ -47,26 +48,26 @@ class   DSU
  class   Solution   { 
  public : 
       int   makeConnected ( int  n ,  vector < vector < int >> &  connections )   { 
+ 
              DSU  ds ( n ) ; 
+              int  ex = 0 ; 
               int  ct = 0 ; 
               for ( auto &  ele :  connections ) 
               { 
-                  int  u = ele [ 0 ] ; 
-                  int  v = ele [ 1 ] ; 
+                  bool  z = ds . unionBySize ( ele [ 0 ] , ele [ 1 ] ) ; 
  
-                  int  pu = ds . findUpar ( u ) ; 
-                  int  pv = ds . findUpar ( v ) ; 
- 
-                  if ( pu != pv ) 
-                      { 
-                         ct ++ ; 
-                         ds . unionBySize ( u , v ) ; 
-                      } 
+                  if ( z == false ) 
+                     ex ++ ; 
+                  else  
+                     ct ++ ; 
               } 
  
-              int  req = n - 1 - ct ; 
- 
-              return   ( req + ct <= connections . size ( ) ) ? req : - 1 ; 
+             int  need = n - 1 - ct ; 
+             
+             if ( ex < need ) 
+                  return   - 1 ; 
+         
+              return  need ; 
  
       } 
  } ;
