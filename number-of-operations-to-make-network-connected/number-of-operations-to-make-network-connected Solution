@@ -8,11 +8,9 @@ class   DSU
       { 
          parent . resize ( n + 1 ) ; 
          size . resize ( n + 1 , 1 ) ; 
- 
- 
-      for ( int  i = 0 ; i <= n ; i ++ ) 
-         parent [ i ] = i ; 
+          iota ( parent . begin ( ) , parent . end ( ) , 0 ) ; 
       } 
+    
  
       int   findUpar ( int  node ) 
       { 
@@ -49,34 +47,26 @@ class   DSU
  class   Solution   { 
  public : 
       int   makeConnected ( int  n ,  vector < vector < int >> &  connections )   { 
-              int  n1 = connections . size ( ) ; 
-            
- 
-              if ( n1 < n - 1 ) 
-                  return   - 1 ; 
-              DSU  ds ( n ) ; 
+             DSU  ds ( n ) ; 
               int  ct = 0 ; 
-              for ( int  i = 0 ; i < connections . size ( ) ; i ++ ) 
+              for ( auto &  ele :  connections ) 
               { 
-                  int  a = connections [ i ] [ 0 ] ; 
-                  int  b = connections [ i ] [ 1 ] ; 
-                  int  ua = ds . findUpar ( a ) ; 
-                  int  ub = ds . findUpar ( b ) ; 
+                  int  u = ele [ 0 ] ; 
+                  int  v = ele [ 1 ] ; 
  
-                  if ( ua != ub ) { 
-                          ds . unionBySize ( a , b ) ; 
-                       
-                  } 
-                
+                  int  pu = ds . findUpar ( u ) ; 
+                  int  pv = ds . findUpar ( v ) ; 
+ 
+                  if ( pu != pv ) 
+                      { 
+                         ct ++ ; 
+                         ds . unionBySize ( u , v ) ; 
+                      } 
               } 
  
-              for ( int  i = 0 ; i < n ; i ++ ) 
-              { 
-                  if ( ds . parent [ i ] == i ) 
-                     ct ++ ; 
-              } 
+              int  req = n - 1 - ct ; 
  
-              return  ct - 1 ; 
+              return   ( req + ct <= connections . size ( ) ) ? req : - 1 ; 
  
       } 
  } ;
