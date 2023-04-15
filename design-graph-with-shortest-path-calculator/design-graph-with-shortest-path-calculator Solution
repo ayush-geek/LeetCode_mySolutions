@@ -1,59 +1,47 @@
 class   Graph   { 
  public : 
-     
-     vector < vector < int >>  adj [ 101 ] ; 
+     vector < vector < long   long >>  mat ; 
+      int  N ; 
       Graph ( int  n ,  vector < vector < int >> &  edges )   { 
-          // adj.resize(n); 
+         N = n ; 
+         mat . resize ( n , vector < long   long >   ( n , LLONG_MAX ) ) ; 
          
           for ( auto &  ele :  edges ) 
           { 
-             adj [ ele [ 0 ] ] . push_back ( { ele [ 1 ] , ele [ 2 ] } ) ; 
+             mat [ ele [ 0 ] ] [ ele [ 1 ] ] = ( long   long ) ele [ 2 ] ; 
+          } 
+         
+         
+          for ( int  via = 0 ; via < n ; via ++ ) 
+          { 
+              for ( int  i = 0 ; i < n ; i ++ ) 
+              { 
+                  for ( int  j = 0 ; j < n ; j ++ ) 
+                  {     if ( i == j ) 
+                         mat [ i ] [ j ] = 0 ; 
+                      else   if ( mat [ i ] [ via ] != LLONG_MAX  &&  mat [ via ] [ j ] != LLONG_MAX ) 
+                     mat [ i ] [ j ] = min ( mat [ i ] [ j ] , mat [ i ] [ via ] + mat [ via ] [ j ] ) ; 
+                  } 
+              } 
           } 
       } 
      
-      void   addEdge ( vector < int >  ele )   { 
-         adj [ ele [ 0 ] ] . push_back ( { ele [ 1 ] , ele [ 2 ] } ) ; 
+      void   addEdge ( vector < int >  edge )   { 
+         for ( int  i = 0 ; i < N ; ++ i ) { 
+              for ( int  j = 0 ; j < N ; ++ j ) { 
+                  if ( mat [ i ] [ edge [ 0 ] ] != LLONG_MAX  &&  mat [ edge [ 1 ] ] [ j ] != LLONG_MAX  ) 
+                 mat [ i ] [ j ]   =   min ( mat [ i ] [ j ] , mat [ i ] [ edge [ 0 ] ] + mat [ edge [ 1 ] ] [ j ] + edge [ 2 ] ) ; 
+              } 
+          } 
+         
+          
+     
       } 
      
       int   shortestPath ( int  node1 ,   int  node2 )   { 
         
          
-          //Dijkstra 
-         vector < int >   dis ( 101 , INT_MAX ) ; 
-         priority_queue < pair < int , int > , vector < pair < int , int >> , greater < pair < int , int >> >  pq ; 
-         dis [ node1 ] = 0 ; 
-         pq . push ( { 0 , node1 } ) ; 
-         
-          while ( ! pq . empty ( ) ) 
-          { 
-              auto  node = pq . top ( ) ; 
-             pq . pop ( ) ; 
-              int  d = node . first ; 
-              int  nd = node . second ; 
-              for ( auto &  ele :  adj [ nd ] ) 
-              { 
-                  int  v = ele [ 0 ] ; 
-                  int  w = ele [ 1 ] ; 
-                 
-                  if ( d + w < dis [ v ] ) 
-                  { 
-                     dis [ v ] = d + w ; 
-                     pq . push ( { d + w , v } ) ; 
-                  } 
-              } 
-          } 
-         
-         
-          if ( dis [ node2 ] == INT_MAX ) 
-                  return   - 1 ; 
-          else 
-              return  dis [ node2 ] ; 
+          return  mat [ node1 ] [ node2 ] == LLONG_MAX ? - 1 : mat [ node1 ] [ node2 ] ; 
       } 
  } ; 
  
- /**
-  * Your Graph object will be instantiated and called as such:
-  * Graph* obj = new Graph(n, edges);
-  * obj->addEdge(edge);
-  * int param_2 = obj->shortestPath(node1,node2);
-  */
