@@ -1,0 +1,48 @@
+class   Solution   { 
+ public : 
+      int   addMinimum ( string word )   { 
+ //         vector<char> v(3,0); 
+ //         int mx=0; 
+ //         for(auto& ele: word) 
+ //         { 
+ //             v[ele-'a']++; 
+             
+ //             mx=max(mx,(int)v[ele-'a']); 
+ //         } 
+         
+ //         return 3*mx-word.size(); 
+          int  n = word . size ( ) ; 
+         
+          // if(n==1) 
+          // { 
+          //     if(word[i]=='b') 
+          //         return 
+          // } 
+          int  j = 0 ; 
+          int  ans = 0 ; 
+          for ( int  i = 1 ; i < word . size ( ) ; i ++ ) 
+          { 
+              if ( word [ i - 1 ] == word [ i ] ) 
+                 ans += 2 ; 
+              else   if ( word [ i ] - word [ i - 1 ] == 1 ) 
+                 ans += 0 ; 
+              else   if ( word [ i ]   >  word [ i - 1 ] ) 
+                 ans ++ ; 
+              else   if ( word [ i ] == 'a'   &&  word [ i - 1 ] == 'c'   ) 
+                 ans += 0 ; 
+              else  
+                 ans ++ ; 
+          } 
+         
+         ans += abs ( 'c' - word [ n - 1 ] ) ; 
+         ans += abs ( 'a' - word [ 0 ] ) ; 
+         
+          return  ans ; 
+      } 
+ } ; 
+ 
+ /*
+ "aaaabb"
+ //9
+ 
+ */
