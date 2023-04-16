@@ -1,0 +1,57 @@
+class   Solution   { 
+ public : 
+      int  mod = 1e9 + 7 ; 
+      int   solve ( int  i , int  j , vector < string > &  words ,  string &  target ,   vector < vector < int >> &  dp ,   vector < vector < int >> &  sum ) 
+      { 
+          //cout<<i<<" "<<j<<endl; 
+          if ( i >= target . size ( ) ) 
+              return   1 ; 
+          if ( j >= words [ 0 ] . size ( ) ) 
+              return   0 ; 
+          if ( dp [ i ] [ j ] != - 1 ) 
+              return  dp [ i ] [ j ] ; 
+         
+          long   long  ct = 0 ; 
+ 
+          //optimize it 
+          // for(int l=0;l<words.size();l++) 
+          // { 
+          //     for(int k=j;k<words[l].size();k++) 
+          //     {    
+                 
+          //         if( words[l][k]==target[i]){ 
+          //            // cout<<l<<" "<<k<<" "<<i<<endl; 
+          //             ct=(ct+solve(i+1,k+1,words,target,dp))%mod; 
+          //             } 
+          //     } 
+          // } 
+ 
+          //Not take 
+         ct = ( ct + solve ( i , j + 1 , words , target , dp , sum ) ) % mod ; 
+ 
+          //Take (out of all possible choice choosing 1 and then continue) 
+         ct = ( ct + ( long   long ) solve ( i + 1 , j + 1 , words , target , dp , sum ) * sum [ j ] [ target [ i ] - 'a' ] ) % mod ; 
+ 
+          return  dp [ i ] [ j ] =  ct ; 
+     
+      } 
+ 
+      int   numWays ( vector < string > &  words ,  string target )   { 
+          int  n = target . size ( ) ; 
+         vector < vector < int >>   dp ( n , vector < int >   ( 1001 , - 1 ) ) ; 
+ 
+ 
+         vector < vector < int >>   sum ( 1001 , vector < int >   ( 26 , 0 ) ) ; 
+ 
+         
+          for ( auto &  ele :  words ) 
+          {     int  k = 0 ; 
+              for ( auto &  it :  ele ) 
+              { 
+                 sum [ k ++ ] [ it - 'a' ] ++ ; 
+              } 
+             
+          } 
+          return   solve ( 0 , 0 , words , target , dp , sum ) ; 
+      } 
+ } ;
