@@ -2,14 +2,15 @@ class   Solution   {
  public : 
      vector < int >   findSmallestSetOfVertices ( int  n ,  vector < vector < int >> &  edges )   { 
          
-          //nodes with indeg ==0 ??? 
-         vector < int >  res ; 
-         vector < int >   indeg ( n , 0 ) ; 
  
-          for ( auto &  ele :  edges ) 
+         vector < int >   indeg ( n , 0 ) ; 
+         vector < int >  res ; 
+ 
+          for ( auto &   ele :  edges ) 
           { 
              indeg [ ele [ 1 ] ] ++ ; 
           } 
+ 
  
           for ( int  i = 0 ; i < n ; i ++ ) 
           { 
