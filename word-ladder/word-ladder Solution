@@ -4,41 +4,39 @@ class   Solution   {
          
          unordered_set < string >   st ( wordList . begin ( ) , wordList . end ( ) ) ; 
  
-          if ( beginWord == endWord  ||  st . count ( endWord ) == 0 ) 
-              return   0 ; 
-         
-         queue < string >  q ; 
-         q . push ( beginWord ) ; 
-          int  steps = 1 ; 
+          //bfs 
+         queue < pair < string , int >>  q ; 
+         q . push ( { beginWord , 0 } ) ; 
+ 
+          if ( beginWord == endWord ) 
+              return   1 ; 
+          if ( st . count ( beginWord ) == 1 ) 
+             st . erase ( beginWord ) ; 
+ 
           while ( ! q . empty ( ) ) 
-          {    
-              int  sz = q . size ( ) ; 
- 
-              while ( sz -- ) 
-              { 
-             string nd = q . front ( ) ; 
+          { 
+              auto  nd = q . front ( ) ; 
              q . pop ( ) ; 
-         cout << nd << endl ; 
-              for ( int  i = 0 ; i < nd . size ( ) ; i ++ ) 
-              {    
-                      char  tmp = nd [ i ] ; 
-                      for ( char  zz = 'a' ; zz <= 'z' ; zz ++ ) 
-                      { 
-                             nd [ i ] = zz ; 
-                          if ( st . count ( nd ) == 1 ) 
-                          { 
-                             q . push ( nd ) ; 
-                             st . erase ( nd ) ; 
-                          } 
  
-                          if ( nd == endWord ) 
-                              return  steps + 1 ; 
-                         
-                      } 
-                     nd [ i ] = tmp ; 
+             string cur = nd . first ; 
+              int  step = nd . second ; 
+ 
+              if ( cur == endWord ) 
+                  return  step + 1 ; 
+ 
+              for ( int  i = 0 ; i < cur . size ( ) ; i ++ ) 
+              {     char  alpha = cur [ i ] ; 
+                  for ( char  zz = 'a' ; zz <= 'z' ; zz ++ ) 
+                  { 
+                    cur [ i ] = zz ; 
+                     if ( st . count ( cur ) == 1 ) 
+                          { 
+                             q . push ( { cur , step + 1 } ) ; 
+                               st . erase ( cur ) ; 
+                          } 
+                  } 
+                 cur [ i ] = alpha ; 
               } 
-              } 
-             steps ++ ; 
           } 
           return   0 ; 
       } 
