@@ -1,60 +1,77 @@
 class   Solution   { 
  public : 
-      int   minMutation ( string startGene ,  string endGene ,  vector < string > &  bank )   { 
+      int   minMutation ( string start ,  string end ,  vector < string > &  bank )   { 
          
-          //bfs 
- 
+         
+          //graph 
+          //traversal ALGO 
+          //bfS 
+         
+         unordered_set < string >  dic ; 
+         
+          for ( int  i = 0 ; i < bank . size ( ) ; i ++ ) 
+          { 
+             dic . insert ( bank [ i ] ) ; 
+          } 
+         
+         
+          if ( dic . find ( end ) == dic . end ( ) ) 
+              return   - 1 ; 
+     
+         vector < char >  avail  =   { 'A' ,   'C' ,   'G' ,   'T' } ; 
+          unordered_set < string >  vis ; 
+         
           int  ans = 0 ; 
- 
-          if ( startGene == endGene ) 
-              return   0 ; 
-         unordered_set < string >   st ( bank . begin ( ) , bank . end ( ) ) ; 
+         
          queue < string >  q ; 
-         q . push ( startGene ) ; 
+         
+         q . push ( start ) ; 
+         vis . insert ( start ) ; 
          
           while ( ! q . empty ( ) ) 
           { 
-              int  sz = q . size ( ) ; 
-            
-              while ( sz -- ) 
+             
+              int  n = q . size ( ) ; 
+             
+              while ( n -- ) 
               { 
-                 string tp = q . front ( ) ; 
+                 
+                 string tmp = q . front ( ) ; 
                  q . pop ( ) ; 
-                  if ( tp == endGene ) 
+                 
+                 
+                  if ( tmp == end ) 
                       return  ans ; 
- 
-                  for ( int  i = 0 ; i < tp . size ( ) ; i ++ ) 
-                  { 
-                      char  tmp = tp [ i ] ; 
- 
-                     tp [ i ] = 'A' ; 
-                      if ( st . find ( tp ) != st . end ( ) ) { 
-                         q . push ( tp ) ; 
-                         st . erase ( tp ) ; 
+                 
+                  for ( int  i = 0 ; i < 8 ; i ++ ) 
+                  {    
+                      char  ori = tmp [ i ] ; 
+                      for ( int  j = 0 ; j < 4 ; j ++ ) 
+                      { 
+                         
+                         tmp [ i ] = avail [ j ] ; 
+                         
+                         
+                          if ( dic . find ( tmp ) != dic . end ( ) ) 
+                          { 
+                              if ( vis . find ( tmp ) == vis . end ( ) ) 
+                              { 
+                                 q . push ( tmp ) ; 
+                                 vis . insert ( tmp ) ; 
+                              } 
+                          } 
                       } 
- 
-                      tp [ i ] = 'C' ; 
-                      if ( st . find ( tp ) != st . end ( ) ) { 
-                         q . push ( tp ) ; 
-                         st . erase ( tp ) ;     
-                      } 
-                      tp [ i ] = 'G' ; 
-                      if ( st . find ( tp ) != st . end ( ) ) { 
-                         q . push ( tp ) ; 
-                      st . erase ( tp ) ;  
-                      } 
- 
-                      tp [ i ] = 'T' ; 
-                      if ( st . find ( tp ) != st . end ( ) ) { 
-                         q . push ( tp ) ; 
-                         st . erase ( tp ) ;  
-                      } 
-                     tp [ i ] = tmp ; 
-                     
+                     tmp [ i ] = ori ; 
                   } 
+                 
               } 
-              ans ++ ; 
+             ans ++ ; 
+             
           } 
+         
           return   - 1 ; 
+         
+         
+         
       } 
  } ;
