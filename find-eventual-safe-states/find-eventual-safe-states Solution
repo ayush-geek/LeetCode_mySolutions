@@ -1,47 +1,51 @@
 class   Solution   { 
  public : 
      vector < int >   eventualSafeNodes ( vector < vector < int >> &  graph )   { 
-          int  n = graph . size ( ) ; 
-         vector < int >  res ; 
-         vector < int >   indeg ( n , 0 ) ; 
-          vector < int >  adj [ n ] ; 
- 
-          for ( int  i = 0 ; i < graph . size ( ) ; i ++   ) 
-          { 
-              for ( auto  ele :  graph [ i ] ) 
-              { 
-                 adj [ ele ] . push_back ( i ) ; 
-                 indeg [ i ] ++ ; 
-              } 
-          } 
- 
-         queue < int >  q ; 
-          for ( int  i = 0 ; i < n ; i ++ ) 
-          { 
-              if ( indeg [ i ] == 0 ) 
-                 q . push ( i ) ; 
-          } 
- 
-          while ( ! q . empty ( ) ) 
-          { 
-              int  nd = q . front ( ) ; 
-             res . push_back ( nd ) ; 
-             q . pop ( ) ; 
- 
-              for ( auto  ele :  adj [ nd ] ) 
-              { 
-                 indeg [ ele ] -- ; 
- 
-                  if ( indeg [ ele ] == 0 ) 
-                  { 
-                     q . push ( ele ) ; 
-                  } 
- 
-              } 
-          } 
- 
-         sort ( res . begin ( ) , res . end ( ) ) ; 
          
-          return  res ; 
+          int  n = graph . size ( ) ; 
+         
+ 
+          //just start from terminal nodes 
+ 
+         vector < int >   indeg ( n , 0 ) ; 
+         vector < int >  adj [ n ] ; 
+    
+       
+ 
+         for ( int  i = 0 ; i < graph . size ( ) ; i ++ ) 
+         { 
+             for ( auto &  ele :  graph [ i ] ) 
+             { 
+                adj [ ele ] . push_back ( i ) ; 
+                indeg [ i ] ++ ; 
+             } 
+         } 
+ 
+        queue < int >  q ; 
+ 
+         for ( int  i = 0 ; i < n ; i ++ ) 
+         { 
+             if ( indeg [ i ] == 0 ) 
+                 q . push ( i ) ; 
+         } 
+ 
+        vector < int >  res ; 
+ 
+         while ( ! q . empty ( ) ) 
+         { 
+             int  nd = q . front ( ) ; 
+            res . push_back ( nd ) ; 
+            q . pop ( ) ; 
+ 
+             for ( auto & ele :  adj [ nd ] ) 
+             { 
+                indeg [ ele ] -- ; 
+                 if ( indeg [ ele ] == 0 ) 
+                 q . push ( ele ) ; 
+             } 
+         } 
+ 
+          sort ( res . begin ( ) , res . end ( ) ) ; 
+         return  res ; 
       } 
  } ;
