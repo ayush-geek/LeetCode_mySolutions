@@ -1,38 +1,36 @@
 class   Solution   { 
-  public : 
+ public : 
  
      vector < vector < int >>  res ; 
  
-      void   solve ( int  i ,  vector < vector < int >> &  graph , vector < int >  tmp ) 
+      void   solve ( int  i , vector < vector < int >> &  graph , vector < int > &  tmp ) 
       { 
+            tmp . push_back ( i ) ; 
+              if ( i == graph . size ( ) - 1 ) 
+                  { 
+                  
+                     res . push_back ( tmp ) ; 
+                     tmp . pop_back ( ) ; 
+                      return   ; 
+                  } 
  
-          if ( i == graph . size ( ) - 1 ) 
-          { 
-             tmp . push_back ( i ) ; 
-             res . push_back ( tmp ) ; 
-              return   ; 
-          } 
-         tmp . push_back ( i ) ; 
-          for ( auto  e :  graph [ i ] ) 
-          { 
-              solve ( e , graph , tmp ) ; 
-          } 
- 
+              for ( auto  ele :  graph [ i ] ) 
+              { 
+                  solve ( ele , graph , tmp ) ; 
+              } 
+         
          tmp . pop_back ( ) ; 
       } 
  
- 
- 
- 
      vector < vector < int >>   allPathsSourceTarget ( vector < vector < int >> &  graph )   { 
          
+          //Bcaktrack 
  
          vector < int >  tmp ; 
- 
           solve ( 0 , graph , tmp ) ; 
  
+ 
+ 
           return  res ; 
- 
- 
       } 
-  } ;
+ } ;
