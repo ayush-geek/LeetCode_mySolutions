@@ -1,0 +1,42 @@
+class   Solution   { 
+ public : 
+ 
+      int   dfs ( int  i , vector < int >  adj [ ] , vector < int > &  vis , vector < int > &  time ) 
+      { 
+ 
+          if ( vis [ i ] ) 
+              return   0 ; 
+         
+         vis [ i ] = 1 ; 
+          int  mxt = 0 ; 
+          int  ct = time [ i ] ; 
+ 
+          for ( auto  u :  adj [ i ] ) 
+          { 
+              if ( ! vis [ u ] ) 
+             mxt = max ( mxt , ct + dfs ( u , adj , vis , time ) ) ; 
+          } 
+ 
+          return  mxt ; 
+      } 
+ 
+ 
+      int   numOfMinutes ( int  n ,   int  headID ,  vector < int > &  manager ,  vector < int > &  informTime )   { 
+         
+ 
+         vector < int >  adj [ n ] ; 
+ 
+          for ( int  i = 0 ; i < manager . size ( ) ; i ++ ) 
+          { 
+                  if ( manager [ i ] != - 1 ) 
+                  { 
+                     adj [ manager [ i ] ] . push_back ( i ) ; 
+                  } 
+ 
+ 
+          } 
+ 
+         vector < int >   vis ( n , 0 ) ; 
+          return   dfs ( headID , adj , vis , informTime ) ; 
+      } 
+ } ;
