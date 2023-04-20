@@ -1,0 +1,45 @@
+class   Solution   { 
+ public : 
+ 
+       void   solve ( int  i , int  j , vector < vector < int >> &  grid1 , vector < vector < int >> &  grid2  , vector < vector < int >> &  vis , int &  res ) 
+      {    
+          int  n = grid1 . size ( ) ; 
+          int  m = grid1 [ 0 ] . size ( ) ; 
+          if ( i < 0   ||  i >= n  ||  j < 0   ||  j >= m   || grid2 [ i ] [ j ] == 0   ||  vis [ i ] [ j ] ) 
+              return   ; 
+          if ( grid2 [ i ] [ j ] == 1   &&  grid1 [ i ] [ j ] == 0 ) 
+             res = 0 ; 
+         
+         
+         vis [ i ] [ j ] = 1 ; 
+          solve ( i - 1 , j , grid1 , grid2 , vis , res ) ; 
+           solve ( i , j - 1 , grid1 , grid2 , vis , res ) ; 
+          solve ( i + 1 , j , grid1 , grid2 , vis , res ) ; 
+          solve ( i , j + 1 , grid1 , grid2 , vis , res ) ; 
+         
+      } 
+ 
+   
+ 
+ 
+      int   countSubIslands ( vector < vector < int >> &  grid1 ,  vector < vector < int >> &  grid2 )   { 
+          int  n = grid1 . size ( ) ; 
+          int  m = grid1 [ 0 ] . size ( ) ;    
+          int  ans = 0 ; 
+         vector < vector < int >>   vis ( n , vector < int >   ( m , 0 ) ) ; 
+        
+           for ( int  i = 0 ; i < n ; i ++ ) 
+          {    
+              for ( int  j = 0 ; j < m ; j ++ ) 
+              { 
+                  if ( grid2 [ i ] [ j ] == 1   &&   ! vis [ i ] [ j ]   ) 
+                  {    
+                     int  res = 1 ; 
+                      solve ( i , j , grid1 , grid2 , vis , res ) ; 
+                     ans += res ;    
+                  } 
+              } 
+          } 
+          return  ans ; 
+      } 
+ } ;
