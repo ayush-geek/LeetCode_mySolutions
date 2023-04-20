@@ -1,36 +1,39 @@
 class   Solution   { 
  public : 
  
- 
-      int   solve ( int  i , int  j , vector < vector < int >> &  grid , vector < vector < int >> &  vis ) 
-      {    
-          int  n = grid . size ( ) ; 
+      void   dfs ( int  i , int  j , vector < vector < int >> &  grid , vector < vector < int >> &  vis , int &  tmp ) 
+      { 
+           int  n = grid . size ( ) ; 
           int  m = grid [ 0 ] . size ( ) ; 
-          if ( i < 0   ||  i >= n  ||  j < 0   ||  j >= m  ||  grid [ i ] [ j ] == 0   ||  vis [ i ] [ j ] == 1   ) 
-              return   0 ; 
+ 
+          if ( i < 0   ||  i >= n  ||  j < 0   ||  j >= m  ||  vis [ i ] [ j ]   ||   ! grid [ i ] [ j ] ) 
+              return   ; 
          
          vis [ i ] [ j ] = 1 ; 
-         int  a =   solve ( i - 1 , j , grid , vis ) ; 
-          int  b =   solve ( i , j - 1 , grid , vis ) ; 
-          int  c = solve ( i + 1 , j , grid , vis ) ; 
-          int  d = solve ( i , j + 1 , grid , vis ) ; 
-          return   1 + a + b + c + d ; 
+         tmp ++ ; 
+ 
+          dfs ( i - 1 , j , grid , vis , tmp ) ; 
+           dfs ( i + 1 , j , grid , vis , tmp ) ; 
+            dfs ( i , j - 1 , grid , vis , tmp ) ; 
+             dfs ( i , j + 1 , grid , vis , tmp ) ; 
       } 
+ 
       int   maxAreaOfIsland ( vector < vector < int >> &  grid )   { 
           int  n = grid . size ( ) ; 
-          int  m = grid [ 0 ] . size ( ) ;    
-          int  ans = 0 ; 
+          int  m = grid [ 0 ] . size ( ) ; 
+ 
          vector < vector < int >>   vis ( n , vector < int >   ( m , 0 ) ) ; 
-         
+          int  ans = 0 ; 
           for ( int  i = 0 ; i < n ; i ++ ) 
-          {    
+          { 
               for ( int  j = 0 ; j < m ; j ++ ) 
               { 
-                  if ( ! vis [ i ] [ j ]   &&  grid [ i ] [ j ] == 1 ) 
-                  {     int  ct = 0 ; 
-                     ct += solve ( i , j , grid , vis ) ; 
-                     ans = max ( ans , ct ) ;    
-                  } 
+                  if ( grid [ i ] [ j ] == 1   &&   ! vis [ i ] [ j ] ) 
+                      { 
+                          int  tmp = 0 ; 
+                          dfs ( i , j , grid , vis , tmp ) ; 
+                         ans = max ( ans , tmp ) ; 
+                      } 
               } 
           } 
           return  ans ; 
