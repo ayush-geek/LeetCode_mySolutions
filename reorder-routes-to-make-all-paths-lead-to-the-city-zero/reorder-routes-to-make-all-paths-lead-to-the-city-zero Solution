@@ -1,0 +1,50 @@
+class   Solution   { 
+ public : 
+ 
+      void   dfs ( int  i , vector < int >  adj [ ] , map < pair < int , int > , int > &  st , vector < int > &  vis , int &  ct ) 
+      { 
+         vis [ i ] = 1 ; 
+ 
+          for ( auto &  ele :  adj [ i ] ) 
+          { 
+              if ( ! vis [ ele ] ) 
+              {    
+                  if ( st . find ( { ele , i } ) == st . end ( ) ) 
+                  { 
+                           ct ++ ; 
+                            //cout<<i<<" "<<ele<<endl; 
+                  } 
+                   
+                  dfs ( ele , adj , st , vis , ct ) ; 
+              } 
+          } 
+      } 
+ 
+      int   minReorder ( int  n ,  vector < vector < int >> &  connections )   { 
+         
+         vector < int >  adj [ n ] ; 
+          // vector<int> radj[n]; 
+     map < pair < int , int > , int >  st ; 
+         vector < int >   indeg ( n , 0 ) ; 
+         vector < int >   outdeg ( n , 0 ) ; 
+          for ( int  i = 0 ; i < connections . size ( ) ; i ++ ) 
+          { 
+              int  a = connections [ i ] [ 0 ] ; 
+              int  b = connections [ i ] [ 1 ] ; 
+ 
+             indeg [ b ] ++ ; 
+             outdeg [ a ] ++ ; 
+             adj [ a ] . push_back ( b ) ; 
+             adj [ b ] . push_back ( a ) ; 
+             st [ { a , b } ] ++ ; 
+          } 
+ 
+          //Leaf node  
+          //outdeg + indeg ==1   
+ 
+         vector < int >   vis ( n , 0 ) ; 
+          int  ct = 0 ; 
+          dfs ( 0 , adj , st , vis , ct ) ; 
+          return  ct ; 
+      } 
+ } ;
