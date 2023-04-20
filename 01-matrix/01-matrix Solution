@@ -1,5 +1,5 @@
 class   Solution   { 
-  public : 
+ public : 
      vector < vector < int >>   updateMatrix ( vector < vector < int >> &  mat )   { 
          
           //a cell 0 will have distance 0 
@@ -49,4 +49,4 @@ class   Solution   {
           } 
           return  mat ; 
       } 
-  } ;
+ } ;
