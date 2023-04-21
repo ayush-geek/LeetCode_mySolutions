@@ -1,0 +1,28 @@
+class   Solution   { 
+ public : 
+ 
+      void   solve ( int  i , int  j , int  n , string tmp , vector < string > &  res ) 
+      { 
+          if ( i == n  &&  j == n ) 
+          { 
+             res . push_back ( tmp ) ; 
+              return   ; 
+          } 
+ 
+          if ( i < n ) 
+          { 
+              solve ( i + 1 , j , n , tmp + '(' , res ) ; 
+          } 
+          if ( j < i ) 
+          { 
+              solve ( i , j + 1 , n , tmp + ')' , res ) ; 
+          } 
+      } 
+ 
+     vector < string >   generateParenthesis ( int  n )   { 
+         vector < string >  res ; 
+         string tmp ; 
+          solve ( 0 , 0 , n , tmp , res ) ; 
+          return  res ; 
+      } 
+ } ;
