@@ -1,0 +1,25 @@
+class   Solution   { 
+ public : 
+     string  reverseWords ( string s )   { 
+          int  n = s . size ( ) - 1 ; 
+ 
+         stringstream  ss ( s ) ; 
+         string tmp ; 
+         string res ; 
+ 
+          while ( ss >> tmp ) 
+          {    
+             
+              if ( ! res . empty ( ) ) 
+                 res . push_back ( ' ' ) ; 
+              reverse ( tmp . begin ( ) , tmp . end ( ) ) ; 
+          
+             res += tmp ; 
+ 
+          } 
+ 
+          reverse ( res . begin ( ) , res . end ( ) ) ; 
+          return  res ; 
+ 
+      } 
+ } ;
