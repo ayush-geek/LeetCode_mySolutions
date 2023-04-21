@@ -1,0 +1,46 @@
+class   Solution   { 
+ public : 
+ 
+ 
+      void   solve ( int  i , int  sm , int  k , int  n , vector < int > &  tmp , vector < vector < int >> &  res ) 
+      { 
+ 
+              if ( tmp . size ( ) == k ) 
+              { 
+                  if ( sm == 0 ) 
+                     res . push_back ( tmp ) ; 
+                  return   ; 
+              } 
+ 
+ 
+              for ( int  j = i ; j <= 9 ; j ++ ) 
+              {    
+                  if ( j <= sm ) 
+                  { 
+                 tmp . push_back ( j ) ; 
+                  solve ( j + 1 , sm - j , k , n , tmp , res ) ; 
+                 tmp . pop_back ( ) ; 
+                  } 
+ 
+ 
+              } 
+ 
+      } 
+ 
+ 
+ 
+ 
+     vector < vector < int >>   combinationSum3 ( int  k ,   int  n )   { 
+         
+ 
+          //Normal Recursion Question 
+ 
+         vector < vector < int >>  res ; 
+         vector < int >  tmp ; 
+          int  csum = 0 ; 
+          solve ( 1 , n , k , n , tmp , res ) ; 
+ 
+ 
+          return  res ; 
+      } 
+ } ;
