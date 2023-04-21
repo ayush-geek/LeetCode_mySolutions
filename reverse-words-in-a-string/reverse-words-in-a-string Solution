@@ -1,25 +1,95 @@
 class   Solution   { 
  public : 
      string  reverseWords ( string s )   { 
+         
           int  n = s . size ( ) - 1 ; 
- 
-         stringstream  ss ( s ) ; 
-         string tmp ; 
-         string res ; 
- 
-          while ( ss >> tmp ) 
-          {    
-             
-              if ( ! res . empty ( ) ) 
-                 res . push_back ( ' ' ) ; 
-              reverse ( tmp . begin ( ) , tmp . end ( ) ) ; 
-          
-             res += tmp ; 
- 
+         string res = "" ; 
+         
+         cout << s . size ( ) << endl ; 
+          int  i = 0 ; 
+          int  j = n ; 
+         
+         
+          while ( s [ i ] == ' ' ) 
+             i ++ ; 
+         
+          while ( s [ j ] == ' ' ) 
+             j -- ; 
+     
+         cout << s [ i ] << " " << s [ j ] << endl ; 
+        //  vector<string> v; 
+         
+         
+ //         int l=i; 
+ //        for(int k=i;k<=j;k++) 
+ //        { 
+ //            if(s[i]==' ') 
+ //            { 
+ //                res.push_back(s.substr()); 
+ //            } 
+            
+ //        } 
+         
+          int  ln = 0 ; 
+         
+           for ( int  l = i ; l <= j ; l ++ ) 
+          {    ln ++ ; 
+              cout << l << " " << s [ l ] << endl ; 
+             if ( s [ l ] == ' ' ) 
+             { 
+                 int  m = l + 1 ; 
+                
+                 int  len = 0 ; 
+                 while ( s [ m ] == ' ' ) 
+                 {     
+                    len ++ ; 
+                    m ++ ; 
+                 } 
+               
+                 //cout<<l<<" "<<m<<endl; 
+                s . erase ( l , len ) ; 
+                // l+=len; 
+                
+                j = j - len ; 
+             } 
+              
           } 
- 
+         
+         
+         
+         res += s . substr ( i , ln ) ; 
+         
+        //  cout<<res.size(); 
+        
+         
+         
+         cout << " " << res . size ( ) << endl ; 
           reverse ( res . begin ( ) , res . end ( ) ) ; 
+         
+         
+         
+         
+          int  k = 0 ; 
+          for ( int  i = 0 ; i <= res . size ( ) ; i ++ ) 
+          { 
+              if ( i == res . size ( ) ) 
+              { 
+                   reverse ( res . begin ( ) + k , res . begin ( ) + i ) ; 
+              } 
+             
+              else   if ( res [ i ] == ' ' ) { 
+                  reverse ( res . begin ( ) + k , res . begin ( ) + i ) ; 
+                 k = i + 1 ;    
+              } 
+         
+          } 
+         
+         
           return  res ; 
- 
+     
+     
       } 
+     
+     
+     
  } ;
