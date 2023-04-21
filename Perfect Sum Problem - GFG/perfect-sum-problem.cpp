@@ -4,31 +4,46 @@ using namespace std;
 
 // } Driver Code Ends
 class Solution{
-    
+
 	public:
-	 int mod=1e9+7;
-	    
+	int mod=1e9+7;
+	  int solve(int i,int arr[],int& ct,int& sum,int& cs,int& n, vector<vector<int>>& dp)
+    {   
+        
+        if(i==n)
+        {
+                
+             return cs==sum;
+        }
+        
+        if(dp[i][cs]!=-1)
+            return dp[i][cs];
+        
+        //take
+        int l=0;
+        if(cs+arr[i]<=sum)
+        {
+        cs+=arr[i];
+        l=solve(i+1,arr,ct,sum,cs,n,dp)%mod;
+        cs-=arr[i];
+        }
+        
+        //Not_take
+          int r=solve(i+1,arr,ct,sum,cs,n,dp)%mod;
+    
+        
+        return dp[i][cs]=(l+r)%mod;
+    }
+  
+	
 	int perfectSum(int arr[], int n, int sum)
 	{
+        int ct=0;
+        int cs=0;
+         vector<vector<int>> dp(n,vector<int> (sum+1,-1));
+        return solve(0,arr,ct,sum,cs,n,dp);
        
-       
-        vector<vector<int>> dp(n+1,vector<int>  (sum+1,0));
-            
-            // for(int i=0;i<=n;i++)
-            //     dp[i][0]=1;
-                
-            dp[0][0]=1;
-            for(int i=1;i<=n;i++)
-            {
-                for(int j=0;j<=sum;j++)
-                {
-                    if(j>=arr[i-1])
-                        dp[i][j]+=dp[i-1][j-arr[i-1]];
-                    
-                    dp[i][j]=(dp[i][j]+dp[i-1][j])%mod;
-                }
-            }
-            return dp[n][sum];
+        
 	}
 	  
 };
