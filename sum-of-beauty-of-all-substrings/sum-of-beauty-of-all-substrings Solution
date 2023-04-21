@@ -1,0 +1,65 @@
+class   Solution   { 
+ public : 
+      int   beautySum ( string s )   { 
+         
+         
+          //Generating all Substrings 
+         
+          // unordered_map<int,int> mp; 
+         
+         
+          int  cnt = 0 ; 
+         
+          for ( int  i = 0 ; i < s . size ( ) ; i ++ ) 
+          { 
+             unordered_map < char , int >  mp ; 
+            for ( int  j = i ; j < s . size ( ) ; j ++ ) 
+            {  
+            // int mx=0; 
+            // int mn=0; 
+             
+                   mp [ s [ j ] ] ++ ; 
+                   
+                  
+              
+            
+ //            for(char alpha='a';alpha<='z';alpha++) 
+ //            { 
+ //                if(mx==0 && mn==0 && mp[alpha]!=0) 
+ //                { 
+ //                    mx=mp[alpha]; 
+ //                    mn=mp[alpha]; 
+ //                } 
+                
+                
+ //                else if(mp[alpha]>mx) 
+ //                    mx=mp[alpha]; 
+ //                else if(mn>mp[alpha] && mp[alpha]!=0) 
+ //                    mn=mp[alpha]; 
+                    
+ //            } 
+            
+ //           // cout<<j<<" -"<<i<<" "<<mx-mn<<endl; 
+ //            cnt+=(mx-mn); 
+               
+               
+                int   mx = INT_MIN , mn = INT_MAX ; 
+              for ( auto  it = mp . begin ( ) ; it != mp . end ( ) ; it ++ ) 
+              { 
+                mn = min ( mn , it -> second ) ; 
+                 mx = max ( mx , it -> second ) ; 
+              } 
+               
+               cnt += mx - mn ; 
+               
+            } 
+             
+             
+             
+             
+          } 
+         
+         
+          return  cnt ; 
+      } 
+ } ;
