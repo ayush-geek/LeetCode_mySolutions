@@ -1,82 +1,67 @@
 class   Solution   { 
- public : 
+ public :  
  
-       bool   isAllowed ( int  row , int  col , vector < string > & board ) 
-      { 
-         
-          for ( int  i = 0 ; i < row ; i ++ ) 
-          { 
-              if ( board [ i ] [ col ] == 'Q' ) 
-                  return   false ; 
-          } 
+      bool   safe ( int  i , int  j , vector < string > &  tmp ) 
+      {     int  n = tmp . size ( ) ; 
+          int  l = i - 1 , r = j - 1 ; 
+        
  
-          // for(int j=0;j<col;j++) 
-          // { 
-          //     if(board[row][j]=='Q') 
-          //         return false; 
-          // } 
-          int  n = board . size ( ) ; 
-          int  i = row ; 
-          int  j = col ; 
-          while ( i >= 0   &&  j >= 0 ) 
-          { 
-              if ( board [ i -- ] [ j -- ] == 'Q' ) 
-                  return   false ; 
-          } 
-          // i=row; 
-          // j=col; 
-          // while(i<n && j>=0) 
-          // { 
-          //     if(board[i++][j--]=='Q') 
-          //         return false; 
-          // } 
-         i = row ; 
-         j = col ; 
-          while ( i >= 0   &&  j < n ) 
-          { 
-              if ( board [ i -- ] [ j ++ ] == 'Q' ) 
-                  return   false ; 
-          } 
-          // i=row; 
-          // j=col; 
-          // while(i<n && j<n) 
-          // { 
-          //     if(board[i++][j++]=='Q') 
-          //         return false; 
-          // } 
-          return   true ; 
- 
-      } 
-      void   solve ( int  i , int  n , vector < string > & board , vector < vector < string >> & allcases ) 
-      { 
-          if ( i == n ) 
-          {    
-             allcases . push_back ( board ) ; 
-              return ; 
-          } 
-          for ( int  j = 0 ; j < n ; j ++ ) 
-          { 
-              if ( isAllowed ( i , j , board ) == false ) 
-                  continue ; 
-             board [ i ] [ j ] = 'Q' ; 
-              solve ( i + 1 , n , board , allcases ) ; 
-             board [ i ] [ j ] = '.' ; 
-          } 
-      } 
-     vector < vector < string >>   solveNQueens ( int  n )   { 
-         vector < vector < string >> allcases ; 
-         vector < string > board ( n , string ( n , '.' ) ) ; 
-          solve ( 0 , n , board , allcases ) ; 
-          for ( auto  i : allcases ) 
-          { 
-              for ( auto  j : i ) 
+          while ( l >= 0   &&  r >= 0   ) 
               { 
-                  for ( auto  k : j ) 
-                     cout << k << " " ; 
-                 cout << "\n" ; 
+                  if ( tmp [ l ] [ r ] == 'Q' ) 
+                      return   false ; 
+                 l -- ; 
+                 r -- ; 
               } 
-             cout << "\\\\\\\\\\\\\\\\\\\\\\\n" ; 
+         l = i - 1 ; 
+         r = j + 1 ; 
+        
+          while ( l >= 0   &&  r < n  ) 
+          { 
+               if ( tmp [ l ] [ r ] == 'Q' ) 
+                      return   false ; 
+                 l -- ; 
+                 r ++ ; 
           } 
-          return  allcases ; 
+ 
+         l = i - 1 ; 
+        
+ 
+          while ( l >= 0   ) 
+          { 
+               if ( tmp [ l ] [ j ] == 'Q' ) 
+                      return   false ; 
+             l -- ; 
+               
+          } 
+          return   true ; 
       } 
- } ; 
+ 
+      void   solve ( int  i , int  n , vector < string > &  tmp , vector < vector < string >> &  res ) 
+      {    
+          if ( i == n ) 
+              { 
+                 res . push_back ( tmp ) ; 
+                  return   ; 
+              } 
+ 
+          for ( int  j = 0 ; j < n ; j ++ ) 
+          {    
+              if ( safe ( i , j , tmp ) ) 
+              { 
+                 tmp [ i ] [ j ] = 'Q' ; 
+                  solve ( i + 1 , n , tmp , res ) ; 
+                 tmp [ i ] [ j ] = '.' ; 
+              } 
+ 
+          } 
+      } 
+ 
+     vector < vector < string >>   solveNQueens ( int  n )   { 
+         vector < vector < string >>  res ; 
+         vector < string >   tmp ( n ,   string   ( n , '.' ) ) ; 
+        
+          solve ( 0 , n , tmp , res ) ; 
+          return  res ; 
+      } 
+ } ;
