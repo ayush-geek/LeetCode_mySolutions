@@ -1,5 +1,5 @@
 class   Solution   { 
-  public : 
+ public : 
  
       bool   ispal ( int  i , int  j , string s ) 
       { 
@@ -51,4 +51,4 @@ class   Solution   {
  
           return  res ; 
       } 
-  } ;
+ } ;
