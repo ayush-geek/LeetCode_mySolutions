@@ -1,0 +1,43 @@
+class   Solution   { 
+ public : 
+      int  mod  = 1e9 + 7 ;  
+      int   cal ( int  i  ,   int   &  n  ,  string  &  s  ,   int &  k  ,  vector < int > &  dp ) 
+      { 
+          if ( i == n ) 
+              return   1   ; 
+          if ( s [ i ] == '0' )  
+              return   0   ;  
+         
+         
+          if ( dp [ i ] != - 1 ) 
+              return  dp [ i ]   ; 
+         
+          long   long   ans  =   0   ,  num  =   0 ;  
+         
+          for ( int  j =  i  ;  j < n  ; j ++   ) 
+          { 
+             
+             num  =  num * 10   +   ( s [ j ] - '0' )   ; 
+              if ( num > k ) 
+                  break ;  
+              if ( num >= 1   &&  num <= k ) 
+              { 
+               ans = ( ans + cal ( j + 1   , n  , s  ,  k  ,  dp  ) ) % mod  ;  
+              } 
+          } 
+         
+         
+          return  dp [ i ] =   ans % mod ;  
+      } 
+     
+     
+     
+     
+      int   numberOfArrays ( string s ,   int  k )   { 
+     
+         vector < int > dp ( s . length ( ) ,   - 1   ) ; 
+          int  n  = s . length ( )   ; 
+          return   cal (   0 ,  n  ,  s  ,  k  ,  dp  )   ; 
+         
+      } 
+ } ;
