@@ -1,36 +1,31 @@
 class   Solution   { 
  public : 
+ 
+ 
+ 
      string  longestPalindrome ( string s )   { 
-          //dp 
+         
           int  n = s . size ( ) ; 
          vector < vector < int >>   dp ( n + 1 , vector < int >   ( n + 1 , 0 ) ) ; 
          string res ; 
- 
           for ( int  i = n - 1 ; i >= 0 ; i -- ) 
           { 
               for ( int  j = i ; j < n ; j ++ ) 
-              {    
-                  int  len = j - i + 1 ; 
+              { 
                   if ( i == j ) { 
-                     dp [ i ] [ j ] = 1 ;  
+                     dp [ i ] [ j ] = 1 ; 
+                      if ( j - i + 1 > res . size ( ) ) 
+                         res = s . substr ( i , 1 ) ; 
+                      } 
+                  else   if ( s [ i ] == s [ j ] ) { 
+                      if ( j - i <= 2   ||  dp [ i + 1 ] [ j - 1 ] ) 
+                         dp [ i ] [ j ] = 1 ; 
+                      if ( dp [ i ] [ j ]    &&  j - i + 1 > res . size ( ) ) 
+                         res = s . substr ( i , j - i + 1 ) ; 
                   } 
-                  else   if ( s [ i ] == s [ j ] ) 
-                  { 
-                      if ( len == 2 ) 
-                         dp [ i ] [ j ] = 1 ; 
-                      else   if ( dp [ i + 1 ] [ j - 1 ] == 1 ) 
-                         dp [ i ] [ j ] = 1 ; 
- 
-                 
               } 
- 
-                      if ( dp [ i ] [ j ]   &&  res . size ( ) < len ) 
-                      {    
-                          //cout<<i<<" "<<j<<" "<<len<<endl; 
-                         res = s . substr ( i , len ) ; 
-                      }  
-                  } 
           } 
+ 
           return  res ; 
       } 
  } ;
