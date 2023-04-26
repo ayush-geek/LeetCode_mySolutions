@@ -1,0 +1,19 @@
+class   Solution   { 
+ public : 
+      int   addDigits ( int  num )   { 
+         
+ 
+          while ( 1 ) 
+          {    
+              long   long  sm = 0 ; 
+              while ( num > 0 ) { 
+                 sm += num % 10 ; 
+                 num = num / 10 ; 
+              } 
+             num = sm ; 
+             if ( num <= 9 ) 
+              return  num ; 
+          } 
+          return   0 ; 
+      } 
+ } ;
