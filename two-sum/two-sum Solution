@@ -1,0 +1,21 @@
+class   Solution   { 
+ public : 
+     vector < int >   twoSum ( vector < int > &  nums ,   int  target )   { 
+         vector < int >  res ; 
+ 
+         map < int , int >  mp ; 
+          int  k = 0 ; 
+          for ( auto &  ele :  nums ) 
+          { 
+                  if ( mp . find ( target - ele ) != mp . end ( ) ) 
+                      { 
+                         res . push_back ( mp [ target - ele ] ) ; 
+                         res . push_back ( k ) ; 
+                          return  res ; 
+                      } 
+                 mp [ ele ] = k ; 
+                 k ++ ; 
+          } 
+          return  res ; 
+      } 
+ } ;
