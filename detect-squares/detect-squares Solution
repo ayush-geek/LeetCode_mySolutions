@@ -1,0 +1,46 @@
+class   DetectSquares   { 
+ public : 
+ 
+     map < vector < int > , int >  mp ; 
+    
+      DetectSquares ( )   { 
+        
+      } 
+     
+      void   add ( vector < int >  point )   { 
+       
+      
+ 
+        mp [ point ] ++ ; 
+ 
+      } 
+     
+      int   count ( vector < int >  point )   { 
+      int  a = point [ 0 ] ; 
+      int  b = point [ 1 ] ; 
+    
+          int  ct = 0 ; 
+          for ( auto &  ele :  mp ) 
+          { 
+            int  x = ele . first [ 0 ] ; 
+            int  y = ele . first [ 1 ] ; 
+ 
+            if ( x != a  &&  y != b  && ( abs ( x - a ) == abs ( y - b ) ) ) 
+            {   
+              int  z1 = mp [ { x , y } ] ; 
+              int  z2 = mp [ { a , y } ] ; 
+              int  z3 = mp [ { x , b } ] ; 
+             ct += z1 * z2 * z3 ; 
+            
+            } 
+          } 
+          return  ct ; 
+      } 
+ } ; 
+ 
+ /**
+  * Your DetectSquares object will be instantiated and called as such:
+  * DetectSquares* obj = new DetectSquares();
+  * obj->add(point);
+  * int param_2 = obj->count(point);
+  */
