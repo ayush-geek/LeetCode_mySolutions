@@ -1,0 +1,21 @@
+class   Solution   { 
+ public : 
+      int   maxArea ( vector < int > &  height )   { 
+          //greedy ->2 pointers 
+          int  l = 0 ; 
+          int  r = height . size ( ) - 1 ; 
+          int  ans = 0 ; 
+          while ( l < r ) 
+          {    
+              //cout<<r<<" "<<l<<endl; 
+              int  cur = min ( height [ l ] , height [ r ] ) * ( r - l ) ; 
+             ans = max ( ans , cur ) ; 
+        //  cout<<cur<<endl; 
+              if ( height [ l ] <= height [ r ] ) 
+                 l ++ ; 
+              else 
+                 r -- ; 
+          } 
+          return  ans ; 
+      } 
+ } ;
