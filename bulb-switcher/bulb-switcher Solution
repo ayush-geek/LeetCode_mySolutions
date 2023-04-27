@@ -1,0 +1,16 @@
+class   Solution   { 
+ public : 
+      int   bulbSwitch ( int  n )   { 
+       
+        //equilvalent to Perfext SQUARE LESS THAN OR EQUAL TO SQRTN 
+      int  ct = 0 ; 
+        for ( int  i = 1 ; i <= sqrt ( n ) ; i ++ ) 
+        { 
+          if ( i * i <= n ) 
+           ct ++ ; 
+        } 
+ 
+          return  ct ; 
+ 
+      } 
+ } ;
