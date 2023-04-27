@@ -1,0 +1,51 @@
+class   Solution   { 
+ public : 
+      int   maximumScore ( vector < int > &  scores ,  vector < vector < int >> &  edges )   { 
+          int  n = scores . size ( ) ; 
+         vector < vector < int >>   v ( n ) ; 
+ 
+          for ( int  i = 0 ; i < edges . size ( ) ; i ++ ) 
+          { 
+             v [ edges [ i ] [ 0 ] ] . push_back ( edges [ i ] [ 1 ] ) ; 
+             v [ edges [ i ] [ 1 ] ] . push_back ( edges [ i ] [ 0 ] ) ; 
+ 
+          } 
+ 
+          auto  cmp = [ & scores ] ( int  a , int  b ) 
+          { 
+              return  scores [ a ] > scores [ b ] ; 
+          } ; 
+ 
+          for ( int  i = 0 ; i < n ; i ++ ) 
+          { 
+              sort ( v [ i ] . begin ( ) , v [ i ] . end ( ) , cmp ) ; 
+          } 
+          int  ans = - 1 ; 
+          for ( auto &  ele :  edges ) 
+          { 
+              int  a = ele [ 0 ] ; 
+              int  b = ele [ 1 ] ; 
+              int  l = scores [ a ] + scores [ b ] ; 
+ 
+ 
+              for ( int  i = 0 ; i < min ( 3 , ( int ) v [ a ] . size ( ) ) ; i ++ ) 
+              {    
+                  int  z = v [ a ] [ i ] ; 
+                  int  ca = scores [ z ] ; 
+                  if ( z == b ) 
+                      continue ; 
+ 
+                  for ( int  j = 0 ; j < min ( 3 , ( int ) v [ b ] . size ( ) ) ; j ++ ) 
+                  { 
+                      int  z2 = v [ b ] [ j ] ; 
+                      int  cb = scores [ z2 ] ; 
+                      if ( z2 == a  ||  z2 == z ) 
+                          continue ; 
+                     ans = max ( ans , ca + cb + l ) ; 
+                  } 
+              } 
+          } 
+ 
+          return  ans ; 
+      } 
+ } ;
