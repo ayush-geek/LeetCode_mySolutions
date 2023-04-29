@@ -1,0 +1,95 @@
+class   DSU { 
+      public : 
+     vector < int >  parent , size ; 
+ 
+      DSU ( int  n ) 
+      { 
+         parent . resize ( n + 1 ) ; 
+         size . resize ( n + 1 , 1 ) ; 
+ 
+          // iota(parent.begin(),parent.end(),0); 
+ 
+          for ( int  i = 0 ; i < parent . size ( ) ; i ++ ) 
+             parent [ i ] = i ; 
+      } 
+ 
+      int   findUpar ( int  node ) 
+      { 
+          if ( parent [ node ] == node ) 
+              return  node ; 
+         
+          return  parent [ node ] = findUpar ( parent [ node ] ) ; 
+      } 
+ 
+      void   unionBysize ( int  a , int  b ) 
+      { 
+           int  pa = findUpar ( a ) ; 
+              int  pb = findUpar ( b ) ; 
+ 
+              if ( pa == pb ) 
+                  return   ; 
+             
+              if ( size [ pa ] > size [ pb ] ) 
+              { 
+                 size [ pa ] += size [ pb ] ; 
+                 parent [ pb ] = pa ; 
+              } 
+              else 
+              { 
+                  size [ pb ] += size [ pa ] ; 
+                 parent [ pa ] = pb ; 
+              } 
+ 
+      } 
+ } ; 
+ 
+ 
+ class   Solution   { 
+ public : 
+ 
+      static   bool   cmp   ( vector < int > &  a , vector < int > &  b ) 
+          { 
+              return  a [ 2 ] < b [ 2 ] ; 
+          } 
+     vector < bool >   distanceLimitedPathsExist ( int  n ,  vector < vector < int >> &  edgeList ,  vector < vector < int >> &  queries )   { 
+         vector < bool >   res ( queries . size ( ) , true ) ; 
+         DSU  ds ( n ) ; 
+ 
+         map < vector < int > , int >  mp ; 
+           for ( int  i = 0 ; i < queries . size ( ) ; i ++ ) 
+          { 
+             mp [ queries [ i ] ] = i ; 
+          } 
+          // auto cmp=[](vector<int>& a,vector<int>& b) 
+          // { 
+          //     return a[2]<b[2]; 
+          // }; 
+          sort ( queries . begin ( ) , queries . end ( ) , cmp ) ; 
+          sort ( edgeList . begin ( ) , edgeList . end ( ) , cmp ) ; 
+ 
+          int  k = 0 ; 
+ 
+          for ( int  i = 0 ; i < queries . size ( ) ; i ++ ) 
+          { 
+              int  a = queries [ i ] [ 0 ] ; 
+              int  b = queries [ i ] [ 1 ] ; 
+              int  d = queries [ i ] [ 2 ] ; 
+ 
+              while ( k < edgeList . size ( )   &&  edgeList [ k ] [ 2 ] < d ) 
+              { 
+                 ds . unionBysize ( edgeList [ k ] [ 0 ] , edgeList [ k ] [ 1 ] ) ; 
+                 k ++ ; 
+              } 
+              //cout<<d<<" "<<k<<endl; 
+              int  pa = ds . findUpar ( a ) ; 
+              int  pb = ds . findUpar ( b ) ; 
+ 
+              if ( pa == pb ) 
+                 res [ mp [ queries [ i ] ] ] = ( true ) ; 
+              else 
+              res [ mp [ queries [ i ] ] ] = false ; 
+            
+          } 
+          return  res ; 
+      } 
+ } ;
