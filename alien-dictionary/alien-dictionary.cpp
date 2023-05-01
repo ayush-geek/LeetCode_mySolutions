@@ -1,0 +1,66 @@
+class Solution {
+public:
+    string alienOrder(vector<string>& words) {
+        string res;
+        //just make a adj list
+        vector<char> indeg(256,0);
+        set<char> st;
+        
+        for(auto& ele: words)
+        {
+            for(auto& it: ele)
+                st.insert(it);
+        }
+        
+        vector<char> adj[256];
+        for(int i=0;i<words.size()-1;i++)
+        {   
+            int fg=0;
+            
+            for(int j=0;j<min(words[i].size(),  words[i+1].size());j++)
+            {
+                if(words[i][j]!=words[i+1][j])
+                {
+                    adj[words[i][j]].push_back(words[i+1][j]);
+                    indeg[words[i+1][j]]++;
+                    fg=1;
+                    break;
+                }
+                
+                // st.insert(word[i][j]);
+                //  st.insert(word[i+1][j]);
+
+            }
+            
+            if(fg==0 && words[i].size()>words[i+1].size())
+                    return "";
+                
+        }
+        
+                queue<char> q;
+
+        for(auto& ele: st)
+        {
+            if(indeg[ele]==0)
+                    q.push(ele);
+        }
+        
+        while(!q.empty())
+        {
+            auto nd=q.front();
+            q.pop();
+            res.push_back(nd);
+            
+            for(auto& ele: adj[nd])
+            {
+                indeg[ele]--;
+                
+                if(indeg[ele]==0)
+                        q.push(ele);
+            }
+        }
+        if(res.size()!=st.size())
+                return "";
+        return res;
+    }
+};
