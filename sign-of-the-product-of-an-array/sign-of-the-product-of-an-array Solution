@@ -1,0 +1,22 @@
+class   Solution   { 
+ public : 
+      int   arraySign ( vector < int > &  nums )   { 
+          int  cp = 0 ; 
+          int  cn = 0 ; 
+          int  cz = 0 ; 
+ 
+          for ( auto &  ele :  nums ) 
+          { 
+              if ( ele > 0 ) 
+                 cp ++ ; 
+              else   if ( ele == 0 ) 
+                  return   0 ; 
+              else 
+                 cn ++ ; 
+          } 
+ 
+          if ( cn % 2 == 0 ) 
+              return   1 ; 
+          return   - 1 ; 
+      } 
+ } ;
