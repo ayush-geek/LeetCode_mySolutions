@@ -1,40 +1,33 @@
 class   Solution   { 
  public : 
-     
-       int   solve ( int  i , int  j ,  vector < vector < int >> &  dp , vector < vector < int >> &  matrix ) 
-       { 
-             int  n = matrix . size ( ) ; 
-          int  m = matrix [ 0 ] . size ( ) ; 
-          
-           if ( i == n ) 
-               return   0 ; 
-           if ( j < 0   ||  j >= m ) 
-              return   1e9 ; 
-          
-           if ( dp [ i ] [ j ] != - 1 ) 
-                  return  dp [ i ] [ j ] ; 
-          
-           int  l = solve ( i + 1 , j - 1 , dp , matrix ) ; 
-           int  b = solve ( i + 1 , j , dp , matrix ) ; 
-           int  r = solve ( i + 1 , j + 1 , dp , matrix ) ; 
-          
-           return  dp [ i ] [ j ] = matrix [ i ] [ j ] + min ( l , min ( b , r ) ) ; 
-       } 
-     
       int   minFallingPathSum ( vector < vector < int >> &  matrix )   { 
-         
           int  n = matrix . size ( ) ; 
           int  m = matrix [ 0 ] . size ( ) ; 
-         
-          int  mn = INT_MAX ; 
-         vector < vector < int >>   dp ( n , vector < int >   ( m , - 1 ) ) ; 
-          for ( int  i = 0 ; i < m ; i ++ ) 
-          {    
-              int  z = solve ( 0 , i , dp , matrix ) ; 
-              //cout<<z<<endl; 
-             mn = min ( mn , z ) ; 
+         vector < vector < int >>   dp ( n + 1 , vector < int >   ( m + 2 , 1e9 ) ) ; 
+ 
+          //start from down 
+          int  ans = 1e9 ; 
+          for ( int  i = n - 1 ; i >= 0 ; i -- ) 
+          { 
+              for ( int  j = 1 ; j <= m ; j ++   ) 
+              { 
+                  if ( i == n - 1 ) 
+                     dp [ i ] [ j ] = matrix [ i ] [ j - 1 ] ; 
+                  else 
+                  { 
+                     dp [ i ] [ j ] = matrix [ i ] [ j - 1 ] + min ( { 
+                             dp [ i + 1 ] [ j - 1 ] , dp [ i + 1 ] [ j ] , dp [ i + 1 ] [ j + 1 ] 
+                      } ) ; 
+                  } 
+ 
+                  if ( i == 0 ) 
+                     ans = min ( ans , dp [ i ] [ j ] ) ; 
+ 
+                    //  cout<<dp[i][j]<<" "; 
+              } 
+             // cout<<endl; 
           } 
+          return  ans ; 
          
-          return  mn ; 
       } 
  } ;
