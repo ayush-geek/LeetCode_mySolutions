@@ -1,0 +1,24 @@
+class   Solution   { 
+ public : 
+     vector < vector < int >>   findDifference ( vector < int > &  nums1 ,  vector < int > &  nums2 )   { 
+         
+         unordered_set < int >   st ( nums1 . begin ( ) , nums1 . end ( ) ) ; 
+         unordered_set < int >   st2 ( nums2 . begin ( ) , nums2 . end ( ) ) ; 
+         vector < int >  tmp , tmp2 ; 
+ 
+          for ( auto &  ele :  st ) 
+          { 
+              if ( st2 . count ( ele ) == 0 ) 
+                 tmp . push_back ( ele ) ; 
+          } 
+ 
+          for ( auto &  ele :  st2 ) 
+          { 
+              if ( st . count ( ele ) == 0 ) 
+                 tmp2 . push_back ( ele ) ; 
+          } 
+ 
+      return   { tmp , tmp2 } ; 
+         
+      } 
+ } ;
