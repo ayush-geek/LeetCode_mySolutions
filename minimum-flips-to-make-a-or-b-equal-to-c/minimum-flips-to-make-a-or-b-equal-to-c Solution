@@ -1,0 +1,30 @@
+class   Solution   { 
+ public : 
+      int   minFlips ( int  a ,   int  b ,   int  c )   { 
+         
+          int  ct = 0 ; 
+          for ( int  i = 0 ; i < 32 ; i ++ ) 
+          { 
+              int  z1 = a >> i  &   1 ; 
+              int  z2 = b >> i  &   1 ; 
+              int  z3 = c >> i  &   1 ; 
+          //<<i<<" "<<z1<<" "<<z2<<" "<<z3<<endl; 
+              if ( ( z1  |  z2 ) != z3 ) 
+              { 
+                  if ( z3 == 1   ) 
+                     ct ++ ; 
+                  else  
+                  { 
+                      if ( z1 == 1   &&  z2 == 1 ) 
+                         ct += 2 ; 
+                      else 
+                         ct ++ ; 
+                  } 
+                
+              } 
+ 
+      
+          } 
+          return  ct ; 
+      } 
+ } ;
