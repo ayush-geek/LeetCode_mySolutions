@@ -1,0 +1,37 @@
+class   Solution   { 
+ public : 
+      // int ans=0; 
+      int   solve ( int  i , int  j ,  vector < int > &  nums1 , vector < int > &  nums2 , vector < vector < int >> &  dp ) 
+      { 
+          // ans=max(ans,ct); 
+ 
+          if ( i == nums1 . size ( )   ||  j == nums2 . size ( ) ) 
+              return   0 ; 
+ 
+          if ( dp [ i ] [ j ] != - 1 ) 
+              return  dp [ i ] [ j ] ; 
+     // cout<<i<<" "<<j<<endl; 
+     int  z1 = 0 ; 
+          if ( nums1 [ i ] == nums2 [ j ] ) { 
+             
+             z1 = 1 + solve ( i + 1 , j + 1 , nums1 , nums2 , dp ) ; 
+              } 
+ 
+          int  z2 = solve ( i + 1 , j , nums1 , nums2 , dp ) ; 
+          int  z3 = solve ( i , j + 1 , nums1 , nums2 , dp ) ; 
+          // ans=max(ans,ct); 
+          return  dp [ i ] [ j ] = max ( { z1 , z2 , z3 } ) ; 
+ 
+      } 
+ 
+      int   maxUncrossedLines ( vector < int > &  nums1 ,  vector < int > &  nums2 )   { 
+         
+          int  n = nums1 . size ( ) ; 
+          int  m = nums2 . size ( ) ; 
+          //can i try out all possibility 
+         vector < vector < int >>   dp ( n , vector < int >   ( m , - 1 ) ) ; 
+          return   solve ( 0 , 0 , nums1 , nums2 , dp ) ; 
+         
+ 
+      } 
+ } ;
