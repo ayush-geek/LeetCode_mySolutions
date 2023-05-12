@@ -1,0 +1,32 @@
+class   Solution   { 
+ public : 
+ 
+      long   long   solve ( int  i , vector < vector < int >> &  questions , vector < long   long > &  dp ) 
+      { 
+          if ( i >= questions . size ( ) ) 
+              return   0 ; 
+ 
+          if ( dp [ i ] != - 1 ) 
+              return  dp [ i ] ; 
+         
+          //take 
+          int  a = questions [ i ] [ 0 ] ; 
+          int  b = questions [ i ] [ 1 ] ; 
+          long   long  a1 = ( long   long ) a + solve ( i + b + 1 , questions , dp ) ; 
+ 
+          //not take 
+          long   long  a2 = solve ( i + 1 , questions , dp ) ; 
+ 
+          return  dp [ i ] = max ( a1 , a2 ) ; 
+      } 
+ 
+      long   long   mostPoints ( vector < vector < int >> &  questions )   { 
+         
+          int  n = questions . size ( ) ; 
+         vector < long   long >   dp ( n , - 1ll ) ; 
+          long   long  res = 0 ; 
+ 
+          return   solve ( 0 , questions , dp ) ; 
+      
+      } 
+ } ;
