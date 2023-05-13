@@ -1,0 +1,22 @@
+class   Solution   { 
+ public : 
+      bool   uniqueOccurrences ( vector < int > &  arr )   { 
+         unordered_map < int , int >  mp ; 
+         unordered_set < int >  st ; 
+ 
+          for ( auto &  ele :  arr ) 
+          { 
+             mp [ ele ] ++ ; 
+          } 
+ 
+          for ( auto &  ele :  mp ) 
+              {    
+                  if ( st . count ( ele . second ) == 1 ) 
+                      return   false ; 
+                 st . insert ( ele . second ) ; 
+              } 
+         
+          return   true ; 
+         
+      } 
+ } ;
