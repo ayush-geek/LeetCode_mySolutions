@@ -1,0 +1,29 @@
+class   Solution   { 
+ public : 
+      int  mod = 1e9 + 7 ; 
+      int   solve ( int  i , int  low , int  high , int  z , int  o , vector < int > &  dp ) 
+      { 
+          if ( i > high ) 
+              return   0 ; 
+          if ( dp [ i ] != - 1 ) 
+              return  dp [ i ] ; 
+         
+          if ( i >= low ) 
+             dp [ i ] = 1 ; 
+          else 
+             dp [ i ] = 0 ; 
+         
+         dp [ i ] += solve ( i + z , low , high , z , o , dp ) % mod ; 
+         dp [ i ] += solve ( i + o , low , high , z , o , dp ) % mod ; 
+          return  dp [ i ] % mod ; 
+      } 
+ 
+      int   countGoodStrings ( int  low ,   int  high ,   int  zero ,   int  one )   { 
+         
+          //take 0 
+          //take 1 
+         vector < int >   dp ( high + 1 , - 1 ) ; 
+          return   solve ( 0 , low , high , zero , one , dp ) ; 
+         
+      } 
+ } ;
