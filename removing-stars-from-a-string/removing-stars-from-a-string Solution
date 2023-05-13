@@ -3,22 +3,23 @@ class   Solution   {
      string  removeStars ( string s )   { 
          stack < char >  st ; 
  
-          for ( int  i = 0 ; i < s . size ( ) ; i ++ ) 
+          for ( auto &  ele :  s ) 
           { 
-              if ( s [ i ] == '*'   &&   ! st . empty ( ) ) 
-                 st . pop ( ) ; 
+              if ( ele == '*' ) 
+                  { 
+                      if ( ! st . empty ( ) ) 
+                         st . pop ( ) ; 
+                  } 
               else 
-             st . push ( s [ i ] ) ; 
- 
+             st . push ( ele ) ; 
           } 
- 
-         string tmp ; 
+         string res ; 
           while ( ! st . empty ( ) ) 
-          { 
-             tmp . push_back ( st . top ( ) ) ; 
-             st . pop ( ) ; 
-          } 
-          reverse ( tmp . begin ( ) , tmp . end ( ) ) ; 
-          return  tmp ; 
+              { 
+                 res . push_back ( st . top ( ) ) ; 
+                 st . pop ( ) ; 
+              } 
+              reverse ( res . begin ( ) , res . end ( ) ) ; 
+              return  res ; 
       } 
  } ;
