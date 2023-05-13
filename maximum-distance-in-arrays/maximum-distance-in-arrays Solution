@@ -1,0 +1,30 @@
+class   Solution   { 
+ public : 
+      int   maxDistance ( vector < vector < int >> &  arrays )   { 
+          int  a = INT_MAX ; 
+          int  b = INT_MIN ; 
+         vector < vector < int >>  vp ; 
+           vector < vector < int >>  vp2 ; 
+          int  k = 0 ; 
+          for ( auto &  ele :  arrays ) 
+          { 
+              int  z1 = ele . front ( ) ; 
+              int  z2 = ele . back ( ) ; 
+             
+            vp . push_back ( { z1 , k } ) ; 
+            vp2 . push_back ( { z2 , k } ) ; 
+            k ++ ; 
+          }    
+ 
+          sort ( vp . begin ( ) , vp . end ( )   ) ; 
+ 
+          sort ( vp2 . rbegin ( ) , vp2 . rend ( ) ) ; 
+         // cout<<vp[0][0]<<" "<<vp2[0][0]<<endl; 
+          if ( vp [ 0 ] [ 1 ] == vp2 [ 0 ] [ 1 ] ) 
+              return   max ( abs ( vp [ 0 ] [ 0 ] - vp2 [ 1 ] [ 0 ] ) , abs ( vp [ 1 ] [ 0 ] - vp2 [ 0 ] [ 0 ] ) ) ; 
+          else 
+              return   abs ( vp [ 0 ] [ 0 ] - vp2 [ 0 ] [ 0 ] ) ; 
+ 
+         
+      } 
+ } ;
