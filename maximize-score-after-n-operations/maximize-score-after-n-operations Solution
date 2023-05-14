@@ -1,0 +1,40 @@
+class   Solution   { 
+ public : 
+     unordered_map < int , int >  dp ; 
+      int   solve ( int  op , vector < int > &  nums , int  mask , vector < int > &  dp ) 
+      { 
+          int  n = nums . size ( ) ; 
+          if ( op > n / 2 ) 
+              return   0 ; 
+          if ( dp [ mask ] == - 1 ) 
+          { 
+             
+ 
+              for ( int  i = 0 ; i < n ; i ++ ) 
+              { 
+                  if ( mask &   ( 1 << i ) ) 
+                      continue ; 
+                 
+                  for ( int  j = i + 1 ; j < n ; j ++ ) 
+                  { 
+                      if ( mask  &   ( 1 << j ) ) 
+                          continue ; 
+ 
+                      int  newmask = mask  |   ( 1 << i )   | ( 1 << j ) ; 
+ 
+                      int  score = op * ( __gcd ( nums [ i ] , nums [ j ] ) ) +   solve ( op + 1 , nums , newmask , dp ) ; 
+                     dp [ mask ] = max ( dp [ mask ] , score ) ; 
+                  } 
+              } 
+          } 
+ 
+          return  dp [ mask ] ; 
+      } 
+ 
+      int   maxScore ( vector < int > &  nums )   { 
+         
+         vector < int >   dp ( 1 << 14 , - 1 ) ; 
+ 
+          return   solve ( 1 , nums , 0 , dp ) ; 
+      } 
+ } ;
