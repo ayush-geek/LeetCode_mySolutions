@@ -1,0 +1,49 @@
+typedef  pair < int , int >  pii ; 
+ class   Solution   { 
+ public : 
+      int   minCostToSupplyWater ( int  n ,  vector < int > &  wells ,  vector < vector < int >> &  pipes )   { 
+          //nyc qu 
+ 
+         vector < vector < pii >>   adj ( n + 1 ) ; 
+ 
+ 
+          for ( auto &  ele :  pipes ) 
+          { 
+              int  a = ele [ 0 ] ; 
+              int  b = ele [ 1 ] ; 
+              int  c = ele [ 2 ] ; 
+ 
+             adj [ a ] . push_back ( { b , c } ) ; 
+             adj [ b ] . push_back ( { a , c } ) ; 
+          } 
+ 
+         priority_queue < pii , vector < pii > , greater < pii >>  pq ; 
+          for ( int  i = 0 ; i < wells . size ( ) ; i ++ ) 
+          { 
+             pq . push ( { wells [ i ] , i + 1 } ) ; 
+          } 
+         vector < int >   vis ( n + 1 , 0 ) ; 
+          int  cost = 0 ; 
+          while ( ! pq . empty ( ) ) 
+          { 
+              auto  nd = pq . top ( ) ; 
+             pq . pop ( ) ; 
+ 
+              int  p = nd . first ; 
+              int  node = nd . second ; 
+ 
+              if ( vis [ node ] ) 
+                  continue ; 
+             vis [ node ] = 1 ; 
+             cost += p ; 
+              for ( auto &  ele :  adj [ node ] ) 
+              { 
+                  int  ne = ele . first ; 
+                  int  nc = ele . second ; 
+ 
+                 pq . push ( { nc , ne } ) ; 
+              } 
+          } 
+          return  cost ; 
+      } 
+ } ;
