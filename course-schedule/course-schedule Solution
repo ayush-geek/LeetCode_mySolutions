@@ -1,50 +1,42 @@
 class   Solution   { 
  public : 
-      bool   canFinish ( int  numCourses ,  vector < vector < int >> &  prerequisites )   { 
-         
-          //b->a 
-          int  n = numCourses ; 
-         vector < int >  res ; 
+      bool   canFinish ( int  n ,  vector < vector < int >> &  pre )   { 
+       //a,b => b->a 
          vector < int >   indeg ( n , 0 ) ; 
-         vector < int >  adj [ n ] ; 
- 
-          for ( int  i = 0 ; i < prerequisites . size ( ) ; i ++ ) 
+         vector < vector < int >>   adj ( n ) ; 
+          //DAG 
+          for ( auto &  ele :  pre ) 
           { 
-              int  a = prerequisites [ i ] [ 0 ] ; 
-              int  b = prerequisites [ i ] [ 1 ] ; 
-             adj [ b ] . push_back ( a ) ; 
-             indeg [ a ] ++ ; 
-          } 
+             adj [ ele [ 1 ] ] . push_back ( ele [ 0 ] ) ; 
  
+             indeg [ ele [ 0 ] ] ++ ; 
+          } 
          queue < int >  q ; 
           for ( int  i = 0 ; i < n ; i ++ ) 
           { 
               if ( indeg [ i ] == 0 ) 
-                 q . push ( i ) ; 
-          } 
- 
-          while ( ! q . empty ( ) ) 
-          { 
-              int  nd = q . front ( ) ; 
-             res . push_back ( nd ) ; 
-             q . pop ( ) ; 
- 
-              for ( auto  ele :  adj [ nd ] ) 
               { 
-                 indeg [ ele ] -- ; 
- 
-                  if ( indeg [ ele ] == 0 ) 
-                  { 
-                     q . push ( ele ) ; 
-                  } 
- 
+                 q . push ( i ) ; 
               } 
           } 
  
-          if ( res . size ( ) != n ) 
-              return   false ; 
-         
-          return   true ; 
+          int  ct = 0 ; 
+          while ( ! q . empty ( ) ) 
+          { 
+              int  nd = q . front ( ) ; 
+             q . pop ( ) ; 
+             ct ++ ; 
+              for ( auto &  ele :  adj [ nd ] ) 
+              { 
+                 indeg [ ele ] -- ; 
+                  if ( indeg [ ele ] == 0 ) 
+                     q . push ( ele ) ; 
+              } 
+          } 
+ 
+          if ( ct == n ) 
+              return   true ; 
+          return   false ; 
  
       } 
  } ;
