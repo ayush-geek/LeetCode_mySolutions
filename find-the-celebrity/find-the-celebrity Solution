@@ -1,0 +1,41 @@
+/* The knows API is defined for you.
+       bool knows(int a, int b); */ 
+ 
+ class   Solution   { 
+ public : 
+      int   findCelebrity ( int  n )   { 
+         vector < int >   vis ( n , 0 ) ; 
+          for ( int  i = 0 ; i < n ; i ++ ) 
+          { 
+              for ( int  j = 0 ; j < n ; j ++ ) 
+              { 
+                  if ( i != j  &&   knows ( i , j ) ) 
+                      { 
+                         vis [ i ] = 1 ; 
+                          break ; 
+                      } 
+              } 
+          } 
+ 
+          int  as = - 1 ; 
+     
+          for ( int  i = 0 ; i < n ; i ++ ) 
+          { 
+              if ( vis [ i ] == 0 ) 
+              {    
+                  if ( as != - 1 ) 
+                      return   - 1 ; 
+                 as = i ; 
+              } 
+          } 
+          if ( as == - 1 ) 
+              return   - 1 ; 
+          for ( int  i = 0 ; i < n ; i ++ ) 
+          { 
+              if ( knows ( i , as ) == false ) 
+                  return   - 1 ; 
+          } 
+          return  as ; 
+ 
+      } 
+ } ;
