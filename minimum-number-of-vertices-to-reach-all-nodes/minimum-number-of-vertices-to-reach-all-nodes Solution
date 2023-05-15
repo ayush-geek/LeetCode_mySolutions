@@ -1,22 +1,23 @@
 class   Solution   { 
  public : 
      vector < int >   findSmallestSetOfVertices ( int  n ,  vector < vector < int >> &  edges )   { 
-         
  
-         vector < int >   indeg ( n , 0 ) ; 
-         vector < int >  res ; 
+       //return the node with indegree 0 
+     vector < int >  res ; 
+      vector < int >   indeg ( n , 0 ) ; 
+       for ( auto &  ele :  edges ) 
+       { 
+          indeg [ ele [ 1 ] ] ++ ; 
+       }    
  
-          for ( auto &   ele :  edges ) 
+       for ( int  i = 0 ; i < n ; i ++ ) 
+       { 
+           if ( indeg [ i ] == 0 ) 
           { 
-             indeg [ ele [ 1 ] ] ++ ; 
+             res . push_back ( i ) ; 
           } 
  
- 
-          for ( int  i = 0 ; i < n ; i ++ ) 
-          { 
-              if ( indeg [ i ] == 0 ) 
-                 res . push_back ( i ) ; 
-          } 
-          return  res ; 
+       } 
+       return  res ; 
       } 
  } ;
