@@ -11,20 +11,29 @@
  class   Solution   { 
  public : 
      ListNode *   swapPairs ( ListNode *  head )   { 
-         
-         
-          if ( head == NULL   ||  head -> next == NULL ) 
-              return  head ; 
-         
-         ListNode *  temp = head -> next -> next ;   //Storing The Next To next POinter //3 
-         ListNode *  temp2 = head ;     //Storing Current Head //1 
-         
-         head = head -> next ;   //New Head  //2 
-         head -> next = temp2 ;      //2->1 
-         
-         
-          //Old head now points to next to next //1->3 
-         temp2 -> next =   swapPairs ( temp ) ;    //2->1->4->3 
-          return  head ;         
+          //iTERATIVE 
+    
+     ListNode *  tmp = head ; 
+     ListNode *  prev = NULL ;  
+      while ( tmp != NULL   &&  tmp -> next != NULL ) 
+      {    
+         ListNode *  t1 = tmp -> next -> next ; 
+         tmp -> next -> next = tmp ; 
+        
+ 
+ 
+          if ( tmp == head ) 
+          { 
+             head = tmp -> next ; 
+          } 
+          else 
+          { 
+             prev -> next = tmp -> next ; 
+          } 
+          tmp -> next = t1 ; 
+          prev = tmp ; 
+         tmp = t1 ; 
+      } 
+      return  head ;       
       } 
  } ;
