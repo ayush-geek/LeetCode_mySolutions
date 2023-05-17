@@ -10,34 +10,42 @@
   */ 
  class   Solution   { 
  public : 
+ 
+     ListNode *   reverse ( ListNode *  h ) 
+      { 
+          if ( h == NULL   ||  h -> next == NULL ) 
+              return  h ; 
+         
+         ListNode *  tmp = reverse ( h -> next ) ; 
+         h -> next -> next = h ; 
+         h -> next = NULL ; 
+          return  tmp ; 
+      } 
+ 
       int   pairSum ( ListNode *  head )   { 
          
+      //find middle 
+     ListNode *  slow = head ; 
+     ListNode *  fast = head ; 
+ 
+      while ( fast != NULL   ) 
+      { 
+         slow = slow -> next ; 
+         fast = fast -> next -> next ; 
+      } 
+ 
+     ListNode *  h2 = slow ; 
+     h2 = reverse ( h2 ) ; 
+     cout << h2 -> val << endl ; 
+      int  ans = 0 ; 
+      while ( h2 != NULL ) 
+      { 
+         ans = max ( ans , head -> val + h2 -> val ) ; 
+         head = head -> next ; 
+         h2 = h2 -> next ; 
+ 
+      } 
+      return  ans ; 
          
-         vector < int >  ls ; 
-         
-         ListNode *  tmp = head ; 
-         
-          while ( tmp != NULL ) 
-          { 
-             ls . push_back ( tmp -> val ) ; 
-             tmp = tmp -> next ; 
-             
-          } 
-         
-          int  i = 0 ; 
-          int  j = ls . size ( ) - 1 ; 
-         
-          int  mx = 0 ; 
-         
-          while ( i <= j ) 
-          { 
-             
-             mx = max ( mx , ls [ i ] + ls [ j ] ) ; 
-             i ++ ; 
-             j -- ; 
-          } 
-         
-         
-          return  mx ; 
       } 
  } ;
