@@ -18,37 +18,42 @@ struct Item{
 */
 
 
-bool cmp(Item A,Item B)
-{
-    return A.value/(A.weight*1.0) > B.value/(B.weight*1.0);
-}
-
 class Solution
 {
     public:
     //Function to get the maximum total value in the knapsack.
     double fractionalKnapsack(int W, Item arr[], int n)
     {
-        double ans=0.0;
+        // Your code here
         
-        sort(arr,arr+n,cmp);
-        
+        vector<pair<double,int>> vp;
         
         for(int i=0;i<n;i++)
         {
-            if(W-arr[i].weight>=0)
-            {
-                W-=arr[i].weight;
-                ans+=arr[i].value;
+            double ans= (arr[i].value*1.0) /(arr[i].weight);
+            vp.push_back({ans,i});
+        }
+        
+        sort(vp.begin(),vp.end(),[](pair<double,int>& a,pair<double,int>& b){
+            return a.first>=b.first;
+        });
+        
+        double pft=0;
+        for(int i=0;i<n;i++)
+        {   
+            int z=vp[i].second;
+            if(arr[z].weight<=W){
+                pft+=arr[z].value;
+                W-=arr[z].weight;
             }
             else
             {
-                ans+=W*(1.0*arr[i].value)/(arr[i].weight);
+                pft+=vp[i].first *W;
                 break;
             }
+                
         }
-        
-        return ans;
+        return pft;
     }
         
 };
