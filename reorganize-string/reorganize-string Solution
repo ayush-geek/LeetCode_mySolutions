@@ -1,0 +1,68 @@
+class   Solution   { 
+ public : 
+     string  reorganizeString ( string s )   { 
+         
+         unordered_map < char , int >  mp ; 
+         string res = "" ; 
+         
+          int  n = s . size ( ) ; 
+          for ( int  i = 0 ; i < n ; i ++ ) 
+             mp [ s [ i ] ] ++ ; 
+         
+         
+         priority_queue < pair < int , char >>  pq ; 
+         
+         
+          for ( auto  itr = mp . begin ( ) ; itr != mp . end ( ) ; ++ itr ) 
+          { 
+             
+             pq . push ( { itr -> second , itr -> first } ) ; 
+             
+             
+             
+          } 
+         
+         
+          while ( pq . size ( ) > 1 ) { 
+              int  z1 = pq . top ( ) . first ; 
+              char  alpha = pq . top ( ) . second ; 
+             
+             pq . pop ( ) ; 
+              int  z2 = pq . top ( ) . first ; 
+              char  alpha1 = pq . top ( ) . second ; 
+             pq . pop ( ) ; 
+             
+             
+            res . push_back ( alpha ) ; 
+         res . push_back ( alpha1 ) ; 
+             
+             z1 -= 1 ; 
+             z2 -= 1 ; 
+             
+               if ( z1 > 0 ) 
+                     pq . push ( { z1 , alpha } ) ; 
+             
+               if ( z2 > 0 ) 
+                     pq . push ( { z2 , alpha1 } ) ; 
+             
+             
+             
+           
+            
+             
+          } 
+            if ( ! pq . empty ( ) ) 
+              { 
+                  if ( pq . top ( ) . first > 1 ) 
+                      return   "" ; 
+                  else 
+                  { 
+                     res . push_back ( pq . top ( ) . second ) ; 
+                  } 
+              } 
+         
+         
+          return  res ; 
+         
+      } 
+ } ;
