@@ -1,47 +1,40 @@
 class   Solution   { 
  public : 
+ 
+      int   solve ( string str1 ,  string str2 )  
+ 	 {  
+ 	     // Your code goes here 
+ 	    
+ 	     int  n1 = str1 . size ( ) ; 
+ 	     int  n2 = str2 . size ( ) ; 
+ 	    
+ 	    
+ 	    vector < vector < int >>   dp ( n1 + 1 , vector < int >   ( n2 + 1 , 0 ) ) ; 
+ 	    
+ 	     int  ans = 0 ; 
+ 	     for ( int  i = 1 ; i <= n1 ; i ++ ) 
+ 	     { 
+ 	         for ( int  j = 1 ; j <= n2 ; j ++ ) 
+ 	         { 
+ 	             if ( str1 [ i - 1 ] == str2 [ j - 1 ]   ) 
+ 	                dp [ i ] [ j ] = 1 + dp [ i - 1 ] [ j - 1 ] ; 
+ 	            else 
+ 	           dp [ i ] [ j ] = max ( dp [ i - 1 ] [ j ] , dp [ i ] [ j - 1 ] ) ; 
+ 	           
+ 	           ans = max ( ans , dp [ i ] [ j ] ) ; 
+ 	         } 
+ 	     } 
+ 	    
+ 	     return  ans ; 
+ 	    
+ 	    
+ 	 }  
       bool   isSubsequence ( string s ,  string t )   { 
-         
-         
-          //S to match 
-         
-          if ( t . size ( ) < s . size ( ) ) 
-              return   false ; 
-         
-         
-          if ( s . size ( ) == t . size ( ) ) 
-          { 
-              if ( s == t ) 
-                  return   true ; 
-              else 
-                  return   false ; 
-          } 
-         
-          int  n = s . size ( ) ; 
-          int  m = t . size ( ) ; 
-         vector < vector < int >>   dp ( n + 1 , vector < int >   ( m + 1 , 0 ) ) ; 
-         
-         
-         
-          for ( int  i = n - 1 ; i >= 0 ; i -- ) 
-          { 
-              for ( int  j = m - 1 ; j >= 0 ; j -- ) 
-              { 
-                  //Take 
-                  if ( s [ i ] == t [ j ] ) 
-                     dp [ i ] [ j ] = 1 + dp [ i + 1 ] [ j + 1 ] ; 
-                  else 
-                     dp [ i ] [ j ] = dp [ i ] [ j + 1 ] ; 
-             
-              } 
-             
-          } 
-         
-          if ( dp [ 0 ] [ 0 ] == n ) 
+          int  z = solve ( s , t ) ; 
+         cout << z << endl ; 
+          if ( s . size ( ) == z ) 
               return   true ; 
           else 
               return   false ; 
-         
-         
       } 
  } ;
