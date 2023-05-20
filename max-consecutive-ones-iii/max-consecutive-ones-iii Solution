@@ -2,34 +2,29 @@ class   Solution   {
  public : 
       int   longestOnes ( vector < int > &  nums ,   int  k )   { 
          
-          int  j = 0 ; 
+          //find sliding window that 
+          //at most  K characters 
+ 
           int  n = nums . size ( ) ; 
+ 
           int  ans = 0 ; 
-          int  sm = 0 ; 
-          int  z = k ; 
+          int  j = 0 ; 
+          int  ct = 0 ; 
           for ( int  i = 0 ; i < n ; i ++ ) 
           { 
-             sm += nums [ i ] ; 
               if ( nums [ i ] == 0 ) 
-                 k -- ; 
+                 ct ++ ; 
  
-              while ( k < 0 ) { 
-                  //cout<<k<<endl; 
-                 sm -= nums [ j ] ; 
-                  if ( nums [ j ] == 0 ) { 
-                     k ++ ; 
+              while ( ct > k ) 
+                  { 
+                      if ( nums [ j ] == 0 ) 
+                         ct -- ; 
                      j ++ ; 
-                      break ; 
-                      } 
-                     j ++ ; 
-                
                   } 
- 
              
-             
- 
-             ans = max ( sm + ( z - k ) , ans ) ; 
+             ans = max ( ans , i - j + 1 ) ; 
           } 
+ 
           return  ans ; 
       } 
  } ;
