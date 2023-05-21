@@ -1,0 +1,41 @@
+class   Solution   { 
+ public : 
+     
+   
+      bool   solve ( int  i , int  sm , string s ) 
+      { 
+         
+          if ( i == s . size ( )   &&  sm == 0 ) 
+              return   true ; 
+          if ( sm < 0 ) 
+              return   false ; 
+        
+      
+          int  prev = 0 ; 
+          for ( int  j = i ; j < s . size ( ) ; j ++ ) 
+          { 
+             prev = prev * 10 + ( s [ j ] - '0' ) ; 
+ 
+              if ( solve ( j + 1 , sm - prev , s ) ) 
+                  return   true ; 
+          } 
+              return   false ; 
+      } 
+     
+      int   punishmentNumber ( int  n )   { 
+          int  sm = 0 ; 
+          for ( int  i = 1 ; i <= n ; i ++ ) 
+          { 
+              int  z = i * i ; 
+             string ss = to_string ( z ) ; 
+ 
+              if ( solve ( 0 , i , ss ) ) 
+                 sm += z ; 
+ 
+ 
+     
+            
+          } 
+          return  sm ; 
+      } 
+ } ;
