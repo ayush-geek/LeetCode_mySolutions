@@ -48,21 +48,22 @@ class   DSU
  class   Solution   { 
  public : 
       int   findCircleNum ( vector < vector < int >> &  isConnected )   { 
-          int  ct = 0 ; 
-          int  n = isConnected . size ( ) ; 
-          int  m = isConnected [ 0 ] . size ( ) ; 
-         DSU  ds ( n ) ; 
+      int  n = isConnected . size ( ) ; 
+     DSU  ds ( n ) ; 
+      int  ct = 0 ; 
           for ( int  i = 0 ; i < n ; i ++ ) 
           { 
               for ( int  j = 0 ; j < n ; j ++ ) 
               { 
-                  if ( isConnected [ i ] [ j ] ) { 
-                      bool  z = ds . unionBySize ( i , j ) ; 
-                      if ( z )    
-                         ct ++ ;     
+                  if ( isConnected [ i ] [ j ] ) 
+                  { 
+                      if ( ds . unionBySize ( i , j ) ) 
+                         ct ++ ; 
                   } 
               } 
           } 
+ 
+     
           return  n - ct ; 
       } 
  
