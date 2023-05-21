@@ -1,76 +1,61 @@
 class   Solution   { 
  public : 
-      long   long   totalCost ( vector < int > &  costs ,   int  k ,   int  candi )   { 
-      
-         
+      long   long   totalCost ( vector < int > &  costs ,   int  candidates ,   int  k )   { 
           long   long  ans = 0 ; 
-         
-         priority_queue < int ,  vector < int > ,  greater < int >   >  pq1 ; 
-         priority_queue < int ,  vector < int > ,  greater < int >   >  pq2 ; 
-         
-         
-          int  n = costs . size ( ) ; 
+ 
+         priority_queue < int , vector < int > , greater < int >>  pq1 ; 
+         priority_queue < int , vector < int > , greater < int >>  pq2 ; 
+ 
+     
           int  i = 0 ; 
-          for ( ; i < candi ; i ++ ) 
-          { 
-             pq1 . push ( costs [ i ] ) ; 
-          } 
-         
-          int  pos = candi ; 
-          int  j = n - 1 ; 
-          while ( pos -- ) 
-          { 
-              if ( j >= i ) 
-                  pq2 . push ( costs [ j ] ) ; 
-             j -- ; 
-             
-         
-          } 
-        
-         cout << pq2 . size ( ) << endl ; 
-         
-          while ( k -- ) 
-          { 
-              if ( pq1 . empty ( )   &&  pq2 . empty ( ) ) 
-                  break ; 
-                 
-              if ( ! pq1 . empty ( )   &&   ! pq2 . empty ( ) ) 
-              { int  z1 = pq1 . top ( ) ; 
-              int  z2 = pq2 . top ( ) ; 
-             
-             ans += min ( z1 , z2 ) ; 
-             
-              if ( z1 <= z2 ) 
+          int  j = costs . size ( ) - 1 ; 
+ 
+         while ( 1 ) 
+         { 
+             while ( i <= j  &&  pq1 . size ( ) < k ) 
               { 
-                 pq1 . pop ( ) ; 
-                  if ( i <= j ) 
-                     pq1 . push ( costs [ i ++ ] ) ; 
-                 
+                 pq1 . push ( costs [ i ++ ] ) ; 
               } 
-             
-              else 
+ 
+                while ( i <= j  &&  pq2 . size ( ) < k ) 
               { 
-                 pq2 . pop ( ) ; 
-                  if ( j >= i ) 
+                 pq2 . push ( costs [ j -- ] ) ; 
+              } 
+              //cout<<i<<" "<<j<<endl; 
+              if ( ( pq1 . size ( ) == k  &&  pq2 . size ( ) == k )   ||  i >= j ) 
+              {    
+ 
+                  int  z1 = INT_MAX ; 
+              if ( pq1 . size ( ) > 0 ) 
+                 z1 = pq1 . top ( ) ; 
+       
+                  int  z2 = INT_MAX ; 
+                 
+                  if ( pq2 . size ( ) > 0 ) 
+                 z2 = pq2 . top ( ) ; 
+             // cout<<" s"<<" "<<z1<<" "<<z2<<endl; 
+ 
+                  if ( z1 <= z2 ) 
+                      { 
+                         ans += z1 ; 
+                         pq1 . pop ( ) ; 
+                      } 
+                  else 
                   { 
-                     pq2 . push ( costs [ j -- ] ) ; 
+                       ans += z2 ; 
+                         pq2 . pop ( ) ; 
                   } 
+ 
+                 candidates -- ; 
+ 
+ 
               } 
-              } 
-             
-              else   if ( pq2 . empty ( ) ) 
-              { 
-                 ans += pq1 . top ( ) ; 
-                 pq1 . pop ( ) ; 
-              } 
-              else 
-              { 
-                 ans += pq2 . top ( ) ; 
-                 pq2 . pop ( ) ; 
-              } 
-          } 
+ 
+              if ( candidates == 0 ) 
+                  break ; 
          
-          return  ans ; 
-         
+             // cout<<ans<<endl; 
+         } 
+         return  ans ; 
       } 
  } ;
