@@ -1,5 +1,5 @@
 class   Solution   { 
-  public : 
+ public : 
      string  gcdOfStrings ( string str1 ,  string str2 )   { 
          
          string res = "" ; 
@@ -36,4 +36,4 @@ class   Solution   {
  
  
       } 
-  } ;
+ } ;
