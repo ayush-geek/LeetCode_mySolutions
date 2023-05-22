@@ -9,8 +9,8 @@
   *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
   * };
   */ 
-  class   Solution   { 
-  public : 
+ class   Solution   { 
+ public : 
  
       int   solve ( TreeNode *  rt , int  mx ) 
       {     int  ct = 0 ; 
@@ -35,4 +35,4 @@
               int  mx = 0 ; 
           return   solve ( root , root -> val ) ; 
       } 
-  } ;
+ } ;
