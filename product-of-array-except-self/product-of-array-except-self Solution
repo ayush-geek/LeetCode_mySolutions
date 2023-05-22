@@ -1,20 +1,23 @@
 class   Solution   { 
  public : 
      vector < int >   productExceptSelf ( vector < int > &  nums )   { 
+         
+ 
+          //O(1) space 
           int  n = nums . size ( ) ; 
-         vector < int >   res ( n , 1 ) ; 
+         vector < int >   pref ( n , 1 ) ; 
+          
           for ( int  i = 1 ; i < n ; i ++ ) 
-            res [ i ] = res [ i - 1 ] * nums [ i - 1 ] ; 
-             int  prev = nums [ n - 1 ] ; 
+             pref [ i ] = pref [ i - 1 ] * nums [ i - 1 ] ; 
+         
+ 
           for ( int  i = n - 2 ; i >= 0 ; i -- ) 
           { 
-             res [ i ] = prev * res [ i ] ; 
-             prev = prev * nums [ i ] ; 
+              pref [ i ] = pref [ i ] * nums [ i + 1 ] ; 
+              nums [ i ] = nums [ i ] * nums [ i + 1 ] ; 
           } 
  
-          return  res ; 
-          //1 1 2 6  
-          //    8 
-         
+        
+          return  pref ; 
       } 
  } ;
