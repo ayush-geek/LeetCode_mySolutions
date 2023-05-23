@@ -1,60 +1,19 @@
 class   Solution   { 
-  public : 
- 
-      int   solve ( int  i , vector < int > &  nums , vector < int > &  dp ) 
-      { 
-          if ( i >= nums . size ( ) ) 
-              return   0 ; 
-          if ( dp [ i ] != - 1 ) 
-              return  dp [ i ] ; 
- 
-          int  ans1 = 0 ; 
-          int  len = 1 ; 
-          int  j = - 1 ; 
- 
-          int  k = i + 1 ; 
-                  while ( k < nums . size ( ) &&  nums [ k ] <= nums [ i ] + 1 ) 
-                  { 
-                      if ( nums [ k ] == nums [ i ] ) 
-                         len ++ ; 
-                      if ( nums [ k ] != nums [ i ]   &&  j == - 1 ) 
-                         j = k ; 
- 
-                         k ++ ; 
-                  } 
- 
-          //take 
- 
- 
-             {  
- 
-               cout << nums [ i ] << " " << len << endl ; 
- 
-                 ans1 = nums [ i ] * len  + solve ( k , nums , dp ) ; 
-             } 
-         
-          //not take 
-     
-          if ( j == - 1 ) 
-             j = i + 1 ; 
-         cout << nums [ i ] << " j" << j << endl ; 
-              int  ans2 = solve ( j , nums , dp ) ; 
-             
- 
- 
-          return  dp [ i ] = max ( ans1 , ans2 ) ; 
- 
-      } 
- 
+ public : 
       int   deleteAndEarn ( vector < int > &  nums )   { 
+         vector < int >   dp ( 10001 , 0 ) ; 
+ 
+          //like house robber don.t pick adjacent 
+ 
+          for ( auto &  ele :  nums ) 
+             dp [ ele ] += ele ; 
          
-          //rec 
+         dp [ 1 ] = max ( dp [ 1 ] , dp [ 0 ] ) ; 
  
-          sort ( nums . begin ( ) , nums . end ( ) ) ; 
- 
-          int  n = nums . size ( ) ; 
-          // vector<vector<int>> dp(n,vector<int> (20001,-1)); 
-         vector < int >   dp ( n + 1 , - 1 ) ; 
-          return   solve ( 0 , nums , dp ) ; 
+          for ( int  i = 2 ; i <= 10000 ; i ++ ) 
+          { 
+             dp [ i ] = max ( dp [ i - 2 ] + dp [ i ] , dp [ i - 1 ] ) ; 
+          } 
+          return  dp [ 10000 ] ; 
       } 
-  } ;
+ } ;
