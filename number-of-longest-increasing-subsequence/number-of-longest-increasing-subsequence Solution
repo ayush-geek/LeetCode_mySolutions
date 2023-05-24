@@ -2,46 +2,34 @@ class   Solution   {
  public : 
       int   findNumberOfLIS ( vector < int > &  nums )   { 
          
- 
           int  n = nums . size ( ) ; 
- 	     vector < int >   cnt ( n , 1 ) ; 
- 	    vector < int >   dp ( n , 1 ) ; 
-          int  ans = 1 ; 
-      
-         
+         vector < int >   ct ( n , 1 ) ; 
+         vector < int >   dp ( n , 1 ) ; 
+          int  mx = 1 ; 
           for ( int  i = 0 ; i < n ; i ++ ) 
           { 
-             for ( int  j = 0 ; j < i ; j ++ ) 
-             { 
-                 if ( nums [ i ] > nums [ j ]   &&   1 + dp [ j ] > dp [ i ] ) 
+              for ( int  j = 0 ; j < i ; j ++ ) 
+              { 
+                  if ( nums [ j ] < nums [ i ]   &&   1 + dp [ j ] > dp [ i ] ) 
                   { 
-                    dp [ i ] = 1 + dp [ j ] ; 
-                    cnt [ i ] = cnt [ j ] ; 
+                     ct [ i ] = ct [ j ] ; 
+                     dp [ i ] = 1 + dp [ j ] ; 
                   } 
- 
-                  else   if (  nums [ i ] > nums [ j ]   &&   1 + dp [ j ] == dp [ i ] ) 
+                  else   if ( nums [ j ] < nums [ i ]   &&   1 + dp [ j ] == dp [ i ] ) 
                   { 
-                     cnt [ i ] += cnt [ j ] ; 
+                     ct [ i ] += ct [ j ] ; 
                   } 
- 
-                      if ( dp [ i ] > ans ) 
-                      { 
-                         ans = dp [ i ] ; 
-                        
-                      } 
- 
- 
-             } 
-           
+                 mx = max ( dp [ i ] , mx ) ; 
+              } 
           } 
-          int  nos = 0 ; 
+      // cout<<mx<<endl; 
+      int  ans = 0 ; 
           for ( int  i = 0 ; i < n ; i ++ ) 
-             { 
-                 if ( dp [ i ] == ans ) 
-                 nos += cnt [ i ] ; 
-             } 
-         
- 
-          return  nos ; 
+          {    
+              // cout<<dp[i]<<" "<<ct[i]<<endl; 
+              if ( dp [ i ] == mx ) 
+                  ans += ct [ i ] ; 
+          } 
+          return  ans ; 
       } 
  } ;
