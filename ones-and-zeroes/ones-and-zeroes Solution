@@ -1,0 +1,42 @@
+class   Solution   { 
+ public : 
+ 
+      int   solve ( int  i , int  j , int  k , vector < string > &  strs , vector < vector < vector < int >> > &  dp ) 
+      { 
+          if ( i >= strs . size ( ) ) 
+              return   0 ; 
+ 
+          if ( dp [ i ] [ j ] [ k ] != - 1 ) 
+              return  dp [ i ] [ j ] [ k ] ; 
+         
+          //take 
+          int  c1 = 0 ; 
+          int  c0 = 0 ; 
+          for ( int  l = 0 ; l < strs [ i ] . size ( ) ; l ++ ) 
+          { 
+              if ( strs [ i ] [ l ] == '1' ) 
+                 c1 ++ ; 
+              else 
+             c0 ++ ; 
+          } 
+          int  ans = 0 ; 
+          if ( c0 <= j  &&  c1 <= k ) 
+             ans = 1 + solve ( i + 1 , j - c0 , k - c1 , strs , dp ) ; 
+         
+         ans = max ( ans , solve ( i + 1 , j , k , strs , dp ) ) ; 
+ 
+          return  dp [ i ] [ j ] [ k ] = ans ; 
+      } 
+ 
+ 
+ 
+      int   findMaxForm ( vector < string > &  strs ,   int  m ,   int  n )   { 
+         
+          int  k = strs . size ( ) ; 
+ 
+         vector < vector < vector < int >> >   dp ( k + 1 , vector < vector < int >>   ( m + 1 , vector < int >   ( n + 1 , - 1 ) ) ) ; 
+ 
+ 
+          return   solve ( 0 , m , n , strs , dp ) ; 
+      } 
+ } ;
