@@ -1,60 +1,39 @@
 class   Solution   { 
-  public : 
-     
-     
-      int   solve ( int  i , int  target , vector < int > &  nums , vector < vector < int >> &  dp ) 
+ public : 
+ 
+      int   solve ( int  i , int  j , vector < int > &  nums , vector < vector < int >> &  dp ) 
       { 
-         
-         
-          //Base Case 
-          if ( target == 0 ) 
-              return   1 ; 
-         
-         
-          if ( i < 0   ||  target < 0 ) 
-          { 
-              return   0 ; 
-          } 
-         
-         
-         
-         
-         
-          if ( dp [ i ] [ target ] != - 1 ) 
-              return  dp [ i ] [ target ] ; 
-         
-         
-          int  take = 0 ; 
-         
-          if ( nums [ i ] <= target ) 
-          { 
-             take = solve ( nums . size ( ) - 1 , target - nums [ i ] , nums , dp ) ; 
-          } 
-         
-          int  not_take = solve ( i - 1 , target , nums , dp ) ; 
-         
-         
-         
-          return  dp [ i ] [ target ] = take + not_take ; 
-      } 
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
-      int   combinationSum4 ( vector < int > &  nums ,   int  target )   { 
           int  n = nums . size ( ) ; 
+        
+          if ( j == 0 ) 
+              return   1 ; 
+          if ( i < 0   || j < 0 ) 
+          { 
+            
+                  return   0 ; 
+                 
+          }  
+          if ( dp [ i ] [ j ] != - 1 ) 
+              return  dp [ i ] [ j ] ; 
+ 
+          //take 
+          int  t = 0 ; 
+          if ( j - nums [ i ] >= 0 ) 
+             t = solve ( n - 1 , j - nums [ i ] , nums , dp ) ; 
+          int  nt = solve ( i - 1 , j , nums , dp ) ; 
+ 
+          return  dp [ i ] [ j ] = t + nt ; 
+      } 
+ 
+      int   combinationSum4 ( vector < int > &  nums ,   int  target )   { 
          
-          // sort(nums.begin(),nums.end()); 
-         vector < vector < int >>   dp ( n + 1 , vector < int >   ( target + 1 , - 1 ) ) ; 
-         
-         
+          //All Positive Numbers 
+ 
+          sort ( nums . begin ( ) , nums . end ( ) ) ; 
+ 
+          int  n = nums . size ( ) ; 
+         vector < vector < int >>   dp ( n , vector < int >   ( target + 1 , - 1 ) ) ; 
+ 
           return   solve ( n - 1 , target , nums , dp ) ; 
       } 
-  } ;
+ } ;
