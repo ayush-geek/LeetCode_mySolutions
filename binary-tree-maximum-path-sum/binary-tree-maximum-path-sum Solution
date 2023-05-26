@@ -12,23 +12,24 @@
  class   Solution   { 
  public : 
  
-      int   solve ( TreeNode *  root , int &  mx ) 
+      int   solve ( TreeNode *  rt , int &  mx ) 
       { 
-          if ( root == NULL ) 
-              return   0 ; 
-         
-          int  lft = solve ( root -> left , mx ) ; 
-          int  rgt = solve ( root -> right , mx ) ; 
+        if ( rt == NULL ) 
+          return   0 ; 
+       
+        int  lm = solve ( rt -> left , mx ) ; 
+        int  rm = solve ( rt -> right , mx ) ; 
  
-         mx = max ( mx , max ( lft , 0 ) + max ( rgt , 0 ) + root -> val ) ; 
- 
-          return  root -> val + max ( max ( lft , rgt ) , 0 ) ; 
+       mx = max ( { mx , lm + rt -> val , rm + rt -> val , lm + rm + rt -> val , rt -> val } ) ; 
+        return   max ( { lm + rt -> val , rm + rt -> val , rt -> val } ) ; 
       } 
  
       int   maxPathSum ( TreeNode *  root )   { 
          
-        int  ans = root -> val ; 
-          int  z = solve ( root , ans ) ; 
-        return  ans ; 
+   
+        int  mx = INT_MIN ; 
+        int  z = solve ( root , mx ) ; 
+       // cout<<z<<endl; 
+        return  mx ; 
       } 
  } ;
