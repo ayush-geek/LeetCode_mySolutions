@@ -9,27 +9,27 @@
   *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
   * };
   */ 
-  class   Solution   { 
-  public : 
+ class   Solution   { 
+ public : 
  
-     unordered_map < TreeNode *   , int >  mp ; 
-      int   rob ( TreeNode *  root )   { 
-          if ( root == NULL ) 
+      int   solve ( TreeNode *  rt , bool  parent ,  unordered_map < TreeNode * , unordered_map < bool , int >> &  dp ) 
+      { 
+          if ( rt == NULL ) 
               return   0 ; 
  
-          if ( mp [ root ] ) 
-              return  mp [ root ] ; 
-          int  lmx = 0 ; 
-          int  rmx = 0 ; 
+          if ( dp . count ( rt )   &&  dp [ rt ] . count ( parent ) ) 
+              return  dp [ rt ] [ parent ] ; 
+         
+          if ( parent ) 
+              return  dp [ rt ] [ parent ] = solve ( rt -> left , false , dp ) + solve ( rt -> right , false , dp ) ; 
+         
  
-          if ( root -> left != NULL ) 
-            lmx = rob ( root -> left -> left )   + rob ( root -> left -> right ) ; 
- 
-            if ( root -> right  != NULL ) 
-              rmx = rob ( root -> right -> left )   + rob ( root -> right -> right ) ; 
- 
-          return  mp [ root ] = max ( root -> val + lmx + rmx , rob ( root -> left ) + rob ( root -> right ) ) ; 
- 
-     
+      return  dp [ rt ] [ parent ] = max ( { solve ( rt -> left , false , dp ) + solve ( rt -> right , false , dp ) ,   solve ( rt -> left , true , dp ) + 
+      solve ( rt -> right , true , dp )   + rt -> val } ) ; 
       } 
-  } ;
+ 
+      int   rob ( TreeNode *  root )   { 
+       unordered_map < TreeNode * , unordered_map < bool , int >>  dp ; 
+          return   solve ( root , false , dp ) ; 
+      } 
+ } ;
