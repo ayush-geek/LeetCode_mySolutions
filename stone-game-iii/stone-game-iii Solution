@@ -1,0 +1,49 @@
+
+ class   Solution   { 
+ public : 
+ 
+      int   solve ( int  i , int  j , int  k , vector < int > &  stoneValues , vector < vector < vector < int >> > &  dp ) 
+      {    
+          int  n = stoneValues . size ( ) ; 
+          if ( i >= n ) 
+              return   0 ; 
+         
+         
+          if ( dp [ i ] [ j ] [ k ] != - 1 ) 
+              return  dp [ i ] [ j ] [ k ] ; 
+ 
+              int  ans = INT_MIN ; 
+              int  cs = 0 ; 
+          for ( int  l = 1 ; l <= 3 ; l ++ ) 
+          { 
+              int  z = i + l - 1 ; 
+ 
+              if ( z >= n  ||  j < 0 ) 
+                  break ; 
+             cs += stoneValues [ z ] ; 
+              if ( k == 0 ) 
+                     ans = max ( ans , cs - solve ( z + 1 , j , 1 , stoneValues , dp ) ) ; 
+              else 
+                     ans = max ( ans , cs - solve ( z + 1 , j , 0 , stoneValues , dp ) ) ; 
+ 
+ 
+          } 
+ 
+          return  dp [ i ] [ j ] [ k ] = ans ; 
+      } 
+     string  stoneGameIII ( vector < int > &  stoneValues )   { 
+          int  n = stoneValues . size ( ) ; 
+ 
+          // j should be 3  n is not needed 
+         vector < vector < vector < int >> >   dp ( n + 1 , vector < vector < int >>   ( 3 , vector < int >   ( 2 , - 1 ) ) ) ; 
+          int  ans = solve ( 0 , 2 , 0 , stoneValues , dp ) ; 
+          int  z = accumulate ( stoneValues . begin ( ) , stoneValues . end ( ) , 0 ) ; 
+         cout << ans << endl ; 
+          if ( ans > 0 ) 
+              return   "Alice" ; 
+          else   if ( ans == 0 ) 
+              return   "Tie" ; 
+          else 
+              return   "Bob" ; 
+      } 
+ } ;
