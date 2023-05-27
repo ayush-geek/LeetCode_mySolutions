@@ -1,0 +1,132 @@
+class   DSU { 
+      public : 
+     vector < int >  parent , size ; 
+ 
+      DSU ( int  n ) 
+      { 
+         parent . resize ( n + 1 , 0 ) ; 
+         size . resize ( n + 1 , 1 ) ; 
+          iota ( parent . begin ( ) , parent . end ( ) , 0 ) ; 
+      } 
+ 
+      int   find ( int  node ) 
+      { 
+          if ( parent [ node ] == node ) 
+              return  node ; 
+          return  parent [ node ] = find ( parent [ node ] ) ; 
+      } 
+ 
+      void   unionf ( int  a , int  b ) 
+      { 
+          int  pa = find ( a ) ; 
+          int  pb = find ( b ) ; 
+ 
+          if ( pa == pb ) 
+              return   ; 
+          if ( size [ pa ] > size [ pb ] ) 
+          { 
+             parent [ pb ] = pa ; 
+             size [ pa ] += size [ pb ] ; 
+          } 
+          else 
+          { 
+             parent [ pa ] = pb ; 
+             size [ pb ] += size [ pa ] ; 
+          } 
+      } 
+ } ; 
+ 
+ 
+ class   Solution   { 
+ public : 
+    
+ 
+  
+ 
+ //sieve 
+  
+ 
+ void   solve ( vector < int > &  p , int  mx ) 
+ { 
+    p [ 1 ]   =   1 ; 
+      for   ( int  i  =   2 ;  i  <  mx ;  i ++ ) 
+             p [ i ]   =  i ; 
+  
+   
+      for   ( int  i  =   4 ;  i  <  mx ;  i  +=   2 ) 
+         p [ i ]   =   2 ; 
+  
+      for   ( int  i  =   3 ;  i  *  i  <  mx ;  i ++ )   { 
+         
+          if   ( p [ i ]   ==  i )   { 
+          
+              for   ( int  j  =  i  *  i ;  j  <  mx ;  j  +=  i ) 
+  
+                
+                  if   ( p [ j ]   ==  j ) 
+                     p [ j ]   =  i ; 
+          } 
+      } 
+ } 
+  
+ 
+ 
+  
+     
+ 
+ 
+      bool   canTraverseAllPairs ( vector < int > &  nums )   { 
+          int  n = nums . size ( ) ; 
+         vector < int >   p ( 100001 , 0 ) ; 
+          solve ( p , 100001 ) ; 
+         DSU  ds ( n ) ; 
+         
+        unordered_map < int , vector < int >>  mp ; 
+          for ( int  i = 0 ; i < nums . size ( ) ; i ++ ) { 
+            
+              unordered_set < int >  st ; 
+             int  x = nums [ i ] ; 
+              while   ( x  !=   1 )   { 
+         
+           
+                   
+                 
+                  if ( st . count ( p [ x ] ) == 0 ) 
+                     mp [ p [ x ] ] . push_back ( i ) ; 
+                  st . insert ( p [ x ] ) ; 
+         
+                     x  =  x  /  p [ x ] ; 
+            
+          } 
+          } 
+ 
+          for ( auto &  ele2 :  mp ) 
+          {    
+              auto  ele = ele2 . second ; 
+            
+              int  a = ele [ 0 ] ; 
+ 
+              for ( int  i = 1 ; i < ele . size ( ) ; i ++ ) 
+              { 
+                 ds . unionf ( a , ele [ i ] ) ; 
+              } 
+ 
+          } 
+      
+ 
+         for ( int  i = 0 ; i < n ; i ++ ) 
+         { 
+             int  z = ds . find ( i ) ; 
+             if ( z == i ) 
+              { 
+                  if ( ds . size [ z ] == n ) 
+                      return   true ; 
+              } 
+ 
+            //  cout<<i<<" "<<z<<" "<<ds.size[z]<<endl; 
+         } 
+         
+      
+          return   false ; 
+      } 
+ } ;
