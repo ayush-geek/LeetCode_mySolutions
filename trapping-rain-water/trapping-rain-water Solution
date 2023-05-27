@@ -1,47 +1,39 @@
 class   Solution   { 
  public : 
-      int   trap ( vector < int > &  height )   { 
+      int   trap ( vector < int > &  nums )   { 
          
-         
-          //use prefix and suffix sum 
+          int  n = nums . size ( ) ; 
           int  ans = 0 ; 
-          int  n = height . size ( ) ; 
-         vector < int >  pref ; 
-         vector < int >  suf ; 
-         
+          //with prefix and suffix 
+ 
+         vector < int >   pref ( n , 0 ) ; 
+ 
+         vector < int >   suf ( n , 0 ) ; 
+ 
           for ( int  i = 0 ; i < n ; i ++ ) 
           { 
               if ( i == 0 ) 
-             pref . push_back ( height [ 0 ] ) ; 
-             
+                 pref [ i ] = 0 ; 
               else 
-                 pref . push_back ( max ( height [ i ] , pref . back ( ) ) ) ; 
-             
+                 pref [ i ] = max ( pref [ i - 1 ] , nums [ i - 1 ] ) ; 
+                  
           } 
-         
-         
-           for ( int  j = n - 1 ; j >= 0 ; j -- ) 
+ 
+           for ( int  i = n - 1 ; i >= 0 ; i -- ) 
           { 
-              if ( j == n - 1 ) 
-             suf . push_back ( height [ j ] ) ; 
-             
+              if ( i == n - 1 ) 
+                 suf [ i ] = 0 ; 
               else 
-                 suf . push_back ( max ( height [ j ] , suf . back ( ) ) ) ; 
-             
+                 suf [ i ] = max ( suf [ i + 1 ] , nums [ i + 1 ] ) ; 
+ 
+                
           } 
-         
-          reverse ( suf . begin ( ) , suf . end ( ) ) ; 
-         
-          //water will not accumulate at end points 
-         
-         
-         
+ 
           for ( int  i = 1 ; i < n - 1 ; i ++ ) 
-          { 
-              if ( min ( pref [ i ] , suf [ i ] ) - height [ i ] >= 0 ) 
-                 ans += min ( pref [ i ] , suf [ i ] ) - height [ i ] ; 
-             
+          {    
+              //cout<<min(pref[i],suf[i])<<" "<<nums[i]<<endl; 
+             ans += max ( min ( pref [ i ] , suf [ i ] ) - nums [ i ] , 0 ) ; 
           } 
-          return  ans ; 
+          return  ans ;  
       } 
  } ;
