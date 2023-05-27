@@ -1,47 +1,51 @@
 class   Solution   { 
  public : 
       int   findCheapestPrice ( int  n ,  vector < vector < int >> &  flights ,   int  src ,   int  dst ,   int  k )   { 
-         queue < pair < int , pair < int , int >> >  q ; 
-          //k dist src 
-         q . push ( { 0 , { 0 , src } } ) ; 
-         vector < int >   dis ( n , 1e9 ) ; 
-         dis [ src ] = 0 ; 
+         
+         vector < int >   cost ( n , 1e9 ) ; 
+         cost [ src ] = 0 ; 
  
-         vector < vector < int >>  adj [ n ] ; 
+         vector < vector < pair < int , int >> >   adj ( n ) ; 
  
           for ( auto &  ele :  flights ) 
           { 
              adj [ ele [ 0 ] ] . push_back ( { ele [ 1 ] , ele [ 2 ] } ) ; 
           } 
-          while ( ! q . empty ( ) )  
+         
+          //K  cost src 
+         queue < pair < int , pair < int , int >> >  q ; 
+         q . push ( { 0 , { 0 , src } } ) ; 
+          int  ans = INT_MAX ; 
+          while ( ! q . empty ( ) ) 
           { 
               auto  nd = q . front ( ) ; 
              q . pop ( ) ; 
-              int  steps = nd . first ; 
-              int  d = nd . second . first ; 
+              int  ct = nd . first ; 
               int  node = nd . second . second ; 
- 
-              if ( steps > k ) 
+              //cout<<node<<endl; 
+              int  cst = nd . second . first ; 
+              if ( node == dst ) 
+                 ans = min ( ans , cst ) ; 
+              if ( ct > k ) 
                   continue ; 
  
-           
- 
-              for ( auto &  ele :  adj [ node ] ) 
+              for ( auto &  ele : adj [ node ] ) 
               { 
-                  int  nwnode = ele [ 0 ] ; 
-                  int  w = ele [ 1 ] ; 
- 
-                  if ( steps <= k  &&  d + w < dis [ nwnode ] ) 
-                  { 
-                     q . push ( { steps + 1 , { d + w , nwnode } } ) ; 
-                     dis [ nwnode ] = d + w ; 
+                  int  a = ele . first ; 
+                  int  b = ele . second ; 
+                 // cout<<a<<" "<<b<<endl; 
+                  if ( ct <= k  &&  cost [ a ] > cst + b ) 
+                  {    
+                      //cout<<a<<endl; 
+                     cost [ a ] = cst + b ; 
+                     q . push ( { ct + 1 , { cost [ a ] , a } } ) ; 
                   } 
               } 
-          }   
  
-          if ( dis [ dst ] != 1e9 ) 
-              return  dis [ dst ] ; 
+          } 
+          if ( ans == INT_MAX ) 
+              return   - 1 ; 
  
-          return   - 1 ; 
+          return  ans ; 
       } 
  } ;
