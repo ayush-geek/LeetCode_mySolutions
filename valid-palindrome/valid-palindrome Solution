@@ -1,25 +1,25 @@
 class   Solution   { 
  public : 
       bool   isPalindrome ( string s )   { 
-         
-          int  low = 0 ; 
-         
-          int  e = s . size ( ) - 1 ; 
-         
-         
-          while ( low < e ) 
-          { 
-              while ( ! isalpha ( s [ low ] )   && ! isdigit ( s [ low ] )    &&  low < e ) 
-                 low ++ ; 
-              while ( ! isalpha ( s [ e ] )   && ! isdigit ( s [ e ] )   && e > low ) 
-                 e -- ; 
-              // if(low>=e) 
-              //     break; 
-             
-              if ( tolower ( s [ low ] ) != tolower ( s [ e ] ) ) 
+          int  i = 0 ; 
+          int  j = s . size ( ) - 1 ; 
+          while ( 1 ) 
+          {    
+              while ( i < j  &&   ! iswalnum ( s [ i ] )   ) 
+                 i ++ ; 
+              while ( i < j  &&   ! iswalnum ( s [ j ] )   ) 
+                 j -- ; 
+                 cout << i << " " << j << endl ; 
+              if ( i >= j ) 
+                  break ; 
+              char  lft = tolower ( s [ i ] ) ; 
+              char  rgt = tolower ( s [ j ] ) ; 
+ 
+ 
+              if ( lft != rgt ) 
                   return   false ; 
-               low ++ ; 
-             e -- ; 
+             i ++ ; 
+             j -- ; 
           } 
           return   true ; 
       } 
