@@ -1,37 +1,43 @@
 class   Solution   { 
  public : 
- 
-      bool   solve ( string s , int  i , int  j ) 
+     
+      bool   check ( string s  ,   int  src , int  end ) 
       { 
-          while ( i < j ) 
+          while ( src < end ) 
           { 
-              if ( s [ i ] != s [ j ] ) 
+              if ( s [ src ] != s [ end ] ) 
                   return   false ; 
              
-             i ++ ; 
-             j -- ; 
+             src ++ ; 
+             end -- ; 
           } 
+         
           return   true ; 
       } 
- 
+     
+     
+     
       bool   validPalindrome ( string s )   { 
-          int  i = 0 ; 
-          int  j = s . size ( ) - 1 ; 
-          //worst case 1 char diff consider 
-          //string length 1e5 
-          // Tc 2*(O(n)) 
- 
- 
-          while ( i < j ) 
-          { 
-              if ( s [ i ] != s [ j ] ) 
-              { 
-                  return   solve ( s , i + 1 , j )   ||   solve ( s , i , j - 1 ) ; 
-              } 
-             i ++ ; 
-             j -- ; 
+       //Deleting at most 1 letter 
          
+         int  srt = 0 ; 
+          int  e = s . size ( ) - 1 ; 
+         
+          while ( srt < e ) 
+          { 
+              if ( s [ srt ] != s [ e ] ) 
+              { 
+                  return   check ( s , srt , e - 1 )   ||   check ( s , srt + 1 , e ) ; 
+              } 
+             
+             srt ++ ; 
+             e -- ; 
           } 
+         
+         
           return   true ; 
+       
+         
+         
       } 
  } ;
