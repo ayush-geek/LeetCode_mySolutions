@@ -1,0 +1,30 @@
+class   Solution   { 
+ public : 
+    
+      int   solve ( int  i , int  j , string &  s ,  map < pair < int , int > , int > &  mp ) 
+      { 
+          if ( i >= j ) 
+              return   0 ; 
+        
+          if ( mp . count ( { i , j } ) ) 
+              return  mp [ { i , j } ] ; 
+ 
+          int  ans = 0 ; 
+          if ( s [ i ] != s [ j ] ) 
+             ans = min ( 1 + solve ( i + 1 , j , s , mp )   , 1 + solve ( i , j - 1 , s , mp ) ) ; 
+          else 
+             ans = solve ( i + 1 , j - 1 , s , mp ) ; 
+         
+          return  mp [ { i , j } ] = ans ; 
+      } 
+ 
+      bool   isValidPalindrome ( string s ,   int  k )   { 
+         
+          int  n = s . size ( ) ; 
+          //can do memizatiom 
+          map < pair < int , int > , int >  mp ; 
+        // dp.resize(n,vector<int> (n,-1)); 
+ 
+          return   solve ( 0 , n - 1 , s , mp ) <= k ; 
+      } 
+ } ;
