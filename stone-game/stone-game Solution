@@ -1,41 +1,25 @@
 class   Solution   { 
  public : 
  
-      int   solve ( int  i , int  j , int  turn  , int  sa , int  sb , vector < vector < int >> &  dp , vector < int > &  piles ) 
+      int   solve ( int  i , int  j , vector < vector < int >> &  dp , vector < int > &  piles ) 
       { 
           if ( i > j ) 
-            { 
-                if ( sa > sb ) 
-                  return   1 ; 
-              else 
-                  return   0 ; 
-            } 
-          if ( dp [ i ] [ j ] != - 1 ) 
               return   0 ; 
+         
+          if ( dp [ i ] [ j ] != - 1 ) 
+              return  dp [ i ] [ j ] ; 
           int  ans = 0 ; 
-          if ( turn == 0 ) 
-          { 
-             ans = solve ( i + 1 , j , 1 , sa + piles [ i ] , sb , dp , piles ) ; 
-             ans = ans  ||   solve ( i , j - 1 , 1 , sa + piles [ j ] , sb , dp , piles ) ; 
-          } 
  
-          else 
-          { 
-              ans = solve ( i + 1 , j , 0 , sa , piles [ i ] + sb , dp , piles ) ; 
-             ans = ans  ||   solve ( i , j - 1 , 0 , sa , piles [ j ] + sb , dp , piles ) ; 
-          } 
- 
+         ans = max ( piles [ i ] - solve ( i + 1 , j , dp , piles )   , piles [ j ] - solve ( i , j - 1 , dp , piles ) ) ; 
           return  dp [ i ] [ j ] = ans ; 
       } 
  
       bool   stoneGame ( vector < int > &  piles )   { 
          
           int  n = piles . size ( ) ; 
-          //0->alice 
-          //1->bob 
-          int  sa = 0 ; 
-          int  sb = 0 ; 
-         vector < vector < int >>   dp ( n + 1 , vector < int >   ( n + 1 , - 1 ) ) ; 
-          return   solve ( 0 , n - 1 , 0 , sa , sb , dp , piles ) ; 
+       
+        vector < vector < int >>   dp ( n + 1 , vector < int >   ( n + 1 , - 1 ) ) ; 
+     
+          return   solve ( 0 , n - 1 , dp , piles ) ; 
       } 
  } ;
