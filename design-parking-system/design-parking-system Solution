@@ -1,0 +1,46 @@
+class   ParkingSystem   { 
+ private : 
+       int  big , medium , small ; 
+       //1 2 3  
+   public :     
+      ParkingSystem ( int  big ,   int  medium ,   int  small )   { 
+          this -> big = big ; 
+          this -> medium = medium ; 
+          this -> small = small ; 
+ 
+      } 
+   
+      bool   addCar ( int  carType )   { 
+         bool  fg = false ; 
+         switch ( carType ) 
+          { 
+             case   1 : 
+                 fg  =   ( big > 0 ) ? true : false ; 
+                  if ( fg ) 
+                     big -- ; 
+                  return  fg ; 
+                  break ; 
+              case   2 : 
+               fg  =   ( medium > 0 ) ? true : false ; 
+                  if ( fg ) 
+                     medium -- ; 
+                  return  fg ; 
+                  break ; 
+              case   3 : 
+             fg  =   ( small > 0 ) ? true : false ; 
+                  if ( fg ) 
+                     small -- ; 
+                  return  fg ; 
+                  break ; 
+              default : 
+                  return   false ; 
+ 
+          } 
+      } 
+ } ; 
+ 
+ /**
+  * Your ParkingSystem object will be instantiated and called as such:
+  * ParkingSystem* obj = new ParkingSystem(big, medium, small);
+  * bool param_1 = obj->addCar(carType);
+  */
