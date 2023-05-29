@@ -1,45 +1,62 @@
 class   Solution   { 
  public : 
      vector < vector < int >>   fourSum ( vector < int > &  nums ,   int  target )   { 
-          //(O)n3 
+         
          vector < vector < int >>  res ; 
-          int  n = nums . size ( ) ; 
+         
           sort ( nums . begin ( ) , nums . end ( ) ) ; 
+         
+          int  n = nums . size ( ) ; 
+         
+         
+         
           for ( int  i = 0 ; i < n ; i ++ ) 
           {    
               if ( i != 0   &&  nums [ i ] == nums [ i - 1 ] ) 
-                  continue ; 
+                 continue ; 
               for ( int  j = i + 1 ; j < n ; j ++ ) 
               { 
+                  //4 sum to 3 sum 
                   if ( j != i + 1   &&  nums [ j ] == nums [ j - 1 ] ) 
+                          continue ; 
+                 
+                    long   long  tgt = ( long   long ) target - ( long   long ) nums [ i ]   - ( long   long ) nums [ j ] ; 
+                 
+                 
+                   int  fst = j + 1 ; 
+                  int  scnd = n - 1 ; 
+             
+                  if ( fst >= scnd ) 
                       continue ; 
-                  int  k = j + 1 ; 
-                  int  l = n - 1 ; 
- 
-                  while ( k < l ) 
-                  {    
+             
+              while ( fst < scnd ) 
+              { 
+                  if ( ( long   long ) ( nums [ fst ] + nums [ scnd ] ) == tgt ) 
+                  { 
+                     res . push_back ( { nums [ fst ] , nums [ scnd ] , nums [ i ] , nums [ j ] } ) ; 
                      
-                      if ( 1ll * nums [ k ] + 1ll * nums [ l ] + 1ll * nums [ i ] + 1ll * nums [ j ] == 1ll * target ) 
-                      { 
-                         res . push_back ( { nums [ i ] , nums [ j ] , nums [ k ] , nums [ l ] } ) ; 
- 
-                         k ++ ; 
-                         l -- ; 
- 
-                          while ( k < l  &&  nums [ k ] == nums [ k - 1 ] ) 
-                             k ++ ; 
-                          while ( k < l  &&  nums [ l ] == nums [ l + 1 ] ) 
-                             l -- ; 
-                      } 
- 
-                      else   if ( 1ll * nums [ k ] + 1ll * nums [ l ] + 1ll * nums [ i ] + 1ll * nums [ j ] > 1ll * target ) 
-                         l -- ; 
-                      else 
-                         k ++ ; 
+                     fst ++ ; 
+                     while ( fst < scnd  &&  nums [ fst ] == nums [ fst - 1 ] ) 
+                        fst ++ ; 
+                     scnd -- ; 
+                      while ( scnd > fst  &&  nums [ scnd ] == nums [ scnd + 1 ] ) 
+                        scnd -- ; 
+                     
+                     
                   } 
-                     
+                 
+                 
+                  else   if ( ( long   long ) ( nums [ fst ] + nums [ scnd ] ) > tgt ) 
+                     scnd -- ; 
+                  else 
+                     fst ++ ; 
+             
+             
+              } 
+                 
+                 
               } 
           } 
-          return  res ; 
+        return  res ;   
       } 
  } ;
