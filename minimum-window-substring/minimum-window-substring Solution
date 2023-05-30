@@ -1,0 +1,59 @@
+class   Solution   { 
+ public : 
+     string  minWindow ( string s ,  string t )   { 
+          if ( s . size ( ) < t . size ( ) ) 
+              return   "" ; 
+ 
+         
+         unordered_map < char , int >  mp2 ; 
+ 
+          for ( int  i = 0 ; i < t . size ( ) ; i ++ ) 
+             mp2 [ t [ i ] ] ++ ; 
+ 
+ 
+         unordered_map < char , int >  mp ; 
+          int  j = 0 ; 
+         string res = "" ; 
+          int  ans = 1e9 ; 
+          for ( int  i = 0 ; i < s . size ( ) ; i ++ ) 
+          { 
+              mp [ s [ i ] ] ++ ; 
+ 
+               //chk at max constant 
+              int  fg = 1 ; 
+               for ( auto &  ele :  mp2 ) 
+               { 
+                   if ( mp2 [ ele . first ]   > mp [ ele . first ] ) { 
+                     fg = 0 ; 
+                      break ; 
+                      } 
+               } 
+ 
+               if ( fg ) 
+               { 
+                  //  ans=min(ans,i-j+1); 
+ 
+                   while ( j <= i ) 
+                   { 
+                       if ( mp2 . find ( s [ j ] ) == mp2 . end ( )   || mp2 [ s [ j ] ] < mp [ s [ j ] ] ) 
+                       { 
+                          mp [ s [ j ] ] -- ; 
+                          j ++ ; 
+                       } 
+                       else 
+                          break ; 
+                   } 
+ 
+                 
+                   if ( ans > i - j + 1 ) 
+                   {   
+                       ans = min ( ans , i - j + 1 ) ; 
+                      res = s . substr ( j , i - j + 1 ) ; 
+                   } 
+               } 
+          } 
+ 
+         return  res ; 
+ 
+      } 
+ } ;
