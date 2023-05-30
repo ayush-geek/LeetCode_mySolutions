@@ -1,5 +1,5 @@
 class   Solution   { 
-  public : 
+ public : 
       int   maxFrequency ( vector < int > &  nums ,   int  k )   { 
  
           sort ( nums . begin ( ) , nums . end ( ) ) ; 
@@ -25,4 +25,4 @@ class   Solution   {
  
           return  ans ; 
       } 
-  } ;
+ } ;
