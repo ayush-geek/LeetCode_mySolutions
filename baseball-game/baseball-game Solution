@@ -1,56 +1,46 @@
 class   Solution   { 
  public : 
-      int   calPoints ( vector < string > &  ops )   { 
+      int   calPoints ( vector < string > &  operations )   { 
          
-         stack < long   long >  st ; 
-          long   long  sum = 0 ; 
-          for ( int  i = 0 ; i < ops . size ( ) ; i ++ ) 
+         stack < int >  st ; 
+ 
+          for ( auto &  element :  operations ) 
           { 
-             
-              if ( ops [ i ] == "C" ) 
+              if ( element == "+" ) 
               { 
-               st . pop ( ) ; 
-              } 
-             
-              else   if ( ops [ i ] == "D" ) 
-              { 
-                  long   long  z = st . top ( ) ; 
-                 z = 2 * z ; 
-                 
-                 st . push ( z ) ; 
-              } 
-             
-              else   if ( ops [ i ] == "+" ) 
-              { 
-                  long   long  z1 = st . top ( ) ; 
+                  int  t1 = st . top ( ) ; 
                  st . pop ( ) ; 
+                  int  t2 = st . top ( ) ; 
                  
-                  long   long  z2 = st . top ( ) ; 
-                
-                 
-                 st . push ( z1 ) ; 
-                 
-                 
-                 st . push ( z1 + z2 ) ; 
-              }            
-              else 
-              {    
-                  //cout<<ops[i]<<' '; 
-                  long   long  my  =   stol ( ops [ i ] ) ; 
-                 st . push ( my ) ; 
+                 st . push ( t1 ) ; 
+ 
+                 st . push ( t1 + t2 ) ; 
               } 
-             
-             
+              else    if ( element == "D" ) 
+              { 
+                  int  t1 = st . top ( ) ; 
+                  // st.pop(); 
+                 
+                 st . push ( 2 * t1 ) ; 
+              } 
+              else    if ( element == "C" ) 
+              { 
+                  int  t1 = st . top ( ) ; 
+                 st . pop ( ) ; 
+                
+              } 
+              else  
+              { 
+                 st . push ( stoi ( element ) ) ; 
+              } 
           } 
-         
-         
+ 
+          int  sm = 0 ; 
           while ( ! st . empty ( ) ) 
-          { 
-             sum += st . top ( ) ; 
-             st . pop ( ) ; 
-          } 
-         
-         
-          return  sum ; 
+              { 
+                 sm += st . top ( ) ; 
+                 st . pop ( ) ; 
+              } 
+          return  sm ; 
       } 
  } ;
