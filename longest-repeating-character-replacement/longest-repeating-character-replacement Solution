@@ -1,38 +1,49 @@
 class   Solution   { 
  public : 
+ 
+      int   mxfreq ( unordered_map < char , int > &  mp ) 
+      { 
+          int  mx = 0 ; 
+          for ( auto  ele : mp ) 
+          { 
+              if ( ele . second >= mx ) 
+                 mx = max ( mx , ele . second ) ; 
+          } 
+          return  mx ; 
+      } 
       int   characterReplacement ( string s ,   int  k )   { 
-          int  n = s . size ( ) ; 
-          int  j = 0 ; 
-         vector < int >   v ( 26 , 0 ) ; 
+         
+          //Sliding Window 
+ 
+          unordered_map < char , int >  mp ; 
+          // unordered_set<int> st; 
+          int  i = 0 ; 
+          int  j = 0 ;         
+          int  len = 0 ; 
           int  ans = 0 ; 
  
-          int  mx = 0 ; 
-          for ( int  i = 0 ; i < n ; i ++ ) 
-          { 
-             v [ s [ i ] - 'A' ] ++ ; 
-             mx = max ( v [ s [ i ] - 'A' ] , mx ) ; 
- 
+          for ( int  i = 0 ; i < s . size ( ) ; i ++ ) 
+          {    
+              mp [ s [ i ] ] ++ ; 
               int  len = i - j + 1 ; 
-              // ans=max(ans,len); 
  
+              if ( len - mxfreq ( mp ) > k ) 
+              { 
+                  while ( len - mxfreq ( mp ) > k ) 
+                  { 
+                     mp [ s [ j ] ] -- ; 
+                     j ++ ; 
  
-              while ( len - mx > k ) 
-              {    
-                  //cout<<i<<" "<<len<<" "<<mx<<endl; 
-                 v [ s [ j ] - 'A' ] -- ; 
-                 j ++ ; 
-                  for ( int  i = 0 ; i < 26 ; i ++ ) 
-                     mx = max ( mx , v [ i ] ) ; 
-                 len -- ; 
- 
-                 // cout<<i<<" "<<len<<" "<<mx<<endl; 
+                     len -- ; 
+                  } 
+                 
  
               } 
+         
  
-               ans = max ( ans , len ) ; 
- 
-             
+            ans = max ( ans , len ) ; 
           } 
+ 
           return  ans ; 
       } 
  } ;
