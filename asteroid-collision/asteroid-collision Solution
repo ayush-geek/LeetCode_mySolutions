@@ -1,26 +1,53 @@
 class   Solution   { 
  public : 
      vector < int >   asteroidCollision ( vector < int > &  asteroids )   { 
-         vector < int >  stack ; 
-          int  curr ; 
-          for   ( int  i = 0 ;  i < asteroids . size ( ) ;  i ++ )   { 
-             curr  =  asteroids [ i ] ; 
-           
-              if   ( ( curr  >   0 )   ||   ( stack . empty ( ) )   ||   ( stack . back ( )   <   0 ) ) 
-                 stack . push_back ( curr ) ; 
-             
-           
-              else   if   ( abs ( curr )   ==  stack . back ( ) )   { 
-                 stack . pop_back ( ) ; 
-                  continue ; 
+          //++ no 
+          //+- coll 
+          //-- no 
+          //-+ no 
+ 
+ 
+         stack < int >  st ; 
+ 
+          for ( auto &  ele :  asteroids ) 
+          { 
+ 
+              if ( ele < 0 ) 
+              {   
+                  while ( ! st . empty ( )   &&  st . top ( ) > 0   &&   abs ( st . top ( ) ) < abs ( ele ) ) 
+                  {    
+                   
+                     st . pop ( ) ; 
+ 
+                     
+                         
+                  } 
+ 
+ 
+                  if ( st . empty ( )   )  
+                     st . push ( ele ) ; 
+                  else   if ( st . top ( ) < 0   ) 
+                      { 
+                       st . push ( ele ) ; 
+                      } 
+                  else   if ( st . top ( ) > 0   &&  st . top ( ) == abs ( ele ) ) 
+                  { 
+                     st . pop ( ) ; 
+                  } 
+ 
               } 
-             
-           
-              else   if   ( abs ( curr )   >  stack . back ( ) )   { 
-                 stack . pop_back ( ) ; 
-                 i -- ; 
-              } 
+              else 
+                 st . push ( ele ) ; 
           } 
-          return  stack ; 
+         vector < int >  res ; 
+          while ( ! st . empty ( ) ) 
+          { 
+                   res . push_back ( st . top ( ) ) ; 
+                   st . pop ( ) ; 
+          } 
+ 
+          reverse ( res . begin ( ) , res . end ( ) ) ; 
+ 
+            return  res ; 
       } 
  } ;
