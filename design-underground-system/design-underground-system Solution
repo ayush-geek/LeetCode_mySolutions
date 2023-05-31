@@ -1,0 +1,40 @@
+class   UndergroundSystem   { 
+ 
+ private : 
+     unordered_map < int , pair < string , int >>  mp1 ;   //id station  
+     map < pair < string , string > , int >  mp2 ; //count 
+     map < pair < string , string > , double >  mp3 ;           //sum 
+ 
+ public : 
+      UndergroundSystem ( )   { 
+         
+      } 
+     
+      void   checkIn ( int  id ,  string stationName ,   int  t )   { 
+             mp1 [ id ] = { stationName , t } ; 
+      } 
+     
+      void   checkOut ( int  id ,  string es ,   int  t )   { 
+ 
+         string ss = mp1 [ id ] . first ; 
+          int  st = mp1 [ id ] . second ; 
+          //can earse but not needed since specified  
+          //in q chronological 
+ 
+         mp2 [ { ss , es } ] ++ ; 
+         mp3 [ { ss , es } ] += ( t - st ) ; 
+      } 
+     
+      double   getAverageTime ( string ss ,  string es )   { 
+          return   mp3 [ { ss , es } ] / mp2 [ { ss , es } ] ; 
+ 
+      } 
+ } ; 
+ 
+ /**
+  * Your UndergroundSystem object will be instantiated and called as such:
+  * UndergroundSystem* obj = new UndergroundSystem();
+  * obj->checkIn(id,stationName,t);
+  * obj->checkOut(id,stationName,t);
+  * double param_3 = obj->getAverageTime(startStation,endStation);
+  */
