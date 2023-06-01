@@ -1,0 +1,42 @@
+class   FreqStack   { 
+ 
+ 
+ //same freq-> stack LIFO 
+ //else pq  
+ 
+ private : 
+      int  mx ; 
+     unordered_map < int , int >  mp ;    //to store count 
+     unordered_map < int , stack < int >>  st ;    //to pop the required  
+ 
+ public : 
+ 
+      FreqStack ( )   { 
+          this -> mx = 0 ; 
+      } 
+     
+      void   push ( int  val )   { 
+         
+         mp [ val ] ++ ; 
+          int  z1 = mp [ val ] ; 
+         st [ z1 ] . push ( val ) ; 
+         mx = max ( mx , z1 ) ; 
+      } 
+     
+      int   pop ( )   { 
+          int  ans = st [ mx ] . top ( ) ; 
+         st [ mx ] . pop ( ) ; 
+ 
+          if ( st [ mx ] . size ( ) == 0 ) 
+             mx -- ; 
+         mp [ ans ] -- ; 
+          return  ans ; 
+      } 
+ } ; 
+ 
+ /**
+  * Your FreqStack object will be instantiated and called as such:
+  * FreqStack* obj = new FreqStack();
+  * obj->push(val);
+  * int param_2 = obj->pop();
+  */
