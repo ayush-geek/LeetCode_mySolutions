@@ -1,47 +1,48 @@
 class   Solution   { 
  public : 
       int   shortestPathBinaryMatrix ( vector < vector < int >> &  grid )   { 
+         
           int  n = grid . size ( ) ; 
           int  m = grid [ 0 ] . size ( ) ; 
-         vector < vector < int >>   vis ( n , vector < int >   ( m , 0 ) ) ; 
- 
-          //all the vis cells of path are 0 
-         queue < pair < pair < int , int > , int >>  q ; 
-          if ( grid [ 0 ] [ 0 ] != 0   ||  grid [ n - 1 ] [ m - 1 ] != 0 ) 
-              return   - 1 ; 
-         q . push ( { { 0 , 0 } , 0 } ) ; 
-         vis [ 0 ] [ 0 ] = 1 ; 
- 
+         
+         
+         priority_queue < pair < int , pair < int , int >> >  q ; 
+      if ( grid [ 0 ] [ 0 ] ) 
+          return   - 1 ; 
+         q . push ( { 0 , { 0 , 0 } } ) ; 
+         vector < vector < int >>   dis ( n , vector < int >   ( m , 1e9 ) ) ; 
           while ( ! q . empty ( ) ) 
           { 
-              int  r = q . front ( ) . first . first ; 
-              int  c = q . front ( ) . first . second ; 
-              int  l = q . front ( ) . second ; 
+              auto  nd = q . top ( ) ; 
              q . pop ( ) ; 
+              int  r = nd . second . first ; 
+              int  c = nd . second . second ; 
+              int  d = abs ( nd . first ) ; 
  
+              if ( d >= dis [ r ] [ c ] ) 
+                  continue ; 
+             dis [ r ] [ c ] = d ; 
+             grid [ r ] [ c ] = - 1 ; 
               if ( r == n - 1   &&  c == m - 1 ) 
-                  return  l + 1 ; 
-              for ( int  dr = - 1 ; dr <= 1 ; dr ++ ) 
+                  return  d + 1 ; 
+ 
+              for ( int  i = - 1 ; i <= 1 ; i ++ ) 
               { 
-                  for ( int  dc = - 1 ; dc <= 1 ; dc ++ ) 
+                  for ( int  j = - 1 ; j <= 1 ; j ++ ) 
                   { 
-                      int  nr = r + dr ; 
-                      int  nc = c + dc ; 
+                      int  nr = r + i ; 
+                      int  nc = c + j ; 
  
-                      if ( nr >= 0   &&  nr < n  &&  nc >= 0   &&  nc < m  &&  grid [ nr ] [ nc ] == 0   &&  vis [ nr ] [ nc ] == 0 ) 
+ 
+                      if ( nr >= 0   &&  nr < n  &&  nc >= 0   &&  nc < m  &&  grid [ nr ] [ nc ] == 0 ) 
                       { 
-                         q . push ( { { nr , nc } , l + 1 } ) ; 
-                         vis [ nr ] [ nc ] = 1 ; 
+                         q . push ( { - 1 * ( d + 1 ) , { nr , nc } } ) ; 
                       } 
- 
- 
                   } 
               } 
+ 
+         
           } 
- 
-        
-              return   - 1 ; 
-     
- 
+          return   - 1 ; 
       } 
  } ;
