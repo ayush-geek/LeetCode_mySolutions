@@ -1,0 +1,42 @@
+class   Solution   { 
+ public : 
+ 
+      void   dfs ( int  i , vector < vector < int >> &  bombs ,  unordered_set < int > &  vis , int &  ans ) 
+      { 
+         vis . insert ( i ) ; 
+         ans ++ ; 
+         
+          for ( int  j = 0 ; j < bombs . size ( ) ; j ++ ) 
+          { 
+              if ( vis . count ( j ) == 0 ) 
+              { 
+                  long   long  dx = abs ( bombs [ i ] [ 0 ] - bombs [ j ] [ 0 ] ) ; 
+                  long   long  dy = abs ( bombs [ i ] [ 1 ] - bombs [ j ] [ 1 ] ) ; 
+ 
+                  long   long  cd2 = pow ( dx , 2 ) + pow ( dy , 2 ) ; 
+                  long   long  d = pow ( bombs [ i ] [ 2 ] , 2 ) ; 
+                  if ( cd2 <= d ) 
+                      { 
+                          dfs ( j , bombs , vis , ans ) ; 
+                      } 
+              } 
+          } 
+     
+      } 
+ 
+      int   maximumDetonation ( vector < vector < int >> &  bombs )   { 
+         
+ 
+          //run dfs from each loop 
+          int  mx = 0 ; 
+          for ( int  i = 0 ; i < bombs . size ( ) ; i ++ ) 
+          { 
+              int  ans = 0 ; 
+             unordered_set < int >  vis ; 
+ 
+              dfs ( i , bombs , vis , ans ) ; 
+             mx = max ( mx , ans ) ; 
+          } 
+          return  mx ; 
+      } 
+ } ;
