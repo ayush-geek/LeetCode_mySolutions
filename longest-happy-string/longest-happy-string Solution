@@ -1,0 +1,56 @@
+class   Solution   { 
+ public : 
+     string  longestDiverseString ( int  a ,   int  b ,   int  c )   { 
+          //priority q  
+ 
+        
+ 
+         string res = "" ; 
+         priority_queue < pair < int , char >>  pq ; 
+          if ( a != 0 ) 
+             pq . push ( { a , 'a' } ) ; 
+          if ( b != 0 ) 
+             pq . push ( { b , 'b' } ) ; 
+         
+          if ( c != 0 ) 
+             pq . push ( { c , 'c' } ) ; 
+ 
+ 
+          while ( ! pq . empty ( ) ) 
+          { 
+              char  zz  = pq . top ( ) . second ; 
+              int  freq = pq . top ( ) . first ; 
+             pq . pop ( ) ; 
+            
+              if ( res . size ( ) <= 1   ||   res [ res . size ( ) - 1 ] !=  zz   ||  res [ res . size ( ) - 1 ] != res [ res . size ( ) - 2 ]   )  
+              { 
+                  res . push_back ( zz ) ; 
+                     freq -= 1 ;     
+              } 
+              else 
+              { 
+                  if ( ! pq . empty ( ) ) 
+                  { 
+                       char  zzz  = pq . top ( ) . second ; 
+                       int  fre = pq . top ( ) . first ; 
+                         pq . pop ( ) ; 
+                     res . push_back ( zzz ) ; 
+                     fre -- ; 
+                      if ( fre > 0 ) 
+                         pq . push ( { fre , zzz } ) ; 
+                  } 
+                  else 
+                      break ; 
+              } 
+ 
+              if ( freq > 0 ) 
+              { 
+                 pq . push ( { freq , zz } ) ; 
+              } 
+ 
+           
+          } 
+          return  res ; 
+         
+      } 
+ } ;
