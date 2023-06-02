@@ -9,23 +9,17 @@
   *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
   * };
   */ 
-  class   Solution   { 
-  public : 
- 
-      bool   solve ( TreeNode *  rt , long  mn , long  mx ) 
-      { 
-          if ( rt == NULL ) 
+ class   Solution   { 
+ public : 
+      bool   isValidBST ( TreeNode *  root , long  lft = LONG_MIN , long  rgt = LONG_MAX )   { 
+          if ( root == NULL ) 
               return   true ; 
  
-          if ( rt -> val <= mn  ||  rt -> val >= mx ) 
+          if ( root -> val >= rgt  ||  root -> val <= lft ) 
               return   false ; 
          
-          return   solve ( rt -> left , mn , rt -> val )   &&   solve ( rt -> right , rt -> val , mx ) ; 
+          bool  left = isValidBST ( root -> left , lft , root -> val ) ; 
+          bool  regt = isValidBST ( root -> right , root -> val , rgt ) ; 
+          return  left  &&  regt ; 
       } 
- 
-      bool   isValidBST ( TreeNode *  root )   { 
-         
- 
-          return   solve ( root , LONG_MIN , LONG_MAX ) ; 
-      } 
-  } ;
+ } ;
