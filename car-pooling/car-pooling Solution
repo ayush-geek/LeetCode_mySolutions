@@ -1,0 +1,46 @@
+typedef  pair < int , int >  pi ; 
+ class   Solution   { 
+ public : 
+      bool   carPooling ( vector < vector < int >> &  trips ,   int  capacity )   { 
+          //to ,num 
+ 
+         priority_queue < pi , vector < pi > , greater < pi >>  pq ; 
+ 
+          sort ( trips . begin ( ) , trips . end ( ) , [ ] ( vector < int > &  a , vector < int > &  b ) { 
+ 
+              if ( a [ 1 ] == b [ 1 ] ) 
+              {    
+                  if ( a [ 2 ] == b [ 2 ] ) 
+                      return  a [ 0 ] > b [ 0 ] ; 
+                  return  a [ 2 ] < b [ 2 ] ; 
+              } 
+              return  a [ 1 ] < b [ 1 ] ; 
+          } ) ; 
+ 
+          for ( int  i = 0 ; i < trips . size ( ) ; i ++ ) 
+          { 
+              if ( capacity >= trips [ i ] [ 0 ] ) 
+              { 
+                 pq . push ( { trips [ i ] [ 2 ] , trips [ i ] [ 0 ] } ) ; 
+                 capacity -= trips [ i ] [ 0 ] ; 
+              } 
+              else { 
+                  int  ct = trips [ i ] [ 1 ] ; 
+ 
+                  while ( ! pq . empty ( )   &&  pq . top ( ) . first <= ct ) 
+                  {    
+                     capacity += pq . top ( ) . second ; 
+                     pq . pop ( ) ; 
+                  } 
+ 
+ 
+                  if ( capacity < trips [ i ] [ 0 ] ) 
+                      return   false ; 
+                  pq . push ( { trips [ i ] [ 2 ] , trips [ i ] [ 0 ] } ) ; 
+                   capacity -= trips [ i ] [ 0 ] ; 
+              } 
+          } 
+ 
+          return   true ; 
+      } 
+ } ;
