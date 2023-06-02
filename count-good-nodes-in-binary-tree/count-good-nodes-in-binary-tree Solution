@@ -12,27 +12,24 @@
  class   Solution   { 
  public : 
  
-      int   solve ( TreeNode *  rt , int  mx ) 
-      {     int  ct = 0 ; 
-          if ( rt == NULL ) 
-              return   0 ; 
+      void   solve ( TreeNode *  root , int  mxv , int &  ans ) 
+      { 
+          if ( root == NULL ) 
+              return   ; 
+         
+          if ( root -> val >= mxv ) 
+             ans ++ ; 
+         
+          solve ( root -> left , max ( mxv , root -> val ) , ans ) ; 
+          solve ( root -> right , max ( mxv , root -> val ) , ans ) ; 
  
-          if ( rt -> val >= mx ) 
-          { 
-             ct ++ ; 
-             
-          } 
- 
-         mx = max ( rt -> val , mx ) ; 
- 
-          int  l = solve ( rt -> left , mx ) ; 
-          int  r = solve ( rt -> right , mx ) ; 
-          return  l + r + ct ; 
       } 
  
       int   goodNodes ( TreeNode *  root )   { 
-          if ( root == NULL )    return   0 ; 
-              int  mx = 0 ; 
-          return   solve ( root , root -> val ) ; 
+          int  ans = 0 ; 
+ 
+          solve ( root , root -> val , ans ) ; 
+ 
+          return  ans ; 
       } 
  } ;
