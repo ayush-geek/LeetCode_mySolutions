@@ -1,32 +1,25 @@
 class   Solution   { 
  public : 
- 
-    long   long   solve ( int  a  , int  b ) 
-    { 
-        return   ( 1ll * a * a  +   1ll * b * b ) ; 
-    } 
- 
-     
- 
      vector < vector < int >>   kClosest ( vector < vector < int >> &  points ,   int  k )   { 
-         
-         vector < vector < int >>  res ; 
-         priority_queue < pair < long   long , vector < int >   >>  pq ; 
+         priority_queue < pair < long   long , int >>  pq ; 
           for ( int  i = 0 ; i < points . size ( ) ; i ++ ) 
           { 
-              int  a = points [ i ] [ 0 ] ; 
-              int  b = points [ i ] [ 1 ] ; 
+              long   long  d = ( long   long )   pow ( points [ i ] [ 0 ] , 2 )   +   ( long   long ) pow ( points [ i ] [ 1 ] , 2 ) ; 
  
+             pq . push ( { d , i } ) ; 
  
-             pq . push ( { solve ( a , b ) , points [ i ] } ) ; 
- 
-              if ( pq . size ( ) > k )  
+              if ( pq . size ( ) > k ) 
                  pq . pop ( ) ; 
+ 
+ 
           } 
  
+         vector < vector < int >>  res ; 
+ 
           while ( ! pq . empty ( ) ) 
-          { 
-             res . push_back ( pq . top ( ) . second ) ; 
+          {     int  z = pq . top ( ) . second ; 
+ 
+             res . push_back ( points [ z ] ) ; 
              pq . pop ( ) ; 
           } 
  
