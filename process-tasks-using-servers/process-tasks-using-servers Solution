@@ -1,0 +1,85 @@
+class   comp { 
+      public : 
+      bool   operator ( ) ( vector < int > &  a , vector < int > &  b ) 
+      { 
+          if ( a [ 0 ] == b [ 0 ] ) 
+          { 
+              if ( a [ 1 ] == b [ 1 ] ) 
+                  return  a [ 2 ] > b [ 2 ] ; 
+              return  a [ 1 ] > b [ 1 ] ; 
+          } 
+          return   a [ 0 ] > b [ 0 ] ; 
+      } 
+ } ; 
+ 
+ class   comp2 { 
+      public : 
+      bool   operator ( ) ( vector < int > &  a , vector < int > &  b ) 
+      { 
+          if ( a [ 0 ] == b [ 0 ] ) 
+          { 
+             
+              return  a [ 1 ] > b [ 1 ] ; 
+          } 
+          return   a [ 0 ] > b [ 0 ] ; 
+      } 
+ } ; 
+ 
+ class   Solution   { 
+ public : 
+     vector < int >   assignTasks ( vector < int > &  servers ,  vector < int > &  tasks )   { 
+          //nyc q 
+ 
+         vector < int >  res ; 
+ 
+         priority_queue < vector < int > , vector < vector < int >> , comp >  pq ; 
+         
+          // available pq 
+        priority_queue < vector < int > , vector < vector < int >> , comp2 >  pq2 ; 
+         
+          //t wt no 
+          for ( int  i = 0 ; i < servers . size ( ) ; i ++ ) 
+          { 
+              // servers[i].push_back(i); 
+ 
+             pq2 . push ( { servers [ i ] , i } ) ; 
+          } 
+          int  ct = 0 ; 
+          for ( int  j = 0 ; j < tasks . size ( ) ; j ++ ) 
+          {        ct = max ( ct , j ) ; 
+ 
+             
+              while ( ! pq . empty ( )   &&  pq . top ( ) [ 0 ] <= ct ) 
+              { 
+                  auto  nd = pq . top ( ) ; 
+                 pq . pop ( ) ; 
+ 
+                 pq2 . push ( { nd [ 1 ] , nd [ 2 ] } ) ; 
+              
+ 
+              } 
+          // cout<<ct<<endl; 
+          // cout<<pq.size()<<endl; 
+          // cout<<pq2.size()<<endl; 
+              if ( pq2 . size ( ) == 0 ) 
+              { 
+                 ct = max ( ct , pq . top ( ) [ 0 ] ) ; 
+ 
+                  while ( ! pq . empty ( )   &&  pq . top ( ) [ 0 ] == ct ) 
+                  { 
+                      auto  nd = pq . top ( ) ; 
+                     pq . pop ( ) ; 
+                     pq2 . push ( { nd [ 1 ] , nd [ 2 ] } ) ; 
+                  } 
+              } 
+ 
+              auto  node = pq2 . top ( ) ; 
+             pq2 . pop ( ) ; 
+             res . push_back ( node [ 1 ] ) ; 
+             pq . push ( { ct + tasks [ j ] , node [ 0 ] , node [ 1 ] } ) ; 
+          } 
+ 
+          return  res ; 
+ 
+      } 
+ } ;
