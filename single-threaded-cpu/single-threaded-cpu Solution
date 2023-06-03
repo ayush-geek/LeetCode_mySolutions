@@ -1,0 +1,88 @@
+class   comp { 
+      public : 
+ 
+      bool   operator ( ) ( pair < int , int > &  a , pair < int , int > &  b ) 
+      { 
+          if ( a . first == b . first ) 
+              return  a . second > b . second ; 
+ 
+              return  a . first > b . first ; 
+      } 
+ } ; 
+ 
+ class   Solution   { 
+ public : 
+     vector < int >   getOrder ( vector < vector < int >> &  tasks )   { 
+          //enq-time proc-time 
+         vector < int >  res ; 
+          for ( int  i = 0 ; i < tasks . size ( ) ; i ++ ) 
+          { 
+             tasks [ i ] . push_back ( i ) ; 
+          } 
+ 
+          sort ( tasks . begin ( ) , tasks . end ( ) ) ; 
+         
+          // ,[](vector<int>& a,vector<int>& b){ 
+          //         if(a[0]==b[0]) 
+          //         { 
+          //             if(a[1]==b[1]) 
+          //                 return a[2]<b[2]; 
+          //             return a[1]<b[1]; 
+          //         } 
+          //         return a[0]<b[0]; 
+          // }); 
+ 
+ 
+          //sort sp ,index 
+ 
+         priority_queue < pair < int , int > , vector < pair < int , int >> , comp >  pq ; 
+ 
+          int  j = 0 ; 
+          long   long  ct = tasks [ 0 ] [ 0 ] ; 
+          //pq.push({tasks[0][1],tasks[0][2]}); 
+          int  n = tasks . size ( ) ; 
+          while ( ! pq . empty ( )   ||  j < n ) 
+          { 
+              while ( j < n   &&  ct >= ( long   long ) tasks [ j ] [ 0 ] ) 
+              { 
+ 
+                 pq . push ( { tasks [ j ] [ 1 ] , tasks [ j ] [ 2 ] } ) ; 
+                  //cout<<j<<endl; 
+                 j ++ ; 
+ 
+ 
+              }    
+ 
+              if ( pq . empty ( ) ) 
+              {    
+                  if ( j < n ) 
+                     ct = tasks [ j ] [ 0 ] ; 
+                   else 
+                      break ; 
+              } 
+ 
+ 
+             else  
+              { 
+                  int  z = pq . top ( ) . second ; 
+                 ct = ct + 1ll * pq . top ( ) . first ; 
+                 pq . pop ( ) ; 
+                 res . push_back ( z ) ; 
+              } 
+ 
+          
+ 
+          } 
+ 
+          //  while(!pq.empty()) 
+          //     { 
+          //         int z=pq.top().second; 
+          //         ct=max(ct,pq.top().first); 
+          //         pq.pop(); 
+          //         res.push_back(z); 
+          //     } 
+ 
+          return  res ; 
+ 
+      } 
+ } ;
