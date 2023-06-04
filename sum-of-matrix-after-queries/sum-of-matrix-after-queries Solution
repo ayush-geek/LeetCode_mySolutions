@@ -1,0 +1,86 @@
+class   Solution   { 
+ public : 
+      long   long   matrixSumQueries ( int  n ,  vector < vector < int >> &  queries )   { 
+         
+         unordered_map < int , long   long >  mpr ; 
+         unordered_map < int , long   long >  mpc ; 
+         
+          long   long  pr = 0 ; 
+          long   long  pc = 0 ; 
+         
+         unordered_map < int , long   long >  ppr ; 
+         unordered_map < int , long   long >  ppc ; 
+           long   long  ans = 0 ; 
+           reverse ( queries . begin ( ) , queries . end ( ) ) ; 
+          for ( auto &  ele :  queries ) 
+          { 
+              int  t = ele [ 0 ] ; 
+              int  ind = ele [ 1 ] ; 
+              long   long  val = ( long   long ) ele [ 2 ] ; 
+             
+             
+              if ( t == 0 ) 
+              {    
+                  if ( ppr . count ( ind ) == 0 ) 
+                  { 
+                  long   long  tmp = ( long   long ) n * ( long   long ) val ; 
+                 tmp -= pc * val ; 
+                 pr ++ ; 
+ //                 mpr[ind]+=tmp; 
+                  // tmp-=ppr[ind]*n; 
+                  // pr+=(long long)val; 
+                  // pr-=ppr[ind]; 
+                 ppr [ ind ] = val ; 
+             
+ //                 if(ppc.count(ind)==1) 
+ //                     pc-=ppc[ind]; 
+ //                 ppc[ind]=val; 
+                 ans += tmp ; 
+                  } 
+              } 
+              else 
+              {    
+ 
+                  if ( ppc . count ( ind ) == 0 ) 
+                  { 
+                  long   long  tmp = ( long   long ) n * ( long   long )  val ; 
+                 tmp -= pr * val ; 
+                 pc ++ ; 
+                 // mpc[ind]+=tmp; 
+                  // tmp-=ppc[ind]*n; 
+                  // pc+=(long long)val; 
+                  // pc-=ppc[ind]; 
+                
+                 ppc [ ind ] = val ; 
+                  ans += tmp ; 
+                  } 
+                
+                
+              } 
+          } 
+         
+        
+         
+ //         for(auto& ele: mpr) 
+ //         { 
+ //             ans+=(long long)ele.second; 
+ //         } 
+         
+ //         for(auto& ele: mpc) 
+ //         { 
+ //             ans+=(long long)ele.second; 
+ //         } 
+         
+          return  ans ; 
+     
+      } 
+ } ; 
+ 
+ /*
+ 
+ 
+ 8
+ [[0,6,30094],[0,7,99382],[1,2,18599],[1,3,49292],[1,0,81549],[1,1,38280],[0,0,19405],[0,4,30065],[1,4,60826],[1,5,9241],[0,5,33729],[0,1,41456],[0,2,62692],[0,3,30807],[1,7,70613],[1,6,9506],[0,5,39344],[1,0,44658],[1,1,56485],[1,2,48112],[0,6,43384]]
+ 
+ 2783119
+ */
