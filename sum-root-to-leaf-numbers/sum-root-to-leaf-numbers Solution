@@ -12,33 +12,33 @@
  class   Solution   { 
  public : 
  
-      void   solve ( TreeNode *  root , vector < int > &  res , int  ans ) 
-      {    
+     void   solve ( TreeNode *  root , int  tmp , int &  ans ) 
+      { 
           if ( root == NULL ) 
-              return   ; 
-          if ( root -> left == NULL   &&  root -> right == NULL ) 
           { 
-             ans = ans * 10 +  root -> val ; 
- 
-             // cout<<ans<<endl; 
-             res . push_back ( ans ) ; 
- 
+           
               return   ; 
           } 
  
+          if ( root -> left == NULL   &&  root -> right == NULL ) 
+              { 
+                 tmp = tmp * 10 +  root -> val ; 
+                 ans += tmp ; 
+                  return   ; 
+              } 
  
-          solve ( root -> left , res , ans * 10 + root -> val ) ; 
-          solve ( root -> right , res , ans * 10 + root -> val ) ; 
+         tmp = tmp * 10 + root -> val ; 
+ 
+          solve ( root -> left , tmp , ans ) ; 
+          solve ( root -> right , tmp , ans ) ; 
+ 
       } 
  
       int   sumNumbers ( TreeNode *  root )   { 
-         
-         vector < int >  res ; 
- 
-          solve ( root , res , 0 ) ; 
           int  ans = 0 ; 
-          for ( auto  ele :   res ) 
-             ans += ele ; 
+ 
+          int  tmp = 0 ; 
+          solve ( root , tmp , ans ) ; 
           return  ans ; 
       } 
  } ;
