@@ -1,5 +1,5 @@
 class   Solution   { 
-  public : 
+ public : 
       int   leastInterval ( vector < char > &  tasks ,   int  n )   { 
          
           // proiority_queue<pair<int,int>> pq; 
@@ -46,4 +46,4 @@ class   Solution   {
           return  t ; 
  
       } 
-  } ;
+ } ;
