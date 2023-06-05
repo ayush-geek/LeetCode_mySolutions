@@ -1,26 +1,27 @@
 class   Solution   { 
-  public : 
+ public : 
       void   sortColors ( vector < int > &  nums )   { 
-         
+          //sort colors 
+          //Dutch national flag Algo 
  
-          //Dutch national Flag  
-          int  s = 0 ; 
-          int  e = nums . size ( ) - 1 ; 
-          for ( int  i = 0 ; i <= e ; ) 
-          {    
+          int  n = nums . size ( ) ; 
+       
+          int  i = 0 ; 
+          int  j = n - 1 ; 
+          int  p = 0 ; 
  
-              if ( nums [ i ] == 0 ) 
+          while ( i <= j ) 
+          { 
+              if ( nums [ i ] == 2 ) 
               { 
-                  swap ( nums [ s ] , nums [ i ] ) ; 
-                i ++ ; 
-                s ++ ; 
- 
+                  swap ( nums [ i ] , nums [ j ] ) ; 
+                 j -- ; 
               } 
- 
-              else   if ( nums [ i ] == 2 ) 
+              else   if ( nums [ i ] == 0 ) 
               { 
-                  swap ( nums [ e ] , nums [ i ] ) ; 
-                e -- ; 
+                  swap ( nums [ i ] , nums [ p ] ) ; 
+                 p ++ ; 
+                 i ++ ; 
               } 
               else 
               { 
@@ -28,4 +29,4 @@ class   Solution   {
               } 
           } 
       } 
-  } ;
+ } ;
