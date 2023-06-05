@@ -1,0 +1,30 @@
+class   Solution   { 
+ public : 
+      bool   checkStraightLine ( vector < vector < int >> &  coordinates )   { 
+         
+          //sort the points 
+          sort ( coordinates . begin ( ) , coordinates . end ( ) ) ; 
+ 
+          int  dx = coordinates [ 1 ] [ 0 ] - coordinates [ 0 ] [ 0 ] ; 
+          int  dy = coordinates [ 1 ] [ 1 ] - coordinates [ 0 ] [ 1 ] ; 
+          double  slope = INT_MAX ; 
+          if ( dx != 0 ) 
+             slope = ( 1.0 * dy ) / dx ; 
+          for ( int  i = 2 ; i < coordinates . size ( ) ; i ++ ) 
+          { 
+               int  cx = coordinates [ i ] [ 0 ] - coordinates [ 0 ] [ 0 ] ; 
+              int  cy = coordinates [ i ] [ 1 ] - coordinates [ 0 ] [ 1 ] ; 
+         
+              double  tmp_slope = INT_MAX ; 
+              if ( cx != 0 ) 
+                 tmp_slope = ( 1.0 * cy ) / cx ; 
+ 
+              if ( tmp_slope != slope ) 
+                  return   false ; 
+ 
+          } 
+ 
+          return   true ; 
+ 
+      } 
+ } ;
