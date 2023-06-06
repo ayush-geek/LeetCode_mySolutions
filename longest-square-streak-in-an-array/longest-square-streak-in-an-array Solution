@@ -1,0 +1,56 @@
+class   Solution   { 
+ public : 
+      int   longestSquareStreak ( vector < int > &  nums )   { 
+         
+         
+          sort ( nums . begin ( ) , nums . end ( ) ) ; 
+         
+         
+          //chk 
+         unordered_set < int >  st ; 
+         
+          for ( int  i :  nums ) 
+             st . insert ( i ) ; 
+         
+         
+          int  mx = - 1 ; 
+          for ( int  i = nums . size ( ) - 1 ; i >= 0 ; i -- ) 
+          {    
+              int  cur = 0 ; 
+             
+              long   long  z = nums [ i ] ; 
+             
+              while ( st . count ( z ) ) 
+              { 
+               cur ++ ; 
+                  long   long  tmp = z ; 
+                 z = sqrt ( tmp ) ; 
+                    // cout<<z<<" "<<tmp<<" "<<cur <<endl; 
+ 
+                  if ( z * z != tmp ) 
+                      break ; 
+                 
+                           
+               
+                   
+                 
+              } 
+              
+             
+              if ( cur == 1 ) 
+              { 
+                 cur = - 1 ; 
+              } 
+            
+             
+              if ( cur != - 1 ) 
+                  mx = max ( mx , cur ) ; 
+             
+              // cout<<cur<<" "<<mx<<endl; 
+            
+          } 
+         
+         
+          return  mx ; 
+      } 
+ } ;
