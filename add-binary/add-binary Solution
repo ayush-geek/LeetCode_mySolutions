@@ -2,54 +2,49 @@ class   Solution   {
  public : 
      string  addBinary ( string a ,  string b )   { 
          
- 
           reverse ( a . begin ( ) , a . end ( ) ) ; 
           reverse ( b . begin ( ) , b . end ( ) ) ; 
  
-         string res ; 
+          int  n = a . size ( ) ; 
+          int  m = b . size ( ) ; 
           int  i = 0 ; 
+          int  j = 0 ; 
           int  carry = 0 ; 
-          for ( i ; i < min ( a . size ( ) , b . size ( ) ) ; i ++ ) 
+          while ( i < n  &&  j < m ) 
           { 
-              int  s1 = a [ i ] - '0' ; 
-              int  s2 = b [ i ] - '0' ; 
-              int  val = ( s1 + s2 + carry ) ; 
-             carry = val / 2 ; 
-             val = val % 2 ; 
-              char  nt = ( char ) val + '0' ; 
-             res . push_back ( nt ) ; 
- 
-          } 
- 
-          while ( i < a . size ( ) ) 
-          { 
-               int  s1 = a [ i ] - '0' ; 
-              //int s2=b[i]-'1'; 
-              int  val = ( s1 + carry ) ; 
-             carry = val / 2 ; 
-             val = val % 2 ; 
-              char  nt = ( char ) val + '0' ; 
-             res . push_back ( nt ) ; 
+              int  num = ( a [ i ] - '0' )   + ( b [ j ] - '0' ) + carry ; 
+           
+             carry = num / 2 ; 
+             num %= 2 ; 
+             a [ i ] =   char ( num + '0' ) ; 
              i ++ ; 
+             j ++ ; 
           } 
  
-           while ( i < b . size ( ) ) 
+          while ( j < m ) 
           { 
-              // int s1=a[i]-'1'; 
-              int  s2 = b [ i ] - '0' ; 
-              int  val = ( s2 + carry ) ; 
-             carry = val / 2 ; 
-             val = val % 2 ; 
-              char  nt = ( char ) val + '0' ; 
-             res . push_back ( nt ) ; 
-             i ++ ; 
+               int  num = ( b [ j ] - '0' ) + carry ; 
+             
+             carry = num / 2 ; 
+             num %= 2 ; 
+             a . push_back ( char ( num + '0' ) ) ; 
+            j ++ ; 
           } 
-         
+ 
+          while ( i < n ) 
+          { 
+               int  num = ( a [ i ] - '0' ) + carry ; 
+             
+             carry = num / 2 ; 
+             num %= 2 ; 
+             a [ i ] = ( char ( num + '0' ) ) ; 
+            i ++ ; 
+          } 
+ 
           if ( carry == 1 ) 
-         res . push_back ( '1' ) ; 
+              a . push_back ( '1' ) ; 
  
-          reverse ( res . begin ( ) , res . end ( ) ) ; 
- 
-          return  res ; 
+              reverse ( a . begin ( ) , a . end ( ) ) ; 
+              return  a ; 
       } 
  } ;
