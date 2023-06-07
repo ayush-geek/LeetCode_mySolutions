@@ -1,23 +1,26 @@
 class   Solution   { 
  public : 
      vector < int >   countBits ( int  n )   { 
-         vector < int >  res ; 
+          if ( n == 0 ) 
+              return   { 0 } ; 
+          if ( n == 1 ) 
+              return   { 0 , 1 } ; 
+         vector < int >   dp ( n + 1 , 0 ) ; 
+         dp [ 1 ] = 1 ; 
+         dp [ 2 ] = 1 ; 
          
-       for ( int  i = 0 ; i <= n ; i ++ ) 
-       { 
-          int  ct = 0 ; 
-          int  z = i ; 
-          while ( z != 0 ) 
-          {    
-              if ( z % 2 != 0 ) 
-                 ct ++ ; 
-             z = z / 2 ; 
-             
+          for ( int  i = 3 ; i <= n ; i ++ ) 
+          { 
+              if ( i % 2 == 0 ) 
+              { 
+                 dp [ i ] = dp [ i / 2 ] ; 
+              } 
+              else 
+              { 
+                 dp [ i ] = dp [ i / 2 ] + 1 ; 
+              } 
           } 
- 
-          res . push_back ( ct ) ; 
-       }   
- 
-       return  res ;  
+          return  dp ; 
       } 
+ 
  } ;
