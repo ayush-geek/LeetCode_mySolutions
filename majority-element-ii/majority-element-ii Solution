@@ -1,0 +1,44 @@
+class   Solution   { 
+ public : 
+     vector < int >   majorityElement ( vector < int > &  nums )   { 
+          //kadane algo 
+         
+         
+          //m1 hashmap 
+         vector < int >  res ; 
+         
+             unordered_map < int , int >  mp ; 
+          int  n = nums . size ( ) ; 
+          int  z = n / 3 ; 
+          for ( auto & ele :  nums ) 
+                 mp [ ele ] ++ ; 
+         
+          for ( auto &  ele :  mp ) 
+          { 
+              if ( ele . second > z )    
+                 res . push_back ( ele . first ) ; 
+          } 
+          return  res ; 
+         
+ //         int prev=-1; 
+ //         int ct=0; 
+         
+ //         for(auto& ele: nums) 
+ //         { 
+ //             if(ele==prev) 
+ //                 ct++; 
+ //             else 
+ //             { 
+ //                 if(ct==0) 
+ //                 { 
+ //                     prev=ele; 
+ //                     ct=1; 
+ //                 } 
+ //                 else 
+ //                     ct--; 
+ //             } 
+ //         } 
+         
+         
+      } 
+ } ;
