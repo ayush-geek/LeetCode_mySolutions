@@ -3,39 +3,36 @@ class   Solution   {
       int   ladderLength ( string beginWord ,  string endWord ,  vector < string > &  wordList )   { 
          
          unordered_set < string >   st ( wordList . begin ( ) , wordList . end ( ) ) ; 
- 
-          //bfs 
+          if ( st . count ( endWord ) == 0 ) 
+              return   0 ; 
          queue < pair < string , int >>  q ; 
          q . push ( { beginWord , 0 } ) ; 
- 
-          if ( beginWord == endWord ) 
-              return   1 ; 
-          if ( st . count ( beginWord ) == 1 ) 
-             st . erase ( beginWord ) ; 
+         st . erase ( beginWord ) ; 
  
           while ( ! q . empty ( ) ) 
           { 
-              auto  nd = q . front ( ) ; 
+              auto  node = q . front ( ) ; 
+             string nd = node . first ; 
+              int  ct = node . second ; 
              q . pop ( ) ; 
  
-             string cur = nd . first ; 
-              int  step = nd . second ; 
+              if ( nd == endWord ) 
+                  return  ct + 1 ; 
  
-              if ( cur == endWord ) 
-                  return  step + 1 ; 
- 
-              for ( int  i = 0 ; i < cur . size ( ) ; i ++ ) 
-              {     char  alpha = cur [ i ] ; 
+              for ( int  i = 0 ; i < nd . length ( ) ; i ++ ) 
+              {    
+                  char  tmp = nd [ i ] ; 
                   for ( char  zz = 'a' ; zz <= 'z' ; zz ++ ) 
                   { 
-                    cur [ i ] = zz ; 
-                     if ( st . count ( cur ) == 1 ) 
-                          { 
-                             q . push ( { cur , step + 1 } ) ; 
-                               st . erase ( cur ) ; 
-                          } 
+                     nd [ i ] = zz ; 
+                      if ( st . count ( nd ) ) 
+                      { 
+                         q . push ( { nd , ct + 1 } ) ; 
+                         st . erase ( nd ) ; 
+                      } 
+ 
                   } 
-                 cur [ i ] = alpha ; 
+                 nd [ i ] = tmp ; 
               } 
           } 
           return   0 ; 
