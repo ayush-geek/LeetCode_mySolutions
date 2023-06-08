@@ -1,0 +1,28 @@
+class   Solution   { 
+ public : 
+      int   countNegatives ( vector < vector < int >> &  grid )   { 
+          //m1 brute -n2 
+          //m2 
+          //using benefit of sorting 
+          int  n = grid . size ( ) ; 
+          int  m = grid [ 0 ] . size ( ) ; 
+          int  sr = 0 ; 
+          int  sc = grid [ 0 ] . size ( ) - 1 ; 
+          int  ans = 0 ; 
+          while ( sr < n  &&  sc >= 0 ) 
+          { 
+              if ( grid [ sr ] [ sc ] >= 0 ) { 
+                 sr ++ ; 
+               
+              } 
+              else 
+              { 
+                
+                 ans += ( n - sr ) ; 
+                  sc -- ; 
+              } 
+             // cout<<ans<<endl; 
+          } 
+          return  ans ; 
+      } 
+ } ;
