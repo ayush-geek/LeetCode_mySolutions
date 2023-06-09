@@ -1,0 +1,35 @@
+class   Solution   { 
+ public : 
+     
+      void   solve ( int  i , int  k , int  n , vector < vector < int >> &  res ,  vector < int > &  lvl ) 
+      { 
+         
+          if ( lvl . size ( ) == k ) 
+          { 
+             
+             res . push_back ( lvl ) ; 
+              return   ; 
+          } 
+         
+          for ( int  j = i ; j <= n ; j ++ ) 
+          { 
+             lvl . push_back ( j ) ; 
+              solve ( j + 1 , k , n , res , lvl ) ; 
+             lvl . pop_back ( ) ; 
+          } 
+      } 
+     
+     
+     vector < vector < int >>   combine ( int  n ,   int  k )   { 
+         
+         
+         vector < vector < int >>  res ; 
+         
+         vector < int >  lvl ; 
+         
+          solve ( 1 , k , n , res , lvl ) ; 
+     
+     
+              return  res ; 
+      } 
+ } ;
