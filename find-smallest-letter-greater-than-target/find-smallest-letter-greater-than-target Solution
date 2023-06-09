@@ -2,17 +2,26 @@ class   Solution   {
  public : 
       char   nextGreatestLetter ( vector < char > &  letters ,   char  target )   { 
          
-          int  ub = upper_bound ( letters . begin ( ) , letters . end ( ) , target ) - letters . begin ( ) ; 
- 
-          if ( ub < letters . size ( ) ) 
+         
+          int  s = 0 ; 
+          int  e = letters . size ( ) - 1 ; 
+          int  ans = 0 ; 
+         
+          while ( s <= e ) 
           { 
-               if ( letters [ ub ] == target ) 
-              ub ++ ; 
+              int  mid = s + ( e - s ) / 2 ; 
+             
+              if ( letters [ mid ] <= target ) 
+                 s = mid + 1 ; 
+              else 
+              { 
+                 ans = mid ; 
+                 e = mid - 1 ; 
+              } 
+             
+             
           } 
          
-          if ( ub < letters . size ( )   ) 
-              return  letters [ ub ] ; 
-          else 
-              return  letters [ 0 ] ; 
+          return  letters [ ans ] ;  
       } 
  } ;
