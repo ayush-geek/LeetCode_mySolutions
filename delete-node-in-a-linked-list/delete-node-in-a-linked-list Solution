@@ -11,7 +11,7 @@
       void   deleteNode ( ListNode *  node )   { 
          //swap the values 
          //and make last node -> NULL; 
- 
+         
          while ( node != NULL ) 
          {     
            
@@ -19,7 +19,9 @@
              swap ( node -> val , node -> next -> val ) ; 
            
               if ( node -> next -> next == NULL ) { 
+                 ListNode *  tmp = node -> next ; 
                  node -> next = NULL ; 
+                  delete  tmp ; 
                   } 
              node = node -> next ; 
  
