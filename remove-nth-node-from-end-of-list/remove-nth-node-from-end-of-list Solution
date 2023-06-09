@@ -12,36 +12,32 @@
  public : 
      ListNode *   removeNthFromEnd ( ListNode *  head ,   int  n )   { 
          
-         
-          int  ct = 0 ; 
-         
-          ListNode *  tmp = head ; 
-         
-          while ( tmp != NULL ) 
+         ListNode *  p1 = head ; 
+         ListNode *  p2 = head ; 
+ 
+          while ( n > 0 ) 
           { 
-             tmp = tmp -> next ; 
-             ct ++ ; 
+             p2 = p2 -> next ; 
+             n -- ; 
           } 
-         
-         
-       
-         
-          int  k = ct - n ; 
-          if ( k == 0 ) 
-              return  head -> next ; 
-            // if(k==1) 
-            //   return head->next; 
-         
-         
-         tmp = head ; 
-          for ( int  i = 1 ; i < k ; i ++ ) 
+ 
+          if ( p2 == NULL ) 
           { 
-             tmp = tmp -> next ; 
+              return  p1 -> next ; 
           } 
-         
-         tmp -> next = tmp -> next -> next ; 
-         
-         
+          //p1 and p2 both n apart 
+ 
+          while ( p2 -> next != NULL ) 
+          { 
+             p1 = p1 -> next ; 
+             p2 = p2 -> next ; 
+          } 
+ 
+         ListNode *  tmp = p1 -> next ; 
+         p1 -> next = p1 -> next -> next ; 
+          delete ( tmp ) ; 
+ 
           return  head ; 
       } 
+ 
  } ;
