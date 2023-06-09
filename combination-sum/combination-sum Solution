@@ -1,42 +1,35 @@
 class   Solution   { 
  public : 
  
- 	 // int mod=1e9+7; 
- 	 void   solve ( int  i , vector < int > &  candidates , int  target , vector < int > &  tmp , vector < vector < int >> &  res , int &  cs ) 
+      void   solve ( int  i , vector < int > &  candidates , int  target , vector < int >  tmp , vector < vector < int >> &  res ) 
       {    
-         
-          if ( i == candidates . size ( ) ) 
-          {    
-              if ( cs == target ) 
+          if ( target == 0 ) 
+              { 
                  res . push_back ( tmp ) ; 
-              return   ; 
-          } 
-         
-         
-         
-          //take 
-       
-          if ( cs + candidates [ i ] <= target ) 
+                  return   ; 
+              } 
+          for ( int  j = i ; j < candidates . size ( ) ; j ++ ) 
           { 
-             cs += candidates [ i ] ; 
-             tmp . push_back ( candidates [ i ] ) ; 
-              solve ( i , candidates , target , tmp , res , cs ) ; 
-             cs -= candidates [ i ] ; 
+              if ( j != i  &&  candidates [ j ] == candidates [ j - 1 ] ) 
+                  continue ; 
+             
+              if ( j > target ) 
+                  break ; 
+             
+             tmp . push_back ( candidates [ j ] ) ; 
+              solve ( j , candidates , target - candidates [ j ] , tmp , res ) ; 
              tmp . pop_back ( ) ; 
           } 
-         
-          //Not_take 
-           solve ( i + 1 , candidates , target , tmp , res , cs ) ; 
-     
-         
-       
       } 
-   
+ 
      vector < vector < int >>   combinationSum ( vector < int > &  candidates ,   int  target )   { 
+          sort ( candidates . begin ( ) , candidates . end ( ) ) ; 
+          int  n = candidates . size ( ) ; 
+ 
          vector < vector < int >>  res ; 
          vector < int >  tmp ; 
-          int  cs = 0 ; 
-          solve ( 0 , candidates , target , tmp , res , cs ) ; 
+          solve ( 0 , candidates , target , tmp , res ) ; 
+ 
           return  res ; 
       } 
  } ;
