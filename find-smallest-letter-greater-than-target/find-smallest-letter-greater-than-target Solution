@@ -1,0 +1,18 @@
+class   Solution   { 
+ public : 
+      char   nextGreatestLetter ( vector < char > &  letters ,   char  target )   { 
+         
+          int  ub = upper_bound ( letters . begin ( ) , letters . end ( ) , target ) - letters . begin ( ) ; 
+ 
+          if ( ub < letters . size ( ) ) 
+          { 
+               if ( letters [ ub ] == target ) 
+              ub ++ ; 
+          } 
+         
+          if ( ub < letters . size ( )   ) 
+              return  letters [ ub ] ; 
+          else 
+              return  letters [ 0 ] ; 
+      } 
+ } ;
