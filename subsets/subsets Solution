@@ -1,33 +1,43 @@
 class   Solution   { 
  public : 
  
-     
-     set < vector < int >>  st ; 
-      void   solve ( int  i , vector < int > &  nums , vector < int > &  ans ) 
-      { 
-          if ( i == nums . size ( ) ) 
-          { 
-             st . insert ( ans ) ; 
-              return   ; 
-          } 
+      // void solve(int i,vector<int>& nums,vector<int>& tmp,vector<vector<int>>& res) 
+      // { 
+      //     if(i==nums.size()) 
+      //     { 
+      //         res.push_back(tmp); 
+      //         return ; 
+      //     } 
  
-          //Take 
-         ans . push_back ( nums [ i ] ) ; 
-          solve ( i + 1 , nums , ans ) ; 
-         ans . pop_back ( ) ; 
-          //Not Take 
-          solve ( i + 1 , nums , ans ) ; 
-      } 
+      //     //take 
+      //     tmp.push_back(nums[i]); 
+      //     solve(i+1,nums,tmp,res); 
+      //     tmp.pop_back(); 
+ 
+      //     //not take 
+      //     solve(i+1,nums,tmp,res); 
+      // } 
  
      vector < vector < int >>   subsets ( vector < int > &  nums )   { 
          
- 
-          //subsrts  
-          //takins 
-        vector < int >  tmp ; 
-          solve ( 0 , nums , tmp ) ; 
-        vector < vector < int >>   res ( st . begin ( ) , st . end ( ) ) ; 
- 
+         vector < vector < int >>  res ; 
+          // vector<int> tmp; 
+          // solve(0,nums,tmp,res); 
+          // return res; 
+          int  n = nums . size ( ) ; 
+          int  p = ( 1 << n ) ; 
+          for ( int  i = 0 ; i < p ; i ++ ) 
+          {    
+             vector < int >  tmp ; 
+              for ( int  j = 0 ; j < n ; j ++ ) 
+              { 
+                  if (   ( i  &   ( 1 << j )   ) != 0   ) 
+                  { 
+                     tmp . push_back ( nums [ j ] ) ; 
+                  } 
+              } 
+             res . push_back ( tmp ) ; 
+          } 
           return  res ; 
       } 
  } ;
