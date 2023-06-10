@@ -9,64 +9,38 @@
  class   Solution   { 
  public : 
      ListNode  * getIntersectionNode ( ListNode  * headA ,  ListNode  * headB )   { 
-         
-         
-          //approach 
-         
-          //make a map and fill all  
-         
-          //Values 
-     
-          // AND cHK 
-         
-         
- //         unordered_set<ListNode* > st; 
-         
-         
- //         while(headA!=NULL) 
- //         { 
-            
- //             st.insert(headA); 
+         ListNode *  s1 = headA ; 
+         ListNode *  s2 = headB ; 
+ 
+ 
+          //will two insersect  
+          //when they cover equal 
+          //ditsanc and meet 
+ 
+        
+          while ( s1 != NULL   &&  s2 != NULL ) 
+          {    
+               if ( s1 == s2 ) 
+                   return  s1 ; 
+  
              
- //             headA=headA->next; 
- //         } 
-         
-         
- //         while(headB!=NULL) 
- //         { 
- //             if(st.count(headB)==1) 
- //             { 
- //                 return headB; 
- //             } 
-             
- //             headB=headB->next; 
- //         } 
-         
-         
- //         return NULL; 
-         
-         
-          //M2 
-         
-         
-         ListNode *  ptr1 = headA ; 
-         ListNode *  ptr2 = headB ; 
-         
-          while ( ptr1 != ptr2 ) 
-          {   if ( ptr1 == NULL ) 
-                 ptr1 = headB ; 
-             else 
-             ptr1 = ptr1 -> next ; 
-          
-            if ( ptr2 == NULL ) 
-                 ptr2 = headA ; 
-              else 
-             ptr2 = ptr2 -> next ; 
-             
-             
-            
+             s1 = s1 -> next ; 
+ 
+             s2 = s2 -> next ; 
+ 
+                  if ( s1 == s2 ) 
+                      break ; 
+ 
+              if ( s2 == NULL ) 
+                 s2 = headA ; 
+              if ( s1 == NULL ) 
+                 s1 = headB ; 
           } 
-         
-          return  ptr1 ; 
+ 
+ 
+          if ( s1 == s2 ) 
+              return  s1 ; 
+          return   NULL ; 
+ 
       } 
  } ;
