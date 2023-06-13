@@ -6,31 +6,36 @@ using namespace std;
 class Solution
 {
 public:
-
-    void solve(int i,vector<int>& arr,int& cs,vector<int>& res)
+    
+    void solve(int i,vector<int>& nums,int tmp,vector<int>& res)   
     {
-        if(i==arr.size())
-        {
-            res.push_back(cs);
-            return ;
-        }
+        int n=nums.size();
+    if(i==nums.size())
+    {
+        res.push_back(tmp);
+        return ;
+    }
+
+  
+
+              
+                
+                solve(i+1,nums,tmp+nums[i],res);
+              
+            
+
+            
+             solve(i+1,nums,tmp,res);
         
-        //take
-        cs+=arr[i];
-        solve(i+1,arr,cs,res);
-        cs-=arr[i];
-        
-        
-        //not take
-        solve(i+1,arr,cs,res);
     }
 
     vector<int> subsetSums(vector<int> arr, int N)
     {
-        vector<int> res;
-        int cs=0;
-        solve(0,arr,cs,res);
+        // Write Your Code here
         
+        vector<int> res;
+        int tmp=0;
+        solve(0,arr,tmp,res);
         return res;
     }
 };
