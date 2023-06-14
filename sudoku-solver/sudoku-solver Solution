@@ -1,0 +1,59 @@
+class   Solution   { 
+ public : 
+      void   solveSudoku ( vector < vector < char >> &  board )   { 
+          solve ( board ) ; 
+      } 
+ 
+      bool   solve ( vector < vector < char >> &  board ) 
+      { 
+         
+          for ( int  i = 0 ; i < 9 ; i ++ ) 
+          { 
+              for ( int  j = 0 ; j < 9 ; j ++ ) 
+              { 
+                  if ( board [ i ] [ j ] == '.' ) 
+                  { 
+                      for ( char  zz = '1' ; zz <= '9' ; zz ++ ) 
+                      { 
+                          if ( isvalid ( board , i , j , zz ) ) 
+                          { 
+                            board [ i ] [ j ] = zz ; 
+                         
+                              if ( solve ( board ) ) 
+                                  return   true ; 
+                              else 
+                                 board [ i ] [ j ] = '.' ; 
+                          } 
+ 
+                      } 
+                     
+                       return   false ; 
+                  } 
+                
+              } 
+          } 
+          return   true ; 
+      } 
+ 
+ 
+      bool   isvalid ( vector < vector < char >> &  board , int  r , int  c , char  zz ) 
+      { 
+          for ( int  i = 0 ; i < 9 ; i ++ ) 
+          {    
+              //col 
+              if ( board [ r ] [ i ] == zz ) 
+                  return   false ; 
+              //row 
+              if ( board [ i ] [ c ] == zz ) 
+                  return   false ; 
+ 
+              //9*9 
+              int  nr = 3 * ( r / 3 )   + i / 3 ; 
+              int  nc = 3 * ( c / 3 ) + i % 3 ; 
+                if ( board [ nr ] [ nc ] == zz ) 
+                  return   false ; 
+          } 
+          return   true ; 
+      } 
+ 
+ } ;
