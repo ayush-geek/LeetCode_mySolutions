@@ -12,39 +12,40 @@
  class   Solution   { 
  public : 
       int   maxLevelSum ( TreeNode *  root )   { 
+         
+          //bfs 
  
-       //bfs 
-          int  ans = 0 ; 
-          queue < TreeNode * >  q ;    
-          q . push ( root ) ; 
-          long   long  mxs = LLONG_MIN ; 
-          int  l = 0 ; 
-           while ( ! q . empty ( ) ) 
-           { 
-               int  sz = q . size ( ) ; 
-               long   long  sm = 0 ; 
-                 l ++ ; 
-               while ( sz -- ) 
-               { 
-                   auto  nd = q . front ( ) ; 
-                  sm += ( long   long ) nd -> val ; 
-                  q . pop ( ) ; 
+          int  ans = INT_MIN ; 
+          int  pos  = - 1 ; 
+          int  k = 0 ; 
+         queue < TreeNode * >  q ; 
+         q . push ( root ) ; 
  
-                   if ( nd -> left != NULL ) 
+          while ( ! q . empty ( ) ) 
+          { 
+              int  sz = q . size ( ) ; 
+             k ++ ; 
+              int  sm = 0 ; 
+              while ( sz -- ) 
+              { 
+                  auto  nd = q . front ( ) ; 
+                 q . pop ( ) ; 
+ 
+                 sm += nd -> val ; 
+ 
+                  if ( nd -> left ) 
                      q . push ( nd -> left ) ; 
-                   if ( nd -> right != NULL ) 
+                  if ( nd -> right ) 
                      q . push ( nd -> right ) ; 
-               } 
-             cout << l << " " << sm << endl ;  
-               if ( sm > mxs ) 
-               { 
-                  mxs = sm ; 
-                  ans = l ; 
-               } 
-              
+              } 
+              if ( sm > ans ) 
+              { 
+                 ans = sm ; 
+                 pos = k ; 
+              } 
+            
+          } 
  
-           } 
- 
-           return  ans ; 
+          return  pos ; 
       } 
  } ;
