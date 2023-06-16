@@ -1,0 +1,55 @@
+class   Solution   { 
+ public : 
+     vector < vector < long   long >>  dp ; 
+      int  mod = 1e9 + 7 ; 
+      int   numOfWays ( vector < int > &  nums )   { 
+         
+          int  n = nums . size ( ) ; 
+          // dp.resize(n+1); 
+         dp . push_back ( { 1 } ) ; 
+         vector < long   long >  tab ; 
+          for ( int  i = 1 ; i <= n ; i ++ ) 
+          { 
+             tab . resize ( i + 1 , 1 ) ; 
+ 
+              for ( int  j = 1 ; j < i ; j ++ ) 
+              { 
+                 tab [ j ] = ( dp [ i - 1 ] [ j - 1 ] + dp [ i - 1 ] [ j ] ) % mod ; 
+              } 
+             
+             dp . push_back ( tab ) ; 
+          } 
+          // cout<<dp[2][1]<<endl; 
+          // return -1; 
+          long   long  ans = dfs ( nums ) % mod ; 
+ 
+          return   ( ans % mod  - 1 )   % mod ; 
+      } 
+ 
+      long   long   dfs ( vector < int > &  nums ) 
+      { 
+          int  n = nums . size ( ) ; 
+ 
+          if ( n <= 2 ) 
+              return   1 ; 
+ 
+         vector < int >  lft , rgt ; 
+ 
+          int  rt = nums [ 0 ] ; 
+ 
+          for ( int  i = 1 ; i < n ; i ++ ) 
+          { 
+              if ( nums [ i ] < rt ) 
+                 lft . push_back ( nums [ i ] ) ; 
+              else 
+                 rgt . push_back ( nums [ i ] ) ; 
+          } 
+ 
+ 
+          long   long  ans = ( dp [ n - 1 ] [ lft . size ( ) ] % mod  * dfs ( lft ) % mod * dfs ( rgt ) % mod ) % mod ; 
+          return  ans % mod ; 
+         
+      } 
+     
+ 
+ } ;
