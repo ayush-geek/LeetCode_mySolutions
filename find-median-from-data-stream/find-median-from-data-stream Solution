@@ -1,5 +1,5 @@
 class   MedianFinder   { 
-  public : 
+ public : 
      priority_queue < int >  maxHeap ; 
      priority_queue < int ,  vector < int > ,  greater < int >>  minHeap ; 
      
@@ -18,9 +18,9 @@ class   MedianFinder   {
           if   ( maxHeap . size ( )   >  minHeap . size ( ) )   return  maxHeap . top ( ) ; 
           return   ( maxHeap . top ( )   +  minHeap . top ( ) )   /   2.0 ; 
       } 
-  } ; 
+ } ; 
  
-  /**
+ /**
   * Your MedianFinder object will be instantiated and called as such:
   * MedianFinder* obj = new MedianFinder();
   * obj->addNum(num);
