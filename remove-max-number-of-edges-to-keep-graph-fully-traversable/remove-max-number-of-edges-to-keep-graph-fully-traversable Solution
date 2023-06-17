@@ -1,0 +1,112 @@
+class   DSU { 
+      public : 
+     vector < int >  parent , size ; 
+ 
+      DSU ( int  n ) 
+      { 
+         parent . resize ( n + 1 ) ; 
+         size . resize ( n + 1 , 1 ) ; 
+          iota ( parent . begin ( ) , parent . end ( ) , 0 ) ; 
+ 
+      } 
+ 
+      int   find ( int  nd ) 
+      { 
+          if ( parent [ nd ] == nd ) 
+              return  nd ; 
+         
+          return  parent [ nd ] = find ( parent [ nd ] ) ; 
+      } 
+ 
+      bool   unionSize ( int  a , int  b ) 
+      { 
+          int  pa = find ( a ) ; 
+          int  pb = find ( b ) ; 
+ 
+          if ( pa == pb ) 
+              return   false ; 
+          if ( size [ pa ] < size [ pb ] ) 
+          { 
+             size [ pb ] += size [ pa ] ; 
+             parent [ pa ] = pb ; 
+          } 
+          else 
+          { 
+                size [ pa ] += size [ pb ] ; 
+             parent [ pb ] = pa ; 
+          } 
+          return   true ; 
+      } 
+ } ; 
+ 
+ class   Solution   { 
+ public : 
+      int   maxNumEdgesToRemove ( int  n ,  vector < vector < int >> &  edges )   { 
+         
+ 
+          //first connect all type 3 
+          //an then remove 
+          //already cnnecred ones 
+         DSU  ds ( n ) ; 
+         DSU  ds1 ( n ) ; 
+         DSU  ds2 ( n ) ; 
+ 
+         unordered_map < int , int >  mp ; 
+ 
+          auto  cmp = [ & ] ( vector < int > &  a , vector < int > &  b ) 
+          { 
+              return  a [ 0 ] > b [ 0 ] ; 
+          } ; 
+ 
+          sort ( edges . begin ( ) , edges . end ( ) , cmp ) ; 
+          int  ct1 = 0 , ct2 = 0 ; 
+          int  res = 0 ; 
+ 
+            for ( auto &  ele :  edges ) 
+          { 
+          cout << ele [ 0 ] << endl ; 
+ 
+         
+              if ( ele [ 0 ] == 3 ) { 
+                     
+                  if (  ds1 . unionSize ( ele [ 1 ] , ele [ 2 ] ) ) 
+                  { 
+                      ds2 . unionSize ( ele [ 1 ] , ele [ 2 ] ) ; 
+                      ct1 ++ ; 
+                      ct2 ++ ; 
+                  } 
+                  else 
+                     res ++ ; 
+                    
+                  
+              
+                  } 
+              else 
+              {    
+             
+                if ( ele [ 0 ] == 1 ) 
+                { 
+                    if ( ds1 . unionSize ( ele [ 1 ] , ele [ 2 ] ) ) 
+                     ct1 ++ ; 
+                  else 
+                     res ++ ; 
+                } 
+                  
+              else  
+                   if ( ds2 . unionSize ( ele [ 1 ] , ele [ 2 ] ) ) 
+                     ct2 ++ ; 
+                  else 
+                     res ++ ; 
+              } 
+          } 
+       
+        
+         
+          if ( ct1 == ct2  &&  ct1 == n - 1 ) 
+              return  res ; 
+ 
+          return   - 1 ; 
+ 
+ 
+      } 
+ } ;
