@@ -1,0 +1,47 @@
+class   Solution   { 
+ public : 
+ 
+      int   solve ( int  i , int  prev , vector < int > &  arr1 ,  vector < int > &  arr2 , map < pair < int , int > , int > &  dp ) 
+      { 
+          if ( i == arr1 . size ( ) ) 
+              return   0 ; 
+ 
+          if ( dp . find ( { i , prev } ) != dp . end ( ) ) 
+              return  dp [ { i , prev } ] ; 
+ 
+          int  ub = upper_bound ( arr2 . begin ( ) , arr2 . end ( ) , prev ) - arr2 . begin ( ) ; 
+ 
+          int  ans = 1e9 ; 
+          //Skip 
+          if ( arr1 [ i ] > prev ) 
+             ans = min ( ans , solve ( i + 1 , arr1 [ i ] , arr1 , arr2 , dp ) ) ; 
+         
+          //replace 
+          if ( ub < arr2 . size ( ) ) 
+             ans = min ( ans , solve ( i + 1 , arr2 [ ub ] , arr1 , arr2 , dp ) + 1 ) ; 
+ 
+          return  dp [ { i , prev } ] = ans ; 
+      } 
+     
+     
+      int   makeArrayIncreasing ( vector < int > &  arr1 ,  vector < int > &  arr2 )   { 
+          int  n1 = arr1 . size ( ) ; 
+          int  n2 = arr2 . size ( ) ; 
+ 
+ 
+          sort ( arr2 . begin ( ) , arr2 . end ( ) ) ; 
+         map < pair < int , int > , int >  dp ; 
+ 
+ 
+          int  ans = solve ( 0 , - 1 , arr1 , arr2 , dp ) ; 
+ 
+          //at max min(2000,arr1.size()) element can be removed 
+          if ( ans >= 1e9 ) 
+              return   - 1 ; 
+          return  ans ; 
+             
+ 
+ 
+ 
+      } 
+ } ;
