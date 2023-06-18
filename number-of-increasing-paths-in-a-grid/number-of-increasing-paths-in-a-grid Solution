@@ -1,0 +1,57 @@
+class   Solution   { 
+ public : 
+      int  mod = 1e9 + 7 ; 
+ 
+      int   dfs ( int  i , int  j , int  pi , int  pj , vector < vector < int >> &  dp , vector < vector < int >> &  grid ) 
+      {    
+           int  n = grid . size ( ) ; 
+          int  m = grid [ 0 ] . size ( ) ; 
+ 
+          if ( i < 0   ||  j < 0   ||  i >= n  ||  j >= m ) 
+              return   0 ; 
+ 
+          if ( pi != - 1   &&  pj != - 1 )  
+          { 
+              if ( grid [ i ] [ j ] <= grid [ pi ] [ pj ] ) 
+                  return   0 ; 
+          } 
+ 
+          if ( dp [ i ] [ j ] != - 1 ) 
+              return  dp [ i ] [ j ] ; 
+         dp [ i ] [ j ] = 1 ; 
+ 
+          int  dr [ ] = { - 1 , 0 , 1 , 0 } ; 
+          int  dc [ ] = { 0 , - 1 , 0 , 1 } ; 
+ 
+ 
+          for ( int  k = 0 ; k < 4 ; k ++ ) 
+          { 
+              int  nr = i + dr [ k ] ; 
+              int  nc = j + dc [ k ] ; 
+ 
+             dp [ i ] [ j ] = ( dp [ i ] [ j ] + dfs ( nr , nc , i , j , dp , grid ) ) % mod ; 
+          } 
+         // cout<<i<<" "<<j<<" "<<dp[i][j]<<endl; 
+          return  dp [ i ] [ j ] ; 
+ 
+      } 
+ 
+      int   countPaths ( vector < vector < int >> &  grid )   { 
+          int  n = grid . size ( ) ; 
+          int  m = grid [ 0 ] . size ( ) ; 
+ 
+         vector < vector < int >>   dp ( n , vector < int >   ( m , - 1 ) ) ; 
+          int  ans = 0 ; 
+          for ( int  i = 0 ; i < n ; i ++ ) 
+          { 
+              for ( int  j = 0 ; j < m ; j ++ ) 
+              { 
+                  if ( dp [ i ] [ j ] == - 1 ) 
+                     ans = ( ans + dfs ( i , j , - 1 , - 1 , dp , grid ) ) % mod ; 
+                  else 
+                 ans = ( ans + dp [ i ] [ j ] ) % mod ; 
+              } 
+          } 
+          return  ans ; 
+      } 
+ } ;
