@@ -1,77 +1,35 @@
 class   MyStack   { 
+ private :  
+ queue < int >  q ; 
+ 
  public : 
-     
-       queue < int >  q ; 
-         queue < int >  q1 ; 
-      int  size ; 
       MyStack ( )   { 
-       size = 0 ; 
+         
       } 
      
       void   push ( int  x )   { 
          q . push ( x ) ; 
-          //q1.push(x); 
-         size ++ ; 
+ 
+          for ( int  i = 0 ; i < q . size ( ) - 1 ; i ++ ) 
+          { 
+             q . push ( q . front ( ) ) ; 
+             q . pop ( ) ; 
+          } 
+ 
       } 
      
       int   pop ( )   { 
-         size -- ; 
-          if ( q . size ( ) == 1 ) 
-          { 
-              int  z1 = q . front ( ) ; 
-             q . pop ( ) ; 
-              return  z1 ; 
-          } 
-         
-        while ( q . size ( ) != 1 ) 
-         { 
-             int  z = q . front ( ) ; 
-            q . pop ( ) ; 
-            q1 . push ( z ) ; 
-         } 
-         
-         
-          int  temp = q . front ( ) ; 
-         
-           while ( ! q1 . empty ( ) ) 
-         { 
-             int  z = q1 . front ( ) ; 
-            q1 . pop ( ) ; 
-            q . push ( z ) ; 
-         } 
-          return  temp ; 
+          int  z = top ( ) ; 
+         q . pop ( ) ; 
+          return  z ; 
       } 
      
       int   top ( )   { 
-         while ( q . size ( ) != 1 ) 
-         { 
-             int  z = q . front ( ) ; 
-            q . pop ( ) ; 
-            q1 . push ( z ) ; 
-         } 
-         
-         
-          int  temp = q . front ( ) ; 
-         q1 . push ( temp ) ; 
-         
-           while ( ! q1 . empty ( ) ) 
-         { 
-             int  z = q1 . front ( ) ; 
-            q1 . pop ( ) ; 
-            q . push ( z ) ; 
-         } 
-         
-         
-         return  temp ;  
-         
+          return  q . front ( ) ; 
       } 
      
       bool   empty ( )   { 
-         if ( size == 0 ) 
-             return   true ; 
-         
-         
-          return   false ; 
+          return  q . size ( ) == 0 ; 
       } 
  } ; 
  
