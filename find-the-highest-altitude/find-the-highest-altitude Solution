@@ -1,13 +1,15 @@
 class   Solution   { 
  public : 
       int   largestAltitude ( vector < int > &  gain )   { 
-          int  prev = 0 ; 
-          int  ans = 0 ; 
-          for ( auto &  ele :  gain ) 
-          {    
-             prev += ele ; 
-             ans = max ( ans , prev ) ; 
+         
+          int  ini = 0 ; 
+          int  mx = 0 ; 
+ 
+          for ( auto   & ele :  gain ) 
+          { 
+             ini += ele ; 
+             mx = max ( mx , ini ) ; 
           } 
-          return  ans ; 
+          return  mx ; 
       } 
  } ;
