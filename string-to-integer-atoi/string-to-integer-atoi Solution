@@ -2,44 +2,42 @@ class   Solution   {
  public : 
       int   myAtoi ( string s )   { 
          
-          int  n = s . size ( ) ; 
+ 
           int  i = 0 ; 
-          while ( i < n  &&  s [ i ] == ' ' ) 
-             i ++ ; 
- 
+          for ( i = 0 ; i < s . size ( ) ; i ++ ) 
+          { 
+              if ( s [ i ] != ' ' ) 
+                  break ; 
+          }    
           int  fg = 0 ; 
-          if ( i < n   ) { 
-              if ( s [ i ] == '-' ) { 
-             fg = 1 ; 
-             i ++ ; } 
-              else   if ( s [ i ] == '+' ) { 
-             fg = 0 ; 
-             i ++ ; } 
-             
-          } 
-         
-          int  j = s . size ( ) - 1 ; 
-          while ( j > i  &&  s [ j ] == ' ' ) 
-             j -- ; 
  
-          long  ans = 0 ; 
-          while ( i <= j ) 
+          if ( s [ i ] == '+'   ||  s [ i ] == '-' ) 
+          { 
+          if ( s [ i ] == '-' ) 
+             fg = 1 ; 
+          else 
+             fg = 0 ; 
+         i ++ ; 
+          } 
+          long   long  ans = 0 ; 
+          while ( i < s . size ( ) ) 
           { 
               if ( s [ i ] >= '0'   &&  s [ i ] <= '9' ) 
-                  { 
-                     ans = ans * 10 + ( s [ i ] - '0' ) ; 
-                  } 
+              { 
+                 ans = ans * 10   + ( s [ i ] - '0' ) ; 
+                  if ( fg == 0   &&  ans >= INT_MAX ) 
+                      break ; 
+                  if ( fg == 1   &&   - 1 * ans <= INT_MIN ) 
+                  break ; 
+              } 
               else 
                   break ; 
-              if ( fg == 0   &&  ans >= INT_MAX ) 
-                  return  INT_MAX ; 
-              else   if ( fg == 1   &&   - 1 * ans <= INT_MIN ) 
-                  return  INT_MIN ; 
              i ++ ; 
           } 
  
-          if ( fg == 1 ) 
-              return   - 1 * ans ; 
-              return  ans ; 
+          if ( fg == 0 ) 
+              return   min ( ans , ( long   long ) INT_MAX ) ; 
+          else 
+               return   max ( - 1 * ans , ( long   long ) INT_MIN ) ; 
       } 
  } ;
