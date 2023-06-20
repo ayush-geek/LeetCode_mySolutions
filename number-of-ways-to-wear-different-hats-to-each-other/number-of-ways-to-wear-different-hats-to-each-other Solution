@@ -1,0 +1,55 @@
+# define   ll   long   long 
+ class   Solution   { 
+ public : 
+      int  mod = 1e9 + 7 ; 
+     ll dp [ 1 << 10 ] [ 41 ] ; 
+      int  n ; 
+     unordered_map < int , vector < int >>  mpp ; 
+ 
+      int   solve ( int  mask , int  hat ) 
+ {       
+      int  fin = ( 1 << n ) - 1 ; 
+ 
+      if ( mask == fin ) 
+          return   1 ;    //10 hats taken 
+      if ( hat > 40 ) 
+          return   0 ; 
+      if ( dp [ mask ] [ hat ] != - 1 ) 
+          return  dp [ mask ] [ hat ] ; 
+ 
+      //Skip 
+     ll a1 = solve ( mask , hat + 1 ) ; 
+ 
+      //take 
+     ll a2 = 0 ; 
+     
+      //Chk  for each person 
+      for ( auto &  ele :  mpp [ hat ] ) 
+      { 
+          if ( ( ( 1 << ele )   &  mask )   == 0 )   // Not Set 
+          { 
+             a2 = ( a2 + solve ( mask  |   ( 1 << ele ) , hat + 1 ) ) % mod ; 
+          } 
+      } 
+ 
+      return  dp [ mask ] [ hat ] = ( a1 + a2 ) % mod ; 
+ 
+ }     
+     
+      int   numberWays ( vector < vector < int >> &  hats )   { 
+          //N people and 40 hats 
+          //each people prefernce given 
+         
+         n = hats . size ( ) ; 
+          memset ( dp , - 1 , sizeof ( dp ) ) ; 
+          for ( int  i = 0 ; i < n ; i ++ ) 
+          { 
+              for ( auto &  ele :  hats [ i ] ) 
+              { 
+                 mpp [ ele ] . push_back ( i ) ; 
+              } 
+          } 
+          int  mask = 0 ; 
+          return   solve ( mask , 1 ) % mod ; 
+      } 
+ } ;
