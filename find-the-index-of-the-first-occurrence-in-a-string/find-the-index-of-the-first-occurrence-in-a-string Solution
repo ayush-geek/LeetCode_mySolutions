@@ -3,52 +3,33 @@ class   Solution   {
       int   strStr ( string haystack ,  string needle )   { 
          
          
-          if ( needle . size ( ) == 0   ||  haystack == needle ) 
-              return   0 ; 
+          if ( needle . size ( ) > haystack . size ( ) ) 
+              return   - 1 ; 
          
-     
+          int  n = haystack . size ( ) ; 
+          int  m = needle . size ( ) ; 
          
-          for ( int  i = 0 ; i < haystack . size ( ) ; i ++ ) 
+         
+          for ( int  i = 0 ; i < n ; i ++ ) 
           { 
               if ( haystack [ i ] == needle [ 0 ] ) 
-              {    
-                  if ( needle . size ( ) == 1 ) 
-                      return  i ; 
-                 
+              { 
                   int  j = i + 1 ; 
                   int  k = 1 ; 
                  
-                  while ( j < haystack . size ( ) ) 
-                  {    
-                      if ( haystack [ j ] == needle [ k ] ) 
-                      { 
-                         k ++ ; 
-                         
-                          if ( k == needle . size ( ) ) 
-                          { 
-                             return  i ; 
-                          } 
-                         
-                      } 
-                     
-                      else 
-                      {    
-                        
-                          break ; 
-                      } 
-                     
+                 
+                  while ( j < n  &&  k < m   &&  haystack [ j ] == needle [ k ] ) 
+                  { 
                      j ++ ; 
-                     
+                     k ++ ; 
                   } 
+                 
+                  if ( k == m ) 
+                      return  i ; 
                  
                  
               } 
-             
-             
-             
-            
           } 
-         
          
           return   - 1 ; 
       } 
