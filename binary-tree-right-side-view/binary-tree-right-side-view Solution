@@ -12,23 +12,22 @@
  class   Solution   { 
  public : 
  
-      void   solve ( TreeNode *  root , int  ch , vector < int > &  res ) 
+      void   solve ( TreeNode *  root , vector < int > &  res , int  k ) 
       { 
           if ( root == NULL ) 
               return   ; 
  
-          if ( ch == res . size ( ) )    
-             res . push_back ( root -> val ) ; 
-          solve ( root -> right , ch + 1 , res ) ; 
-          solve ( root -> left , ch + 1 , res ) ; 
+          if ( res . size ( ) == k ) 
+             res . push_back ( root -> val ) ;  
+          solve ( root -> right , res , k + 1 ) ; 
+          solve ( root -> left , res , k + 1 ) ; 
       } 
  
      vector < int >   rightSideView ( TreeNode *  root )   { 
-          // bfs lst node at each lvl 
- 
+          int  k = 0 ; 
          vector < int >  res ; 
-          int  ch = 0 ; //Current height 
-          solve ( root , ch , res ) ; 
-          return  res ; 
+ 
+          solve ( root , res , k ) ; 
+       return  res ;    
       } 
  } ;
