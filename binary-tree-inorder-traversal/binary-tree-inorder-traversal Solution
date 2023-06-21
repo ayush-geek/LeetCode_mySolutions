@@ -9,31 +9,23 @@
   *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
   * };
   */ 
-  class   Solution   { 
-  public : 
-     vector < int >   inorderTraversal ( TreeNode *  root )   { 
+ class   Solution   { 
+ public : 
+ 
+      void   solve ( TreeNode *  root , vector < int > &  res ) 
+      { 
+          if ( root == NULL ) 
+              return   ; 
          
+          solve ( root -> left , res ) ; 
+         res . push_back ( root -> val ) ; 
+          solve ( root -> right , res ) ; 
  
-          //Inorder Traversal using Rec is Very Easy 
-          // Now will do with Stack 
+      } 
  
-         stack < TreeNode * >  st ; 
+     vector < int >   inorderTraversal ( TreeNode *  root )   { 
          vector < int >  res ; 
-          while ( root != NULL   ||   ! st . empty ( ) ) 
-          { 
-              while ( root ) 
-              { 
-                 st . push ( root ) ; 
-                 root = root -> left ; 
-                 
-              } 
- 
-             res . push_back ( st . top ( ) -> val ) ;  
-            
-             root = st . top ( ) -> right ; 
-              st . pop ( ) ; 
-          } 
- 
+          solve ( root , res ) ; 
           return  res ; 
       } 
-  } ;
+ } ;
