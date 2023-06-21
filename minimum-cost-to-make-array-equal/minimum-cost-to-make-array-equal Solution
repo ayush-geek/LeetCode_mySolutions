@@ -1,0 +1,56 @@
+class   Solution   { 
+ public : 
+ 
+      long   long   solve ( int  mid , vector < int > &  nums ,  vector < int > &  cost ) 
+      { 
+          long   long  tmp = 0 ; 
+ 
+          for ( int  i = 0 ; i < nums . size ( ) ; i ++ ) 
+          { 
+              int  diff = abs ( nums [ i ] - mid ) ; 
+ 
+             tmp += ( long   long ) diff * ( long   long ) cost [ i ] ; 
+          } 
+ 
+          return  tmp ; 
+      } 
+      long   long   minCost ( vector < int > &  nums ,  vector < int > &  cost )   { 
+         
+ 
+          //just min the  maxx cost 
+ 
+        
+          long   long  ans = LLONG_MAX ; 
+ 
+          //Linear search -> solve -> n2 
+          // for(int i=0;i<nums.size();i++) 
+          // { 
+          //     long long zz=solve(nums[i],nums,cost); 
+ 
+          //         ans=min(ans,zz); 
+          // } 
+ 
+          //bINARY SEARCH BUT HOw 
+          //alter the fxn 
+ 
+           int  l = 1 ; 
+          int  h = 1e6 ; 
+          while ( l <= h ) 
+          { 
+              int  mid = ( l + h ) / 2 ; 
+ 
+              long   long  z1 = solve ( mid , nums , cost ) ; 
+              long   long  z2 = solve ( mid + 1 , nums , cost ) ; 
+              long   long  z3 = solve ( mid - 1 , nums , cost ) ; 
+ 
+              if ( z1 <= z2  &&  z1 <= z3 ) 
+                  return  z1 ; 
+              else   if ( z1 < z2 ) 
+                 h = mid - 1 ; 
+              else 
+                 l = mid + 1 ; 
+          
+          } 
+          return   - 1 ; 
+      } 
+ } ;
