@@ -104,61 +104,65 @@ class Solution
     //from left to right in Binary Tree.
     vector<int> topView(Node *root)
     {
-     //By bfS
+        //  vector<int> res;
+         if(root==NULL)
+            return {};
+        vector<int> lft;
+        vector<int> rgt;
+            // map<int, Node *> mp;
 
-    
-    if(root==NULL)  
-        return {};
-        
-        
+        // bfs
+
+        queue<pair<Node *, int>> q;
+        q.push({root, 0});
  
-    map<int,int> st;
-    
-    queue<pair<Node*,int>> q;
-    q.push({root,0});
-    
-
-    while(!q.empty())
-    {
-        int sz=q.size();
-        
-        for(int i=0;i<sz;i++)
+        int mn=0;
+        int mx=0;
+        rgt.push_back(root->data);
+        while (!q.empty())
         {   
-            auto itr=q.front();
-        
-           Node* tmp=itr.first;
-           int lv=itr.second;
-           q.pop();
-           
+            int sz=q.size();
             
-            if(st.find(lv)==st.end())
-                st.insert({lv,tmp->data});
-            
-            
-            if(tmp->left)
+            while(sz--)
             {
-                q.push({tmp->left,lv-1});
+            auto node = q.front();
+            auto nd = node.first;
+            int d = node.second;
+            
+            if(d<mn)
+                {   
+                    // cout<<d<<" "<<nd->data<<endl;
+                    lft.push_back(nd->data);
+                    mn=d;
+                }
+             if(d>mx)
+                {   
+                    //  cout<<d<<" "<<nd->data<<endl;
+                    rgt.push_back(nd->data);
+                    mx=d;
+                }
+            q.pop();
+
+            if (nd->left != NULL)
+            {
+                q.push({nd->left, d - 1});
+               
+            }
+            if (nd->right != NULL)
+            {
+                q.push({nd->right, d + 1});
+               
             }
             
-            if(tmp->right)
-            {
-                q.push({tmp->right,lv+1});
-            }
                 
+            }
         }
-    }
-        
+
+        reverse(lft.begin(),lft.end());
+        for(auto& ele: rgt)
+            lft.push_back(ele);
+        return lft;
     
-    vector<int> res;
-    for(auto ele: st)
-    {
-        res.push_back(ele.second);
-    }
-    
-    
-    
-        
-        return res;
     }
 
 };
