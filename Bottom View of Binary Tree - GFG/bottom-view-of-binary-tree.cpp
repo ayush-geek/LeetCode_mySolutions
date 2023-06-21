@@ -96,59 +96,42 @@ Node* buildTree(string str)
 class Solution {
   public:
     vector <int> bottomView(Node *root) {
-     if (root==NULL)  
-        return {};
+        // Your Code Here
+        vector<int> res;
+        
+        map<int,Node*> mp;
         
         
- 
-    map<int,int> st;
-    
-    queue<pair<Node*,int>> q;
-    q.push({root,0});
-    
-
-    while(!q.empty())
-    {
-        int sz=q.size();
+        //bfs
         
-        for(int i=0;i<sz;i++)
-        {   
-            auto itr=q.front();
-        
-           Node* tmp=itr.first;
-           int lv=itr.second;
-           q.pop();
-           
+        queue<pair<Node*,int>> q;
+        q.push({root,0});
+        mp[0]=root;
             
-          st[lv]=tmp->data;
+        while(!q.empty())
+        {
+            auto node=q.front();
+            auto nd=node.first;
+            int d=node.second;
+            q.pop();
             
-            
-            if(tmp->left)
-            {
-                q.push({tmp->left,lv-1});
+            if(nd->left!=NULL){
+                q.push({nd->left,d-1});
+                mp[d-1]=nd->left;
             }
-            
-            if(tmp->right)
-            {
-                q.push({tmp->right,lv+1});
+            if(nd->right!=NULL){
+                q.push({nd->right,d+1});
+                  mp[d+1]=nd->right;
             }
-                
         }
-    }
         
-    
-    vector<int> res;
-    for(auto ele: st)
-    {
-        res.push_back(ele.second);
-    }
-    
-    
-    
-        
+        for(auto& ele: mp)
+        {
+            res.push_back(ele.second->data);
+        }
         return res;
+        
     }
-    
 };
 
 //{ Driver Code Starts.
