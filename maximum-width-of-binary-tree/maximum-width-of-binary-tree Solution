@@ -12,44 +12,42 @@
  class   Solution   { 
  public : 
       int   widthOfBinaryTree ( TreeNode *  root )   { 
+         
           if ( root == NULL ) 
               return   0 ; 
-          unsigned   long   long  ans = 0 ; 
- 
-         queue < pair < TreeNode * , unsigned   long   long >>  q ; 
+          int  ans = 0 ; 
+     
+         queue < pair < TreeNode * , long   long >>  q ; 
          q . push ( { root , 0 } ) ; 
  
           while ( ! q . empty ( ) ) 
           { 
               int  sz = q . size ( ) ; 
-              // long long fpos=LLONG_MAX; 
-          
-              auto   s = q . front ( ) . second ; 
-              auto  lpos = s ; 
+              int  fg = 0 ; 
+              int  k = 0 ; 
               while ( sz -- ) 
               { 
-                  auto  nd = q . front ( ) ; 
+                  auto  node = q . front ( ) ; 
                  q . pop ( ) ; 
  
-                 TreeNode *  node = nd . first ; 
-                  auto  ind = nd . second ; 
-                  ans = max ( ans , ind - s + 1 ) ; 
-               // fpos=min(fpos,ind); 
-               lpos = max ( lpos , ind ) ; 
- 
- 
-                  if ( node -> left != NULL ) 
-                      { 
-                         q . push ( { node -> left , 2 * ind + 1 } ) ; 
-                       
-                      } 
-                  if ( node -> right != NULL ) 
-                  { 
-                      q . push ( { node -> right , 2l * ind + 2 } ) ; 
+                  auto  nd = node . first ; 
+                  int  d = node . second ; 
+                  if ( fg == 0 ) { 
+                     k = d ; 
+                     fg = 1 ; 
                   } 
+                 d -= k ; 
+                  if ( nd -> left != NULL ) 
+                     q . push ( { nd -> left , ( long   long ) 2 * d + 1 } ) ; 
+                   if ( nd -> right != NULL ) 
+                     q . push ( { nd -> right , ( long   long ) 2 * d + 2 } ) ; 
+ 
+                 ans = max ( ans , d + 1 ) ; 
               } 
-            
-          }  
+ 
+          } 
+ 
           return  ans ; 
+ 
       } 
  } ;
