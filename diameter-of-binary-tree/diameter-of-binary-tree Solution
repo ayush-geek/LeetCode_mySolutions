@@ -9,39 +9,25 @@
   *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
   * };
   */ 
-  class   Solution   { 
-  public : 
-     
-     
-     
-      int   solve ( TreeNode *  root , int &  mx_h ) 
+ class   Solution   { 
+ public : 
+ 
+      int   solve ( TreeNode *  root , int &  ans ) 
       { 
           if ( root == NULL ) 
               return   0 ; 
-         
-          int  lh = solve ( root -> left , mx_h ) ; 
-          int  rh = solve ( root -> right , mx_h ) ; 
-         
-         
-         mx_h = max ( lh + rh , mx_h ) ; 
-         
-          return   max ( lh , rh ) + 1 ; 
+          int  l = solve ( root -> left , ans ) ; 
+          int  r = solve ( root -> right , ans ) ; 
+ 
+         ans = max ( { ans , l + r } ) ; 
+ 
+          return   max ( { l , r } ) + 1 ; 
       } 
-     
-     
-     
+ 
       int   diameterOfBinaryTree ( TreeNode *  root )   { 
-      
-          //Diameter =lh+rh 
          
-         
-         
-          int  mx_h = 0 ; 
-         
-          int  hh = solve ( root , mx_h ) ; 
-         
-          return  mx_h ; 
-         
-         
+          int  ans = 0 ; 
+          int  z = solve ( root , ans ) ; 
+          return  ans ; 
       } 
-  } ;
+ } ;
