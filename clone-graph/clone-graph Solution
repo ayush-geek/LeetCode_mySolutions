@@ -21,27 +21,25 @@
  
  class   Solution   { 
  public : 
-     map < int , Node * >  mp ; 
+     unordered_map < int , Node * >  mp ; 
      Node *   cloneGraph ( Node *  node )   { 
-  
-          if ( node == NULL ) 
-              return   NULL ; 
-          int  z = node -> val ; 
-         Node *   newnode = new   Node ( z ) ; 
-         mp [ z ] = newnode ; 
-          for ( auto &  ele :  node -> neighbors ) 
+         Node *  tmp = NULL ; 
+          if ( node != NULL ) 
           { 
-              if ( mp . find ( ele -> val ) == mp . end ( ) ) 
-              { 
-                 newnode -> neighbors . push_back ( cloneGraph ( ele ) ) ; 
+             tmp = new   Node ( node -> val ) ; 
+             mp [ node -> val ] = tmp ; 
+              for ( auto &  ele :  node -> neighbors ) 
+              {       
+                 Node *  tt = NULL ; 
+                  if ( mp . count ( ele -> val ) == 0 ) 
+                     tt = cloneGraph ( ele ) ; 
+                  else 
+                     tt = mp [ ele -> val ] ; 
+                
+                 tmp -> neighbors . push_back ( tt ) ; 
               } 
-              else 
-              { 
-                 newnode -> neighbors . push_back ( mp [ ele -> val ] ) ; 
-              } 
-          } 
- 
-          return  newnode ; 
-         
+             
+          }  
+          return  tmp ;   
       } 
  } ;
