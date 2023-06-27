@@ -13,48 +13,50 @@ class Solution {
     *   V: number of vertices
     */
     vector<int> bellman_ford(int V, vector<vector<int>>& edges, int S) {
-       
+        // Code here
+        //n-1 traversal u will get min distance
+        //if again min distance 
         
         vector<int> dis(V,1e8);
         dis[S]=0;
         
-       for(int i=0;i<V-1;i++)
-       {
-           for(auto& ele: edges)
-           {
-           int u=ele[0];
-           int v=ele[1];
-           int w=ele[2];
-           
-           if(dis[u]+w<dis[v])
-           {
-               dis[v]=dis[u]+w;
-           }
-           }
-       }
+        
+        int z=V-1;
+        while(z--)
+        {
+            for(auto& ele: edges)
+            {
+                int u=ele[0];
+                int v=ele[1];
+                int wt=ele[2];
+                
+                if(dis[u]+wt<dis[v])
+                {
+                    dis[v]=dis[u]+wt;
+                }
+            }
+        }
+        
         int fg=0;
         for(auto& ele: edges)
-           {
-           int u=ele[0];
-           int v=ele[1];
-           int w=ele[2];
-           
-           if(dis[u]+w<dis[v])
-           {
-               dis[v]=dis[u]+w;
-                fg=1;
-                break;
-               
-           }
-          
-               
-           }
-           
-           if(fg==1)
-            return {-1};
+            {
+                int u=ele[0];
+                int v=ele[1];
+                int wt=ele[2];
+                
+                if(dis[u]+wt<dis[v])
+                {
+                   fg=1;
+                   break;
+                }
+            }
         
-        return dis;       
+        
+        if(fg==1)
+            return {-1};
        
+        return dis;
+        
     }
 };
 
