@@ -1,0 +1,46 @@
+class   Solution   { 
+ public : 
+      double   maxProbability ( int  n ,  vector < vector < int >> &  edges ,  vector < double > &  succProb ,   int  start ,   int  end )   { 
+         
+         vector < pair < int , double >>  adj [ n ] ; 
+ 
+          for ( int  i = 0 ; i < edges . size ( ) ; i ++ ) 
+          { 
+              int  u = edges [ i ] [ 0 ] ; 
+              int  v = edges [ i ] [ 1 ] ; 
+              double  p = succProb [ i ] ; 
+ 
+             adj [ u ] . push_back ( { v , p } ) ; 
+             adj [ v ] . push_back ( { u , p } ) ; 
+ 
+          } 
+ 
+          //dijkstra 
+         priority_queue < pair < double , int >>  pq  ; 
+         pq . push ( { 1.0 , start } ) ; 
+         
+     vector < double >   dis ( n + 1 , 0 ) ; 
+     dis [ start ] = 1.0 ; 
+          while ( ! pq . empty ( ) ) 
+          { 
+              auto  nd = pq . top ( ) ; 
+             pq . pop ( ) ; 
+ 
+              double  v = nd . first ; 
+              int  z = nd . second ; 
+              if ( z == end ) 
+                  return  v ; 
+              for ( auto &  ele :  adj [ z ] ) 
+              {    
+                  int  u = ele . first ; 
+                  double  wt = ele . second ; 
+                  if ( dis [ u ] < v * wt ) 
+                  { 
+                     pq . push ( { v * wt , u } ) ; 
+                     dis [ u ] = v * wt ; 
+                  } 
+              } 
+          } 
+          return   0 ; 
+      } 
+ } ;
