@@ -1,18 +1,19 @@
 struct   Node { 
-     Node *  links [ 26 ] ; 
-      bool  flag = false ; 
  
-      bool   containsKey ( char  ch ) 
+     Node *  links [ 26 ] ; 
+      bool  flag ; 
+ 
+      bool   containWord ( char  ch ) 
       { 
           return  links [ ch - 'a' ] != NULL ; 
       } 
  
-      void   put ( char  ch , Node *  node ) 
+      void   putWord ( char  ch , Node *  nd ) 
       { 
-         links [ ch - 'a' ] = node ; 
+         links [ ch - 'a' ] = nd ;  
       } 
  
-     Node *   get ( char  ch ) 
+     Node *   getWord ( char  ch ) 
       { 
           return  links [ ch - 'a' ] ; 
       } 
@@ -26,6 +27,7 @@ struct   Node {
       { 
           return  flag == true ; 
       } 
+ 
  } ; 
  
  
@@ -39,50 +41,47 @@ struct   Node {
       } 
      
       void   insert ( string word )   { 
-         Node *  node = root ;   //just a reference 
- 
+         Node *  tmp = root ; 
           for ( int  i = 0 ; i < word . length ( ) ; i ++ ) 
           { 
-              if ( ! node -> containsKey ( word [ i ] ) ) 
-              { 
-                 node -> put ( word [ i ] , new   Node ( ) ) ; 
+              if ( ! tmp -> containWord ( word [ i ] ) ) 
+              {    
+                 tmp -> putWord ( word [ i ] , new   Node ( ) ) ; 
               } 
-             node = node -> get ( word [ i ] ) ; 
+             tmp = tmp -> getWord ( word [ i ] ) ; 
           } 
  
-         node -> setEnd ( ) ; 
+         tmp -> setEnd ( ) ; 
       } 
      
       bool   search ( string word )   { 
-         Node *  node = root ;   //just a reference 
- 
+         Node *  tmp = root ; 
           for ( int  i = 0 ; i < word . length ( ) ; i ++ ) 
           { 
-              if ( ! node -> containsKey ( word [ i ] ) ) 
-              { 
+              if ( ! tmp -> containWord ( word [ i ] ) ) 
+              {    
                   return   false ; 
               } 
-             node = node -> get ( word [ i ] ) ; 
+             tmp = tmp -> getWord ( word [ i ] ) ; 
           } 
  
-          return  node -> isEnd ( ) ; 
- 
+          if ( tmp -> isEnd ( ) ) 
+              return   true ; 
+          return   false ; 
       } 
      
-      bool   startsWith ( string prefix )   { 
-          Node *  node = root ;   //just a reference 
- 
-          for ( int  i = 0 ; i < prefix . length ( ) ; i ++ ) 
+      bool   startsWith ( string word )   { 
+          Node *  tmp = root ; 
+          for ( int  i = 0 ; i < word . length ( ) ; i ++ ) 
           { 
-              if ( ! node -> containsKey ( prefix [ i ] ) ) 
-              { 
+              if ( ! tmp -> containWord ( word [ i ] ) ) 
+              {    
                   return   false ; 
               } 
-             node = node -> get ( prefix [ i ] ) ; 
+             tmp = tmp -> getWord ( word [ i ] ) ; 
           } 
- 
           return   true ; 
-      } 
+      }    
  } ; 
  
  /**
