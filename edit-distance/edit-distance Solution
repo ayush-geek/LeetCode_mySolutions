@@ -3,43 +3,32 @@ class   Solution   {
  
       int   solve ( int  i , int  j , string word1 , string word2 , vector < vector < int >> &  dp ) 
       { 
-          if ( i >= word1 . size ( ) ) 
-              return   word2 . size ( ) - j  ; 
-          if ( j >= word2 . size ( ) ) 
-              return   word1 . size ( ) - i ; 
- 
+          if ( i < 0 ) 
+              return  j + 1 ; 
+          if ( j < 0 ) 
+              return  i + 1 ; 
+         
           if ( dp [ i ] [ j ] != - 1 ) 
               return  dp [ i ] [ j ] ; 
+         
           if ( word1 [ i ] == word2 [ j ] ) 
-              return  dp [ i ] [ j ] = solve ( i + 1 , j + 1 , word1 , word2 , dp ) ; 
- 
-          else { 
-          //i  
-          int  a = 1 + solve ( i , j + 1 , word1 , word2 , dp ) ; 
-         
- 
-          //d 
-          int  b = 1 + solve ( i + 1 , j , word1 , word2 , dp ) ; 
- 
-          //r 
-          int  c = 1 + solve ( i + 1 , j + 1 , word1 , word2 , dp ) ; 
- 
- 
-         dp [ i ] [ j ] = min ( { a , b , c } ) ; 
+              return  dp [ i ] [ j ] = solve ( i - 1 , j - 1 , word1 , word2 , dp ) ; 
+          else 
+          { 
+              int  op1 = 1 + solve ( i - 1 , j , word1 , word2 , dp ) ;    //delete 
+              int  op2 = 1 + solve ( i , j - 1 , word1 , word2 , dp ) ;    //insert 
+              int  op3 = 1 + solve ( i - 1 , j - 1 , word1 , word2 , dp ) ;   //replace 
+             dp [ i ] [ j ] = min ( { op1 , op2 , op3 } ) ; 
           } 
-         
           return  dp [ i ] [ j ] ; 
- 
-         
- 
       } 
  
- 
       int   minDistance ( string word1 ,  string word2 )   { 
-           int  n = word1 . size ( ) ; 
-           int  m = word2 . size ( ) ; 
+         
+          int  n = word1 . size ( ) ; 
+          int  m = word2 . size ( ) ; 
  
          vector < vector < int >>   dp ( n , vector < int >   ( m , - 1 ) ) ; 
-          return   solve ( 0 , 0 , word1 , word2 , dp ) ; 
+          return   solve ( n - 1 , m - 1 , word1 , word2 , dp ) ; 
       } 
  } ;
