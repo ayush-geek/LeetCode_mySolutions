@@ -1,0 +1,27 @@
+class   Solution   { 
+ public : 
+ 
+   void   solve ( int  i , vector < int > &  cookies , vector < int > &  sm , int  mx , int &   ans ) 
+ { 
+      if ( i == cookies . size ( ) ) 
+      { 
+         ans = min ( ans , mx ) ; 
+          return   ; 
+      } 
+      //for each cookie (mx8) i have k choices 
+      for ( int  j = 0 ; j < sm . size ( ) ; j ++ ) 
+      { 
+         sm [ j ] += cookies [ i ] ; 
+          solve ( i + 1 , cookies , sm , max ( mx , sm [ j ] ) , ans ) ; 
+         sm [ j ] -= cookies [ i ] ; 
+      } 
+ } 
+      int   distributeCookies ( vector < int > &  cookies ,   int  k )   { 
+         
+          int  ans = INT_MAX ; 
+         vector < int >   sm ( k , 0 ) ; 
+          int  mx = 0 ; 
+          solve ( 0 , cookies , sm , mx , ans ) ; 
+          return  ans ; 
+      } 
+ } ;
