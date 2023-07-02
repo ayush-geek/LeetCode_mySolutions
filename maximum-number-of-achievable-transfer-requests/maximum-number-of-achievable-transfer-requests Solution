@@ -1,0 +1,39 @@
+class   Solution   { 
+ public : 
+ 
+      void   solve (   int  i , vector < vector < int >> &  requests , vector < int > &  build , int  proc , int &  maxR ) 
+      { 
+          if ( i == requests . size ( ) ) 
+          { 
+              for ( auto &  ele :  build ) 
+              { 
+                  if ( ele != 0 ) 
+                      return   ; 
+              } 
+             maxR = max ( maxR , proc ) ; 
+              return   ; 
+          } 
+ 
+          //take 
+         build [ requests [ i ] [ 0 ] ] -- ; 
+         build [ requests [ i ] [ 1 ] ] ++ ; 
+ 
+          solve ( i + 1 , requests , build , proc + 1 , maxR ) ; 
+         
+         build [ requests [ i ] [ 0 ] ] ++ ; 
+         build [ requests [ i ] [ 1 ] ] -- ; 
+         
+          //Not Take 
+              solve ( i + 1 , requests , build , proc , maxR ) ; 
+      } 
+ 
+      int   maximumRequests ( int  n ,  vector < vector < int >> &  requests )   { 
+          //backtrack 
+ 
+         vector < int >   build ( n , 0 ) ; 
+              int  maxR = 0 ; 
+             
+           solve ( 0 , requests , build , 0 , maxR ) ; 
+          return  maxR ; 
+      } 
+ } ;
