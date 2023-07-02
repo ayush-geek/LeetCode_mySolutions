@@ -8,17 +8,26 @@ using namespace std;
 class Solution{
     public:
     int setSetBit(int x, int y, int l, int r){
-        // code here
+    
         
-        for(int i=l-1;i<r;i++)
+        for(int i=r-1;i>=l-1;i--)
         {
-            //set
+           
             
-            if(y&(1<<i))
+            //if bit in y is set or not
+            int bit_y =(y& (1<<i))?1:0;
+            //cout<<i<<" "<<bit_y<<endl;
+            if(bit_y)
             {
-                x=x| (1<<i);
+                x=x | (1<<i);
             }
+           
+             
+            
+            
         }
+        
+      
         return x;
     }
 };
