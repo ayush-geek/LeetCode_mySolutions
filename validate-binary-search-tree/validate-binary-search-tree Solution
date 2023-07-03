@@ -11,15 +11,21 @@
   */ 
  class   Solution   { 
  public : 
-      bool   isValidBST ( TreeNode *  root , long  lft = LONG_MIN , long  rgt = LONG_MAX )   { 
+ 
+      bool   solve ( TreeNode *  root , long  lmx , long  rmx ) 
+      { 
           if ( root == NULL ) 
               return   true ; 
- 
-          if ( root -> val >= rgt  ||  root -> val <= lft ) 
-              return   false ; 
          
-          bool  left = isValidBST ( root -> left , lft , root -> val ) ; 
-          bool  regt = isValidBST ( root -> right , root -> val , rgt ) ; 
-          return  left  &&  regt ; 
+          if ( root -> val <= lmx  ||  root -> val >= rmx ) 
+              return   false ; 
+          return   solve ( root -> left , lmx , root -> val )   &&  
+              solve ( root -> right , root -> val , rmx ) ; 
+      } 
+ 
+      bool   isValidBST ( TreeNode *  root )   { 
+         
+         
+          return   solve ( root , LONG_MIN , LONG_MAX ) ; 
       } 
  } ;
