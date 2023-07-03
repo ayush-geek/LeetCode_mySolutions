@@ -1,0 +1,117 @@
+/**
+  * Definition for a binary tree node.
+  * struct TreeNode {
+  *     int val;
+  *     TreeNode *left;
+  *     TreeNode *right;
+  *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+  *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+  *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+  * };
+  */ 
+ class   Solution   { 
+ public : 
+ 
+     TreeNode *  par = NULL ; 
+     TreeNode *   find ( TreeNode *  root , int  key ) 
+      { 
+          if ( root == NULL ) 
+              return   NULL ; 
+ 
+          while ( root != NULL   ) 
+          { 
+            
+              if ( root -> val == key ) 
+                  return  root ; 
+              else   if ( root -> val > key ) 
+                  { 
+                      par = root ; 
+                      root = root -> left ; 
+                  } 
+              else 
+              { 
+                 par = root ; 
+                  root = root -> right ; 
+              } 
+                
+          } 
+ 
+          return   NULL ; 
+      } 
+ 
+ 
+ 
+     TreeNode *   delnode ( TreeNode *  root , TreeNode *  nd ) 
+      { 
+              //Inorder Successor 
+              //Leftmost Child  
+              //Right Subtree 
+ 
+ 
+              if ( nd -> left == NULL   || nd -> right == NULL ) 
+              { 
+                 TreeNode *  ch = nd -> left ? nd -> left : nd -> right ; 
+                  if ( par == NULL ) 
+                     root = ch ; 
+                  else   if ( par -> left == nd ) 
+                     par -> left = ch ; 
+                  else 
+                     par -> right = ch ; 
+ 
+                  delete  nd ; 
+              } 
+              
+               else 
+               { 
+                  TreeNode *  tmp = nd -> right ; 
+ 
+                 TreeNode *  prev = nd ; 
+              while ( tmp -> left != NULL ) 
+              {    prev = tmp ; 
+                 
+ 
+                 tmp = tmp -> left ; 
+              } 
+ 
+                 nd -> val = tmp -> val ; 
+ 
+ 
+                  if ( prev -> left == tmp ) 
+                     prev -> left = tmp -> right ; 
+                  else 
+                     prev -> right = tmp -> right ; 
+              
+                  delete  tmp ; 
+               } 
+       
+             
+ 
+         
+ 
+          return  root ; 
+ 
+ 
+ 
+ 
+      } 
+ 
+ 
+     TreeNode *   deleteNode ( TreeNode *  root ,   int  key )   { 
+         
+          //2 steps 
+          //Find  
+          //Inorder Suc 
+ 
+ 
+ 
+         TreeNode *  del = find ( root , key ) ; 
+          if ( del != NULL ) 
+         cout << del -> val << endl ; 
+ 
+          if ( del == NULL ) 
+              return  root ; 
+          else 
+              return   delnode ( root , del ) ; 
+ 
+      } 
+ } ;
