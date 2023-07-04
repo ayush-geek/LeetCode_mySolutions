@@ -1,40 +1,33 @@
 class   Solution   { 
-  public : 
+ public : 
       int   singleNumber ( vector < int > &  nums )   { 
-         
- 
-          //Each Element 3 Times 
- 
+          int  ans = 0 ; 
          vector < int >   v ( 32 , 0 ) ; 
- 
           for ( int  i = 0 ; i < nums . size ( ) ; i ++ ) 
           { 
-              int  z = nums [ i ] ; 
  
-              for ( int  j = 0 ; j < 32 ; j ++ ) 
+              for ( int  j = 31 ; j >= 0 ; j -- ) 
               { 
  
-                 v [ j ] += z & 1 ; 
-                 // cout<<v[j]<<endl; 
-                 z >>= 1 ; 
-                  if ( z == 0 ) 
-                      break ; 
+                  int  bit = nums [ i ]   &   ( 1 << j ) ; 
+ 
+                  if ( bit ) 
+                     v [ j ] ++ ; 
  
               } 
           } 
-          int  res = 0 ; 
-            for ( int  j = 0 ; j < 32 ; j ++ ) 
+ 
+ 
+      for ( int  i = 31 ; i >= 0 ; i -- ) 
+      { 
+          int  c = v [ i ] % 3 ; 
+ 
+          if ( c ) 
               { 
- 
-                 v [ j ] %= 3 ; 
-                
-                  if ( v [ j ] ) 
-                     res += 1 << ( j ) ; 
- 
+                 ans = ans | ( 1 << i ) ; 
               } 
- 
-          return  res ; 
-         
- 
       } 
-  } ;
+ 
+      return  ans ; 
+      } 
+ } ;                                                                    
