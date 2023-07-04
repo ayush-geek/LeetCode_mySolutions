@@ -20,11 +20,11 @@
          inorder . push_back ( root -> val ) ; 
           dfs ( root -> right , inorder ) ; 
       } 
- 
+      vector < int >  inorder ; 
+      int  k ; 
  public : 
  
-     vector < int >  inorder ; 
-      int  k ; 
+    
       BSTIterator ( TreeNode *  root )   { 
          k = 0 ; 
  
