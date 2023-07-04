@@ -11,41 +11,54 @@
  public : 
  
       // Encodes a tree to a single string. 
-     string  serialize ( TreeNode *  root )   { 
-          if ( root == NULL ) 
-              return   "#" ; 
-         
-          return   to_string ( root -> val ) + "," + serialize ( root -> left ) 
-              + "," + serialize ( root -> right ) ; 
-         
  
+      void   solve ( TreeNode *  root , string &  s ) 
+       { 
+           if ( root == NULL ) 
+           { 
+              s . append ( "N" ) ; 
+               return   ; 
+           } 
+ 
+          s . append ( to_string ( root -> val ) ) ; 
+           s . append ( "," ) ; 
+           solve ( root -> left , s ) ; 
+           s . append ( "," ) ; 
+           solve ( root -> right , s ) ; 
+       } 
+ 
+     string  serialize ( TreeNode *  root )   { 
+         
+         string s = "" ; 
+          solve ( root , s ) ; 
+          return  s ; 
       } 
  
       // Decodes your encoded data to tree. 
      TreeNode *   deserialize ( string data )   { 
-          if ( data == "#" ) 
-              return   NULL ; 
-         
+         if ( data == "N" ) 
+          return   NULL ; 
+ 
          stringstream  s ( data ) ; 
  
-          return   des ( s ) ; 
-        
- 
+          return   myfxn ( s ) ; 
       } 
-     TreeNode *   des ( stringstream &  s ) 
-      { 
-          string str ; 
-          getline ( s , str , ',' ) ; 
  
-          if ( str == "#" ) 
+     TreeNode *   myfxn ( stringstream &  s ) 
+      { 
+         string tmp ; 
+          getline ( s , tmp , ',' ) ;  
+ 
+          if ( tmp ==   "N" ) 
               return   NULL ; 
           else 
           { 
-             TreeNode *  root  =   new   TreeNode ( stoi ( str ) ) ; 
-             root -> left  =   des ( s ) ; 
-             root -> right  =   des ( s ) ; 
+             TreeNode *  root = new   TreeNode ( stoi ( tmp ) ) ; 
+             root -> left = myfxn ( s ) ; 
+             root -> right = myfxn ( s ) ; 
               return  root ; 
           } 
+         
       } 
  } ; 
  
