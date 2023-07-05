@@ -1,26 +1,27 @@
 class   Solution   { 
  public : 
       int   minFallingPathSum ( vector < vector < int >> &  matrix )   { 
-          int  n = matrix . size ( ) ; 
-          int  m = matrix [ 0 ] . size ( ) ; 
-          int  ans = INT_MAX ; 
-         vector < vector < int >>   dp ( n + 1 , vector < int >   ( m + 2 , 1e9 ) ) ; 
+            int  m = matrix . size ( ) ; 
+          int  n = matrix [ 0 ] . size ( ) ; 
+         vector < vector < int >>   dp ( m + 1 , vector < int >   ( n + 2 , 1e9 ) ) ; 
  
-          for ( int   i = 1 ; i <= n ; i ++ ) 
+       
+          for ( int  i = 1 ; i <= m ; i ++ ) 
           { 
-              for ( int  j = 1 ; j <= m ; j ++ ) 
-              { 
-                  if ( i == 1   ) 
-                     dp [ i ] [ j ] = matrix [ i - 1 ] [ j - 1 ] ; 
-                  else 
-                     dp [ i ] [ j ]   = min ( { dp [ i - 1 ] [ j - 1 ] , dp [ i - 1 ] [ j ] , dp [ i - 1 ] [ j + 1 ] } ) + matrix [ i - 1 ] [ j - 1 ] ; 
- 
+              for ( int  j = 1 ; j <= n ; j ++ ) 
+              {        
+                      if ( i == 1   ) 
+                         dp [ i ] [ j ] = matrix [ 0 ] [ j - 1 ] ; 
+                      else 
+                         dp [ i ] [ j ] = matrix [ i - 1 ] [ j - 1 ]   + min ( { dp [ i - 1 ] [ j + 1 ] , dp [ i - 1 ] [ j ] , dp [ i - 1 ] [ j - 1 ] } ) ; 
               } 
           } 
-   
+ 
+          int  ans = 1e9 ; 
+ 
           for ( int  j = 1 ; j <= m ; j ++ ) 
           { 
-             ans = min ( ans , dp [ n ] [ j ] ) ; 
+             ans = min ( ans , dp [ m ] [ j ] ) ; 
           } 
           return  ans ; 
       } 
