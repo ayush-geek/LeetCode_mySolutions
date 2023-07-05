@@ -7,37 +7,40 @@ using namespace std;
 
 // } Driver Code Ends
 // User function Template for C++
-vector<long long> dp(100001,-1);
-long long mod=1e9+7;
+
 class Solution {
+    private:
+        vector<long long> dp;
   public:
-    long long int topDown(int n) {
-        
-        long long prev2=0;
-        long long prev=1;
-        
-        for(int i=2;i<=n;i++)
-        {
-            long long cur=(prev2+prev)%mod;
-            prev2=prev;
-            prev=cur;
-        }
-       // cout<<prev<<endl;
-        return prev;
-        
+    int mod=1e9+7;
+    
+    Solution()
+    {
+        dp.resize(1001,-1);
         
     }
-    long long int bottomUp(int n) {
-        if(n==1)
-            return 1;
-        if(n==0)
-            return 0;
+    long long int topDown(int n) {
+        // code here
+        if(n<=1)
+            return n;
         if(dp[n]!=-1)
             return dp[n];
-        long long z1=bottomUp(n-1);
-        long long z2=bottomUp(n-2);
+            
         
-        return dp[n]=(z1+z2)%mod;
+        return dp[n]=(1ll*topDown(n-1)+1ll*topDown(n-2))%mod;
+    }
+    long long int bottomUp(int n) {
+      
+        dp.resize(n+1,0);
+        
+            dp[0]=0;
+            dp[1]=1;
+            
+            for(int i=2;i<=n;i++)
+            {
+                dp[i]=(dp[i-1]+dp[i-2])%mod;
+            }
+        return dp[n];
     }
 };
 
@@ -47,7 +50,6 @@ int main() {
     int t;
     cin >> t;
     while (t--) {
-        for (int i = 0; i < 100001; i++) dp[i] = -1;
         int n;
         cin >> n;
         Solution obj;
