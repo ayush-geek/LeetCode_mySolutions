@@ -1,5 +1,5 @@
 class   Solution   { 
-  public : 
+ public : 
  
       int   solve ( int  i , int  j , vector < int > &  nums ) 
       { 
@@ -22,4 +22,4 @@ class   Solution   {
               return  nums [ 0 ] ; 
           return   max ( solve ( 0 , nums . size ( ) - 2 , nums ) ,   solve ( 1 , nums . size ( ) - 1 , nums ) ) ; 
       } 
-  } ;
+ } ;
