@@ -6,30 +6,22 @@ using namespace std;
 // } Driver Code Ends
 class Solution {
   public:
-    int minimizeCost(vector<int>& nums, int n, int k) {
-        // Code here
-        
-        vector<int> dp(n+1,1e9);
-        
-        
-        //Base Condition
-       dp[0]=0;
-        
-        //Solve the PRoblem Now
+    int minimizeCost(vector<int>& height, int n, int k) {
+        if(n==1)
+            return 0;
+            vector<int> dp(n+1,0);
         for(int i=1;i<n;i++)
-        {
-            for(int j=i-1;j>=max(i-k,0);j--)
-            {
-                int z1=abs(nums[i]-nums[j])+dp[j];
-                
-                dp[i]=min(dp[i],z1);
-                
+        {   int ans=1e9;
+            for(int j=1;j<=k;j++)
+            {   
+                if(i-j>=0)
+                    {
+                        ans=min(ans,abs(height[i]-height[i-j])+dp[i-j]);
+                    }
+                dp[i]=ans;
             }
         }
-        
         return dp[n-1];
-        
-        
     }
 };
 
