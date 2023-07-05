@@ -6,45 +6,44 @@ using namespace std;
 class Solution{
 
   public:
-	int minDifference(int arr[], int n)  { 
-	    // Your code goes here
-	    
-	    int sum=accumulate(arr,arr+n,0);
-	    vector<vector<int>> dp(n+1,vector<int>  (sum+1,0));
-            
-            for(int i=0;i<=n;i++)
-                dp[i][0]=1;
-                
-            
-            for(int i=1;i<=n;i++)
-            {
-                for(int j=1;j<=sum;j++)
-                {
-                    if(j>=arr[i-1])
-                        dp[i][j]=dp[i-1][j-arr[i-1]];
-                    
-                    dp[i][j]=(dp[i][j]|| dp[i-1][j]);
-                }
-            }
-           
-           int diff=INT_MAX;
-           for(int j=0;j<=sum;j++)
-           {
-               if(dp[n][j])
-               {
-                int other=sum-j;
-                
-                if(abs(other-j)<diff)
-                {
-                    diff=abs(other-j);
-                }
+	int minDifference(int nums[], int n)  { 
+	   int sm=accumulate(nums,nums+n,0);
 
-               }
-           }
-           
+
+    int tgt=sm/2;
+
+    vector<vector<int>> dp(n+1,vector<int> (tgt+1,0));
+
+    for(int i=0;i<n;i++)
+    {
+        dp[i][0]=1;
+    }
+
+        for(int i=1;i<=n;i++)
+        {
+            for(int j=1;j<=tgt;j++)
+            {
+                if(nums[i-1]<=j)
+                    dp[i][j]=dp[i-1][j-nums[i-1]];
+                
+                dp[i][j]=max(dp[i][j],dp[i-1][j]);
+               
+            }
           
-                return diff;
-	    
+        }
+        
+        int ans=sm;
+        for(int j=1;j<=tgt;j++)
+        {
+            if(dp[n][j])
+            {
+                int d=abs((sm-j)-j);
+                
+                ans=min(ans,d);
+            }
+        }
+
+       return ans;
 	} 
 };
 
