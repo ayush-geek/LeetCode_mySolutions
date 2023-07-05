@@ -14,11 +14,9 @@ public:
     {   
         if(sum==0)
             return 1;
-        if(i==0)
+        if(i<0)
         {
-            if(sum==arr[0] )
-                return 1;
-            else
+           
                 return 0;
         }
         if(dp[i][sum]!=-1)
@@ -35,9 +33,24 @@ public:
     bool isSubsetSum(vector<int>arr, int sum){
         // code here 
         int n=arr.size();
-        vector<vector<int>> dp(n,vector<int> (sum+1,-1));
+        vector<vector<int>> dp(n+1,vector<int> (sum+1,0));
         
-        return solve(n-1,arr,sum,dp);
+        for(int i=0;i<n;i++)
+            dp[i][0]=1;
+        
+        for(int i=1;i<=n;i++)
+        {
+            for(int j=1;j<=sum;j++)
+            {   int p=0,np=0;
+                if(arr[i-1]<=j)
+                    p=dp[i-1][j-arr[i-1]];
+                np=dp[i-1][j];
+                
+                dp[i][j]=max(p,np);
+            }
+        }
+            
+        return dp[n][sum];
     }
 };
 
