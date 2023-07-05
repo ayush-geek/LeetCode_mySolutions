@@ -1,38 +1,28 @@
 class   Solution   { 
  public : 
- 
-      int   solve ( int  i , int  j , vector < int > &  coins , vector < vector < int >> &  dp ) 
-      { 
- 
- 
-              if ( j == 0 ) 
-                  return   0 ; 
-              if ( i >= coins . size ( ) ) 
-                  return   1e9 ; 
-              if ( dp [ i ] [ j ] != - 1 ) 
-                  return  dp [ i ] [ j ] ; 
- 
-              //pick 
-              int  p = 1e9 ; 
-              if ( coins [ i ] <= j ) 
-              { 
-                 p = 1 + solve ( i , j - coins [ i ] , coins , dp ) ; 
-              } 
- 
-              int  np = solve ( i + 1 , j , coins , dp ) ; 
- 
-              return  dp [ i ] [ j ] = min ( p , np ) ; 
-      } 
- 
       int   coinChange ( vector < int > &  coins ,   int  amount )   { 
+ 
           int  n = coins . size ( ) ; 
+         vector < vector < int >>   dp ( n + 1 , vector < int >   ( amount + 1 , 1e9 ) ) ; 
  
-         vector < vector < int >>   dp ( n , vector < int >   ( amount + 1 , - 1 ) ) ; 
+          for ( int  i = 0 ; i <= n ; i ++ ) 
+          { 
+             dp [ i ] [ 0 ] = 0 ; 
+          } 
  
-          int  ans =   solve ( 0 , amount , coins , dp ) ; 
+          for ( int  i = 1 ; i <= n ; i ++ ) 
+          { 
+              for ( int  j = 1 ; j <= amount ; j ++ ) 
+              { 
+                  if ( coins [ i - 1 ] <= j ) 
+                     dp [ i ] [ j ] = 1 + dp [ i ] [ j - coins [ i - 1 ] ] ; 
+                 
+                 dp [ i ] [ j ] = min ( dp [ i ] [ j ] , dp [ i - 1 ] [ j ] ) ; 
+              } 
+          } 
  
-          if ( ans >= 1e9 ) 
+          if ( dp [ n ] [ amount ] == 1e9 ) 
               return   - 1 ; 
-          return  ans ; 
+          return  dp [ n ] [ amount ] ; 
       } 
  } ;
