@@ -1,35 +1,28 @@
 class   Solution   { 
  public : 
       int   minimumTotal ( vector < vector < int >> &  triangle )   { 
-         
-          int  n = triangle . size ( ) ; 
-          int  m = triangle [ 0 ] . size ( ) ; 
-         vector < vector < int >>   dp ( n ) ; 
-          for ( int  i = 0 ; i < n ; i ++ ) 
-          {    
-             dp [ i ] . resize ( i + 1 , 0 ) ; 
-              for ( int  j = 0 ; j <= i ; j ++ ) 
-              { 
-                      if ( i == 0 ) 
-                         dp [ i ] [ 0 ] = triangle [ i ] [ 0 ] ; 
+           int  m = triangle . size ( ) ; 
+          int  n = triangle [ 0 ] . size ( ) ; 
+         vector < vector < int >>   dp ( 200 , vector < int >   ( 200 , 1e9 ) ) ; 
+ 
+       
+          for ( int  i = 1 ; i <= m ; i ++ ) 
+          { 
+              for ( int  j = 1 ; j <= i ; j ++ ) 
+              {        
+                      if ( i == 1   &&  j == 1 ) 
+                         dp [ i ] [ j ] = triangle [ 0 ] [ 0 ] ; 
                       else 
-                      { 
-                          if ( j == 0   ) 
-                          dp [ i ] [ j ] = triangle [ i ] [ j ] + dp [ i - 1 ] [ j ] ; 
-                          else   if ( j == i ) 
-                            dp [ i ] [ j ] = triangle [ i ] [ j ] + dp [ i - 1 ] [ j - 1 ] ; 
-                          else 
-                             dp [ i ] [ j ] = triangle [ i ] [ j ] + min ( dp [ i - 1 ] [ j ]   , dp [ i - 1 ] [ j - 1 ] ) ; 
-                      } 
+                         dp [ i ] [ j ] = triangle [ i - 1 ] [ j - 1 ]   + min ( dp [ i - 1 ] [ j ] , dp [ i - 1 ] [ j - 1 ] ) ; 
               } 
           } 
  
           int  ans = 1e9 ; 
-        for ( int  i = 0 ; i < n ; i ++ ) 
-        { 
-           ans = min ( ans , dp [ n - 1 ] [ i ] ) ; 
-        } 
  
-        return  ans ; 
+          for ( int  j = 1 ; j <= m ; j ++ ) 
+          { 
+             ans = min ( ans , dp [ m ] [ j ] ) ; 
+          } 
+          return  ans ; 
       } 
  } ;
