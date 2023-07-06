@@ -1,21 +1,42 @@
 class   Solution   { 
  public : 
       int   lengthOfLIS ( vector < int > &  nums )   { 
-         
-         vector < int >  lis ; 
+          //n2 code is normal  
+          //using index and pewv indx  
  
-          //nlogn 
+          //nlogn is trivial 
+          int  n = nums . size ( ) ; 
  
-          for ( int  i = 0 ; i < nums . size ( ) ; i ++ ) 
+          // vector<int> dp(n,1); 
+ 
+          // for(int i=0;i<n;i++) 
+          // { 
+          //     for(int j=0;j<i;j++) 
+          //     { 
+          //         if(nums[i]>nums[j] && 1+dp[j]>dp[i]) 
+          //             { 
+          //                 dp[i]=1+dp[j]; 
+          //             } 
+          //     } 
+          // } 
+ 
+          // return *max_element(dp.begin(),dp.end()); 
+ 
+         vector < int > tmp ; 
+ 
+          for ( int  i = 0 ; i < n ; i ++ ) 
           { 
-              if ( lis . empty ( )   ||  lis . back ( ) < nums [ i ] ) 
-                 lis . push_back ( nums [ i ] ) ; 
+              if ( i == 0   ||  tmp . back ( ) < nums [ i ] ) 
+              { 
+                 tmp . push_back ( nums [ i ] ) ; 
+              } 
               else 
               { 
-                  int  lb = lower_bound ( lis . begin ( ) , lis . end ( ) , nums [ i ] ) - lis . begin ( ) ; 
-                 lis [ lb ] = nums [ i ] ; 
+                  int  lb = lower_bound ( tmp . begin ( ) , tmp . end ( ) , nums [ i ] ) - tmp . begin ( ) ; 
+                 tmp [ lb ] = nums [ i ] ; 
               } 
           } 
-          return  lis . size ( ) ; 
+          return  tmp . size ( ) ; 
       } 
+ 
  } ;
