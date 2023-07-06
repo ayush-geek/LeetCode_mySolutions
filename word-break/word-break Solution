@@ -1,34 +1,39 @@
 class   Solution   { 
- public :  
-     unordered_map < int , bool >  mp ; 
-      bool   solve ( int  i , string s , unordered_set < string > &  st ) 
+ public : 
+ 
+      bool   solve ( int  i , unordered_set < string > &  st , string &  s , vector < int > &  dp ) 
       { 
-          if ( i == s . size ( ) ) 
-          { 
+          if ( i >= s . size ( ) ) 
               return   true ; 
-          } 
  
-          if ( mp . count ( i ) == 1 ) 
-              return  mp [ i ] ;   
-          bool  ans = false ; 
-          for ( int  j = i ; j < s . size ( ) ; j ++ ) 
+          if ( dp [ i ] != - 1 ) 
           { 
-             string tmp = s . substr ( i , j - i + 1 ) ; 
- 
-              if ( st . count ( tmp ) == 1 ) 
-                  { 
-                     ans = solve ( j + 1 , s , st ) ; 
- 
-                      if ( ans == true ) 
-                          return   true ; 
-                  } 
+              if ( dp [ i ] ) 
+                  return   true ; 
+              return   false ; 
           } 
-          return  mp [ i ] = ans ; 
+         
+          for ( int  j = i ; j < s . size ( ) ; j ++ ) 
+          {        
+              int  len = j - i + 1 ; 
+             string tmp = s . substr ( i , len ) ; 
+              if ( st . count ( tmp ) ) 
+              { 
+                  if ( solve ( j + 1 , st , s , dp ) ) 
+                      return  dp [ i ] = true ; 
+              } 
+          } 
+ 
+          return  dp [ i ] = false ; 
       } 
  
       bool   wordBreak ( string s ,  vector < string > &  wordDict )   { 
+ 
          unordered_set < string >   st ( wordDict . begin ( ) , wordDict . end ( ) ) ; 
-         
-          return   solve ( 0 , s , st ) ; 
-      } 
+          int  n = s . size ( ) ; 
+         vector < int >   dp ( n , - 1 ) ; 
+ 
+          return   solve ( 0 , st , s , dp ) ; 
+ 
+      }    
  } ;
