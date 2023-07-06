@@ -1,44 +1,51 @@
 class   Solution   { 
  public : 
      vector < int >   largestDivisibleSubset ( vector < int > &  nums )   { 
+         
+         vector < int >  res ; 
           sort ( nums . begin ( ) , nums . end ( ) ) ; 
+ 
+ 
           int  n = nums . size ( ) ; 
  
-          vector < int >   dp ( n , 1 ) ; 
+         vector < int >   dp ( n , 1 ) ; 
          vector < int >   hash ( n , 0 ) ; 
-          iota ( hash . begin ( ) , hash . end ( ) , 0 ) ;   //Set hash[i]=i; 
-          int  lst = 0 ; 
+          int  lpos = 0 ; 
           int  mx = 0 ; 
           for ( int  i = 0 ; i < n ; i ++ ) 
           { 
+             hash [ i ] = i ; 
               for ( int  j = 0 ; j < i ; j ++ ) 
               { 
-                  if ( nums [ i ] % nums [ j ] == 0   &&   1 + dp [ j ] > dp [ i ] ) 
-                      { 
-                         dp [ i ] = 1 + dp [ j ] ; 
-                         hash [ i ] = j ; 
-                      } 
-                  if ( dp [ i ] > mx ) 
+                  if ( nums [ i ] % nums [ j ] == 0   &&   ( 1 + dp [ j ] > dp [ i ] ) ) 
                   { 
-                     mx = dp [ i ] ; 
-                     lst = i ; 
+                     dp [ i ] = 1 + dp [ j ] ; 
+                     hash [ i ] = j ; 
+ 
+                      if ( dp [ i ] > mx ) 
+                      { 
+                         mx = dp [ i ] ; 
+                         lpos = i ; 
+                      } 
+                      // lpos=i; 
+ 
                   } 
               } 
           } 
-         
-         vector < int >  res ; 
-         
-          while ( 1 ) 
+ 
+         res . push_back ( nums [ lpos ] ) ; 
+ 
+          while ( hash [ lpos ] != lpos ) 
           { 
-             res . push_back ( nums [ lst ] ) ; 
-                 if ( hash [ lst ] == lst ) 
-                  break ; 
-             lst = hash [ lst ] ; 
-             
-          
+             lpos = hash [ lpos ] ; 
+ 
+             res . push_back ( nums [ lpos ] ) ; 
           } 
-         
+ 
           reverse ( res . begin ( ) , res . end ( ) ) ; 
+ 
           return  res ; 
+ 
+ 
       } 
  } ;
