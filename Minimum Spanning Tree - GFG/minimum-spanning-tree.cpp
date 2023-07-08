@@ -3,81 +3,37 @@
 using namespace std;
 
 // } Driver Code Ends
-
-class DSU{
-    public:
-    vector<int> size,parent;
-    
-    DSU(int n)
-    {
-        size.resize(n+1,1);
-        parent.resize(n+1);
-        iota(parent.begin(),parent.end(),0);
-    }
-    
-    int findUpar(int nd)
-    {
-        if(parent[nd]==nd)
-            return nd;
-        return parent[nd]=findUpar(parent[nd]);
-    }
-    
-    bool unionBySize(int u,int v)
-    {
-        int pu=findUpar(u);
-        int pv=findUpar(v);
-        
-        if(pu==pv)
-            return false;
-        if(size[pu]<size[pv])
-        {
-            size[pv]+=size[pu];
-            parent[pu]=pv;
-        }
-        else
-        {
-            size[pu]+=size[pv];
-            parent[pv]=pu;
-        }
-        return true;
-        
-    }
-};
-
-
 class Solution
 {
 	public:
 	//Function to find sum of weights of edges of the Minimum Spanning Tree.
     int spanningTree(int V, vector<vector<int>> adj[])
     {
-        //sort the edge by w8
+       priority_queue<pair<int,int>,vector<pair<int,int>>,greater<pair<int,int>>> pq;
+        
+       pq.push({0,0});
+       vector<int> vis(V,0);
         int ans=0;
-        DSU ds(V);
-        vector<vector<int>> v;
-        
-        for(int i=0;i<V;i++)
-        {
-            for(auto& ele: adj[i])
-            {
-                v.push_back({ele[1],i,ele[0]});
-            }
-        }
-        
-        sort(v.begin(),v.end());
-        
-        for(int i=0;i<v.size();i++)
-        {
-            int a=v[i][1];
-            int b=v[i][2];
-            int w=v[i][0];
-            if(ds.unionBySize(a,b))
-            {
-                ans+=w;
-            }
+       while(!pq.empty())
+       {
+           auto d=pq.top().first;
+           auto nd=pq.top().second;
+           pq.pop();
+       
+           
+           if(vis[nd]==1)
+            continue;
+            ans+=d;
+            vis[nd]=1;
             
-        }
-        return ans;
+            for(auto& ele: adj[nd])
+            {
+                if(!vis[ele[0]])
+                    pq.push({ele[1],ele[0]});
+            }
+       }
+       
+       return ans;
     }
 };
 
