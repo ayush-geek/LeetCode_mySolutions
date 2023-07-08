@@ -10,34 +10,30 @@ class Solution
     //from the source vertex S.
     vector <int> dijkstra(int V, vector<vector<int>> adj[], int S)
     {
-        //Dijkstra
-        
         priority_queue<pair<int,int>,vector<pair<int,int>>,greater<pair<int,int>>> pq;
-        pq.push({0,S});
+        
         vector<int> dis(V,1e9);
+        
         dis[S]=0;
+        
+        pq.push({0,S});
         
         while(!pq.empty())
         {
-            auto nd=pq.top();
+            auto d = pq.top().first;
+            auto nd = pq.top().second;
+
             pq.pop();
-            
-            for(auto &ele: adj[nd.second])
+            // cout<<nd<<endl;
+            for(auto& ele: adj[nd])
             {
-                int w=ele[1];
-                int e=ele[0];
-                
-                int z=nd.first+w;
-                
-                //Relaxation
-                if(z<dis[e])
-                {
-                    dis[e]=z;
-                    pq.push({z,e});
+                if(d+ele[1]<dis[ele[0]]) //Relaxxation
+                {   
+                    dis[ele[0]]=d+ele[1];
+                    pq.push({dis[ele[0]],ele[0]});
                 }
             }
         }
-        
         return dis;
     }
 };
