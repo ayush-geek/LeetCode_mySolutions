@@ -1,0 +1,90 @@
+class   Solution   { 
+ public : 
+ //     long long mmn=INT_MAX; 
+ //     long long mmx=INT_MIN; 
+ //     long long res=0; 
+ //    void solve(int i,vector<int>& weights,int k,long long tmp) 
+ //     {    
+ //         //cout<<i<<" "<<k<<" "<<tmp<<endl; 
+ //         if(k<0) 
+ //             return ; 
+ //         if(i==weights.size() && k!=0) 
+ //             return ; 
+ //         if(i==weights.size()){ 
+ //             cout<<tmp<<endl; 
+ //            mmx=max(mmx,tmp); 
+ //            mmn=min(mmn,tmp); 
+ //            res=mmx-mmn; 
+ //             return ; 
+         
+ //         } 
+        
+         
+ //         long long mn=weights[i]; 
+ //         long long mx=weights[i]; 
+ //         long long ans=0; 
+ //         for(int j=i;j<weights.size();j++) 
+ //         { 
+ //             // if(weights[j]>mx) 
+ //                 mx=max(mx,1ll*weights[j]); 
+ //             // if(weights[j]<mn) 
+ //                 mn=min(mn,1ll*weights[j]); 
+ 
+ //           solve(j+1,weights,k-1,tmp+mn+mx); 
+ //         } 
+ 
+ //         return ; 
+ //     } 
+ 
+      long   long   putMarbles ( vector < int > &  weights ,   int  k )   { 
+       //pdp 
+      int  n = weights . size ( ) ; 
+      // // vector<int> dp() 
+      // // long long mx=LONG_MIN; 
+      // // long long mn=LONG_MAX; 
+      // long long tmp=0; 
+      //  solve(0,weights,k,0);    
+      //  return res; 
+ 
+      //max pq 
+ 
+         priority_queue < int >  mxp ; 
+         priority_queue < int >  mnp ; 
+ 
+          for ( int  i = 0 ; i < n - 1 ; i ++ ) 
+          { 
+              int  val = weights [ i ] + weights [ i + 1 ] ; 
+             mxp . push ( - 1 * val ) ; 
+             mnp . push ( val ) ; 
+ 
+              if ( mxp . size ( ) > k - 1 ) 
+                 mxp . pop ( ) ; 
+              if ( mnp . size ( ) > k - 1 ) 
+                 mnp . pop ( ) ; 
+          } 
+ 
+          long   long  mxs = weights [ 0 ] + weights [ n - 1 ] ; 
+          long   long  mns = weights [ 0 ] + weights [ n - 1 ] ; 
+ 
+ 
+          while ( ! mxp . empty ( ) ) 
+          { 
+              int  z1 = abs ( mxp . top ( ) ) ; 
+              //cout<<z1<<endl; 
+             mxp . pop ( ) ; 
+             mxs += ( long   long ) z1 ; 
+          } 
+ 
+            while ( ! mnp . empty ( ) ) 
+          { 
+              int  z1 = abs ( mnp . top ( ) ) ; 
+             mnp . pop ( ) ; 
+             mns += ( long   long ) z1 ; 
+          } 
+ 
+          return  mxs - mns ; 
+ 
+ 
+ 
+      } 
+ } ;
