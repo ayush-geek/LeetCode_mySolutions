@@ -5,67 +5,70 @@ using namespace std;
 // } Driver Code Ends
 class Solution
 {
-    
-    private: 
-    void dfs(int i,vector<int> adj[],vector<int>& vis,stack<int>& st)
-    {
-        vis[i]=1;
-        
-        for(auto ele: adj[i])
-        {
-            if(!vis[ele])
-                dfs(ele,adj,vis,st);
-                
-        }
-        
-        st.push(i);
-        
-        
-    }
-    
 	public:
 	//Function to return list containing vertices in Topological order. 
+	void dfs(int i,stack<int>& st,vector<int> adj[],vector<int>& vis)
+	{
+	    vis[i]=1;
+	    
+	    for(auto& ele: adj[i])
+	    {
+	        if(!vis[ele])
+	            dfs(ele,st,adj,vis);
+	    }
+	    st.push(i);
+	}
+	
+	
 	vector<int> topoSort(int V, vector<int> adj[]) 
 	{
+	       vector<int> res;
 	    
-	    //dfs
+	       stack<int> st;
+	       vector<int> vis(V,0);
+	       for(int i=0;i<V;i++)
+	       {
+	           if(vis[i]==0)
+	           {
+	               dfs(i,st,adj,vis);
+	           }
+	       }
+	       
+	       while(!st.empty())
+	       {
+	           res.push_back(st.top());
+	           st.pop();
+	       }
 	    
-	   vector<int> indeg(V,0);
-	
-	    vector<int> res;
+	   // vector<int> indeg(V,0);
 	    
-	    for(int i=0;i<V;i++)
-	    {
-	        for(auto ele: adj[i])
-	        {
-	            indeg[ele]++;
-	        }
-	    }
+	   // for(int i=0;i<V;i++)
+	   // {
+	   //     for(auto& ele: adj[i])
+	   //     {
+	   //         indeg[ele]++;
+	   //     }
+	   // }
+	   // queue<int> q;
+	   // for(int i=0;i<V;i++)
+	   // {
+	   //     if(indeg[i]==0)
+	   //         q.push(i);
+	   // }
 	    
-	    queue<int> q;
-	    
-	    for(int i=0;i<V;i++)
-	    {
-	        if(indeg[i]==0)
-	            q.push(i);
-	    }
-	  
-	    while(!q.empty())
-	    {
-	        int nd=q.front();
-	        res.push_back(nd);
-	        q.pop();
+	   // while(!q.empty())
+	   // {
+	   //     auto nd=q.front();
+	   //     q.pop();
+	   //     res.push_back(nd);
 	        
-	        for(auto ele: adj[nd])
-	        {
-	            indeg[ele]--;
-	            
-	            if(indeg[ele]==0)
-	                q.push(ele);
-	        }
-	    }
-	  
-	    
+	   //     for(auto& ele: adj[nd])
+	   //     {
+	   //         indeg[ele]--;
+	   //         if(indeg[ele]==0)
+	   //             q.push(ele);
+	   //     }
+	   // }
 	    return res;
 	}
 };
