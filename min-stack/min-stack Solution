@@ -1,35 +1,37 @@
 class   MinStack   { 
+ private : 
+     stack < int >  st ; 
+     stack < int >  mn ; 
+      int  prev = INT_MAX ; 
+ 
  public : 
-     
-     stack < int >  st1 ; 
-     stack < int >  st2 ; 
       MinStack ( )   { 
          
       } 
      
       void   push ( int  val )   { 
-         
-         st1 . push ( val ) ; 
-         
-          if ( st2 . empty ( )   ||  val < st2 . top ( ) ) 
-             st2 . push ( val ) ; 
+         st . push ( val ) ; 
+ 
+          if ( mn . empty ( )   || val < mn . top ( ) ) 
+             mn . push ( val ) ; 
           else 
-             st2 . push ( st2 . top ( ) ) ; 
+             mn . push ( mn . top ( ) ) ; 
+ 
+        
+         
       } 
      
       void   pop ( )   { 
-         
-         st1 . pop ( ) ; 
-         st2 . pop ( ) ; 
+         st . pop ( ) ; 
+         mn . pop ( ) ; 
       } 
      
       int   top ( )   { 
-         
-          return  st1 . top ( ) ; 
+          return  st . top ( ) ; 
       } 
      
       int   getMin ( )   { 
-          return  st2 . top ( ) ; 
+          return  mn . top ( ) ; 
       } 
  } ; 
  
