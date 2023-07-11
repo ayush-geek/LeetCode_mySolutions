@@ -1,0 +1,86 @@
+class   LRUCache   { 
+ public : 
+ 
+     vector < int >  vp ;     // 
+     unordered_map < int , pair < int , int >>  mp ;    //Value Pos 
+     set < int >  st ; 
+      int  sz ; 
+      int  cs ; 
+      int  k ; 
+      LRUCache ( int  capacity )   { 
+         vp . resize ( 300001 ) ; 
+         k = 0 ; 
+         sz = capacity ; 
+         cs = 0 ; 
+      } 
+     
+      int   get ( int  key )   { 
+          int  ans = - 1 ; 
+          if ( mp . find ( key ) != mp . end ( ) ) 
+            {   ans =  mp [ key ] . first ; 
+          int  old_pos = mp [ key ] . second ; 
+         mp [ key ] . second = k ; 
+         vp [ old_pos ] = - 1 ; 
+         // vp.erase(old_pos); 
+        st . erase ( old_pos ) ; 
+        st . insert ( k ) ; 
+ 
+         vp [ k ] = key ; 
+         k ++ ; 
+            } 
+ 
+          return  ans ; 
+ 
+      } 
+     
+      void   put ( int  key ,   int  value )   { 
+ 
+          if ( mp . find ( key ) != mp . end ( ) ) 
+              { 
+                 mp [ key ] . first = value ; 
+                   int  old_pos = mp [ key ] . second ; 
+                 mp [ key ] . second = k ; 
+                 vp [ old_pos ] = - 1 ; 
+      
+                 st . erase ( old_pos ) ; 
+                 st . insert ( k ) ; 
+ 
+                 vp [ k ] = key ; 
+                 k ++ ; 
+ 
+                  return   ; 
+              } 
+         
+          if ( cs == sz ) 
+          { 
+              for ( auto  ele :  st ) 
+              { 
+                  int  z = vp [ ele ] ; 
+                 vp [ ele ] = - 1 ; 
+                 mp . erase ( z ) ; 
+                 st . erase ( ele ) ; 
+                 cs -- ; 
+ 
+                  break ; 
+              } 
+             
+          } 
+         
+         
+         mp [ key ] = { value , k } ; 
+         vp [ k ] = key ; 
+         // cout<<vp[k]<<endl; 
+          st . insert ( k ) ; 
+     
+         k ++ ; 
+         cs ++ ; 
+          // 
+      } 
+ } ; 
+ 
+ /**
+  * Your LRUCache object will be instantiated and called as such:
+  * LRUCache* obj = new LRUCache(capacity);
+  * int param_1 = obj->get(key);
+  * obj->put(key,value);
+  */
