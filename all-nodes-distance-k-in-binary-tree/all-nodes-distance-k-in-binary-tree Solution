@@ -1,0 +1,67 @@
+/**
+  * Definition for a binary tree node.
+  * struct TreeNode {
+  *     int val;
+  *     TreeNode *left;
+  *     TreeNode *right;
+  *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+  * };
+  */ 
+ class   Solution   { 
+ public : 
+ 
+      void   dfs ( TreeNode *  root , vector < int >  adj [ ] ) 
+      { 
+          if ( root == NULL ) 
+              return   ; 
+          int  nd = root -> val ; 
+ 
+          if ( root -> left != NULL ) 
+          {     int  node = root -> left -> val ; 
+             adj [ nd ] . push_back ( node ) ; 
+             adj [ node ] . push_back ( nd ) ; 
+              dfs ( root -> left , adj ) ; 
+          } 
+ 
+          if ( root -> right != NULL ) 
+          {    
+               int  node = root -> right -> val ; 
+             adj [ nd ] . push_back ( node ) ; 
+             adj [ node ] . push_back ( nd ) ; 
+              dfs ( root -> right , adj ) ; 
+          } 
+          return   ; 
+      } 
+ 
+     vector < int >   distanceK ( TreeNode *  root ,  TreeNode *  target ,   int  k )   { 
+        //graph  way  ????? 
+       vector < int >  res ; 
+       vector < int >  adj [ 501 ] ; 
+        dfs ( root , adj ) ; 
+        int  val = target -> val ; 
+ 
+         queue < pair < int , int >>  q ; 
+         vector < int >   vis ( 501 , 0 ) ; 
+         q . push ( { 0 , val } ) ; 
+         vis [ val ] = 1 ; 
+          while ( ! q . empty ( ) ) 
+          { 
+              auto   [ d , nd ] = q . front ( ) ; 
+             q . pop ( ) ; 
+              if ( d > k ) 
+                  break ; 
+              if ( d == k ) 
+                 res . push_back ( nd ) ; 
+              for ( auto &  ele :  adj [ nd ] ) 
+              {       
+                  if ( ! vis [ ele ] ) 
+                  { 
+                 vis [ ele ] = 1 ; 
+                 q . push ( { d + 1 , ele } ) ; 
+                  } 
+              } 
+          } 
+ 
+          return  res ; 
+      } 
+ } ;
