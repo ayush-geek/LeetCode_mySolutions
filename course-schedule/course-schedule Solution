@@ -1,21 +1,24 @@
 class   Solution   { 
  public : 
       bool   canFinish ( int  n ,  vector < vector < int >> &  pre )   { 
-         vector < int >   in ( n , 0 ) ; 
+         vector < int >   indeg ( n , 0 ) ; 
          vector < int >  adj [ n ] ; 
-          for ( int  i = 0 ; i < pre . size ( ) ; i ++ ) 
+          for ( auto &  ele :  pre ) 
           { 
-              int  a = pre [ i ] [ 0 ] , b = pre [ i ] [ 1 ] ; 
+              int  a = ele [ 0 ] ; 
+              int  b = ele [ 1 ] ; 
+ 
              adj [ b ] . push_back ( a ) ; 
-             in [ a ] ++ ; 
+             indeg [ a ] ++ ; 
           } 
-         queue < int >  q ; 
+ 
          vector < int >  res ; 
+         queue < int >  q ; 
+ 
           for ( int  i = 0 ; i < n ; i ++ ) 
-          { 
-              if ( in [ i ] == 0 ) 
+          {    
+              if ( indeg [ i ] == 0 ) 
                  q . push ( i ) ; 
-              // cout<<i<<" "<<in[i]<<endl; 
           } 
  
           while ( ! q . empty ( ) ) 
@@ -25,11 +28,12 @@ class   Solution   {
              res . push_back ( nd ) ; 
               for ( auto &  ele :  adj [ nd ] ) 
               { 
-                 in [ ele ] -- ; 
-                  if ( in [ ele ] == 0 ) 
+                 indeg [ ele ] -- ; 
+ 
+                  if ( indeg [ ele ] == 0 ) 
                      q . push ( ele ) ; 
               } 
           } 
-          return  res . size ( ) == n ; 
+          return  res . size ( ) == n ? true : false ; 
       } 
  } ;
