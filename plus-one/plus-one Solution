@@ -1,0 +1,69 @@
+class   Solution   { 
+ public : 
+     vector < int >   plusOne ( vector < int > &  digits )   { 
+         
+         
+         
+          //reverse array 
+          // add 1 
+          //propagate carry 
+         
+         
+          int  i = 0 ; 
+          int  j = digits . size ( ) - 1 ; 
+         
+          while ( i < j ) 
+          { 
+              swap ( digits [ i ] , digits [ j ] ) ; 
+             i ++ ; 
+             j -- ; 
+          } 
+         
+          int  carry = 0 ; 
+         digits [ 0 ] ++ ; 
+          if ( digits [ 0 ] <= 9 ) 
+             carry = 0 ; 
+          else { 
+             carry = 1 ; 
+             digits [ 0 ] = ( digits [ 0 ] ) % 10 ; 
+          } 
+         
+          if ( carry == 1 ) { 
+              for ( int  i = 1 ; i < digits . size ( ) ; i ++ ) 
+              { 
+                  if ( digits [ i ] + carry >= 10 ) 
+                  { 
+                     carry = 1 ; 
+                     digits [ i ] = ( digits [ i ] + carry ) % 10 ; 
+                  } 
+                  else   if ( carry == 1 ) 
+                  { 
+                     digits [ i ] ++ ; 
+                     carry = 0 ; 
+                  } 
+                  else 
+                     carry = 0 ; 
+             
+            
+             
+              } 
+             
+              if ( carry == 1 ) 
+                 digits . push_back ( 1 ) ; 
+          } 
+         
+         i = 0 ; 
+         j = digits . size ( ) - 1 ; 
+         
+          while ( i < j ) 
+          { 
+              swap ( digits [ i ] , digits [ j ] ) ; 
+             i ++ ; 
+             j -- ; 
+          } 
+         
+         
+          return  digits ; 
+         
+      } 
+ } ;
