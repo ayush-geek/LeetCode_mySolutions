@@ -2,16 +2,24 @@ class   Solution   {
  public : 
       int   trailingZeroes ( int  n )   { 
          
-          int  c = 0 ; 
-          int  s = 5 ; 
+          //zero =min(5,2) mutiple 
  
-          while ( s <= n ) 
+          int  p5 = n / 5 ; 
+          int  p2 = n / 2 ; 
+         
+          //power of 5 is what will make zeroes sig 
+          //since c2>=c5 in any case 
+ 
+          //tc->log5n 
+ 
+          int  ans = 0 ; 
+          int  p = 5 ; 
+          while ( p <= n ) 
           { 
-             c += n / s ; 
-             s *= 5 ; 
-         
-         
+             ans += n / p ; 
+             p = p * 5 ; 
           } 
-          return  c ; 
-      }    
+          return  ans ; 
+ 
+      } 
  } ;
