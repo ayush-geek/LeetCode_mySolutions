@@ -1,0 +1,49 @@
+class   Solution   { 
+ public : 
+     vector < string >   summaryRanges ( vector < int > &  nums )   { 
+         
+         vector < string >  res ; 
+          int  n = nums . size ( ) ; 
+          if ( n == 0 ) 
+              return  res  ;       
+          int  prev = 0 ; 
+          for ( int  i = 1 ; i < nums . size ( ) ; i ++ ) 
+          { 
+              int  pre = nums [ i - 1 ] ; 
+              int  cur = nums [ i ] ; 
+ 
+ 
+              if ( cur - 1 != pre ) 
+              {    
+                 string tmp = to_string ( nums [ prev ] ) ; 
+                 
+              if ( prev != i - 1 ) 
+              { 
+                 tmp += "->" ; 
+                 tmp += to_string ( nums [ i - 1 ] ) ; 
+              } 
+             res . push_back ( tmp ) ; 
+             prev = i ; 
+              } 
+          } 
+ 
+          if ( prev == n - 1 ) 
+          { 
+            string tmp = to_string ( nums [ n - 1 ] ) ; 
+             res . push_back ( tmp ) ; 
+ 
+          } 
+          else 
+          { 
+               string tmp = to_string ( nums [ prev ] ) ; 
+                tmp += "->" ; 
+                 tmp += to_string ( nums [ n - 1 ] ) ; 
+             res . push_back ( tmp ) ; 
+ 
+ 
+          } 
+ 
+          return  res ; 
+ 
+      } 
+ } ;
