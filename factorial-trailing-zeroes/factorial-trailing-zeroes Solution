@@ -1,5 +1,5 @@
 class   Solution   { 
-  public : 
+ public : 
       int   trailingZeroes ( int  n )   { 
          
           int  c = 0 ; 
@@ -14,4 +14,4 @@ class   Solution   {
           } 
           return  c ; 
       }    
-  } ;
+ } ;
