@@ -1,5 +1,5 @@
 class   Solution   { 
-  public : 
+ public : 
       bool   wordPattern ( string pattern ,  string s )   { 
          
          unordered_map < char , string >  mp ; 
@@ -46,4 +46,4 @@ class   Solution   {
               return   false ; 
           return   true ; 
       } 
-  } ;
+ } ;
