@@ -9,54 +9,31 @@
   *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
   * };
   */ 
+ class   Solution   { 
+ public : 
  
- 
-  class   Solution   { 
-  public : 
-      int  pre_ind ; 
- 
-     TreeNode *   solve ( vector < int > &  preorder ,  vector < int > &  inorder , int  srt , int  end ) 
+     TreeNode *   build ( vector < int > &  preorder , vector < int > &  inorder , int &  idx , int  l , int  r ) 
       { 
-             
-          if ( srt > end ) 
+          if ( l > r ) 
               return   NULL ; 
-         
-         TreeNode *  node = new   TreeNode ( preorder [ pre_ind ++ ] ) ; 
-         
-          if ( srt == end ) 
-              return  node ; 
-         
-          int  in_ind = search ( inorder , srt , end , node -> val ) ; 
-         
-         node -> left = solve ( preorder , inorder , srt , in_ind - 1 ) ; 
-         node -> right = solve ( preorder , inorder , in_ind + 1 , end ) ; 
-         
-          return  node ; 
-         
-         
-         
-         
-      } 
-     
-     
-      int   search ( vector < int > &  inorder , int  srt , int  end , int  val ) 
-      { 
-          for ( int  i = srt ; i <= end ; i ++ ) 
+          int  pivot = l ; 
+ 
+          while ( inorder [ pivot ] != preorder [ idx ] ) 
           { 
-              if ( inorder [ i ] == val ) 
-                  return  i ; 
+             pivot ++ ; 
           } 
-         
-          return   - 1 ; 
+ 
+         idx ++ ; 
+         TreeNode *  newNode = new   TreeNode ( inorder [ pivot ] ) ; 
+         newNode -> left = build ( preorder , inorder , idx , l , pivot - 1 ) ; 
+         newNode -> right = build ( preorder , inorder , idx , pivot + 1 , r ) ; 
+ 
+          return  newNode ; 
       } 
-     
-     
-     
-     
-     
-     
-     TreeNode *   buildTree ( vector < int > &  preorder ,  vector < int > &  inorder )   {   
-         pre_ind = 0 ; 
-          return   solve ( preorder , inorder , 0 , preorder . size ( ) - 1 ) ; 
+ 
+     TreeNode *   buildTree ( vector < int > &  preorder ,  vector < int > &  inorder )   { 
+          int  rtidx = 0 ; 
+ 
+          return   build ( preorder , inorder , rtidx , 0 , inorder . size ( ) - 1 ) ; 
       } 
-  } ;
+ } ;
