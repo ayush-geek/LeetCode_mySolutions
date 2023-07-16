@@ -16,17 +16,15 @@
           if ( root == p  ||  root == q ) 
               return  root ; 
  
-         TreeNode  * t1 = NULL , * t2 = NULL ; 
-          if ( root -> left != NULL ) 
-              t1 = lowestCommonAncestor ( root -> left ,   p ,   q ) ; 
-          if ( root -> right != NULL ) 
-             t2 = lowestCommonAncestor ( root -> right ,   p ,   q ) ; 
-          if ( t1 == p  &&  t2 == q ) 
+         TreeNode *  a = lowestCommonAncestor ( root -> left , p , q ) ; 
+           TreeNode *  b = lowestCommonAncestor ( root -> right , p , q ) ; 
+         
+          if ( a == NULL ) 
+              return  b ; 
+          else   if ( b == NULL ) 
+              return  a ; 
+          else 
               return  root ; 
-          else   if ( t1 == q  &&  t2 == p ) 
-              return  root ; 
-          else   if ( t1 == NULL ) 
-              return  t2 ; 
-          return  t1 ; 
+ 
       } 
  } ;
