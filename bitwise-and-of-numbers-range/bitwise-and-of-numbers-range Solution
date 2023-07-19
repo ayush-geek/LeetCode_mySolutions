@@ -1,5 +1,5 @@
 class   Solution   { 
-  public : 
+ public : 
       int   rangeBitwiseAnd ( long   long  left ,   long   long  right )   { 
          
          long   long  k = 1 ; 
@@ -25,4 +25,4 @@ class   Solution   {
  
           return  ans ; 
       } 
-  } ;
+ } ;
