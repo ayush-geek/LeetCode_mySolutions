@@ -1,84 +1,49 @@
 class   Solution   { 
  public : 
- 
- struct    cmp { 
- 
-      bool   operator ( ) ( pair < int , int > &  a , pair < int , int > &  b ) 
-      { 
-          if ( a . first < b . first ) 
-              return  a > b ; 
-          else  
-          { 
-              if ( a . first == b . first ) 
-                  { 
-                      if ( a . second < b . second ) 
-                          return  a < b ; 
-                  } 
-             
-          } 
-          return  a < b ; 
-      } 
- 
- } ; 
- 
       int   findMaximizedCapital ( int  k ,   int  w ,  vector < int > &  profits ,  vector < int > &  capital )   { 
          
- 
+     
          vector < pair < int , int >>  vp ; 
-           for ( int  i = 0 ; i < profits . size ( ) ; i ++ ) 
+          int  n = profits . size ( ) ; 
+          for ( int  i = 0 ; i < n ; i ++ ) 
           { 
              vp . push_back ( { capital [ i ] , profits [ i ] } ) ; 
           } 
-         
+          int  ans = w ; 
           sort ( vp . begin ( ) , vp . end ( ) ) ; 
-          //question is of priority queue 
  
- 
- 
- 
- 
-      
-          priority_queue < int >  pq ; 
-          int  ans = 0 ; 
-       
- 
-             
-             
-          // } 
-          int  n = profits . size ( ) ; 
-          int  z = 0 ; 
-          int  l = 0 ; 
- 
-          // if(w<vp[0].first) 
-          //     return w; 
-          while ( k -- ) 
+         priority_queue < pair < int , int >>  pq ; 
+          int  i = 0 ; 
+          for (  i ; i < vp . size ( ) ; i ++ ) 
           { 
-             
-              // if(l>=n) 
-              //     break; 
-              for ( ; l <= n ; l ++ ) 
-              {    
-                  if ( l == n ) 
-                      break ; 
-                  if ( vp [ l ] . first <= w ) 
-                     pq . push ( vp [ l ] . second ) ; 
-                  else 
-                  { 
-                      // l==i; 
-                      break ; 
-                  } 
+              if ( w < vp [ i ] . first ) 
+                  break ; 
+             pq . push ( { vp [ i ] . second , i } ) ; 
+          } 
+ 
+          while ( ! pq . empty ( )   &&  k > 0 ) 
+          { 
+ 
+              auto  nd = pq . top ( ) ; 
+              int  cp = nd . first ; 
+              int  ind = nd . second ; 
+             pq . pop ( ) ; 
+ 
+             ans += cp ; 
+             w += vp [ ind ] . first ; 
+             k -- ; 
+ 
+             cout << ans << " " << w << endl ; 
+              while ( i < n  &&   w <= vp [ i ] . first ) 
+              { 
+                  pq . push ( { vp [ i ] . second , i } ) ; 
+                  i ++ ; 
               } 
-             if ( pq . empty ( ) ) 
-              break ; 
  
-         w += pq . top ( ) ; 
-          pq . pop ( ) ;       
  
-          
  
           } 
  
-       
-          return  w ; 
+          return  ans ; 
       } 
  } ;
