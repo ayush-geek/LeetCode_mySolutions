@@ -11,44 +11,47 @@
   */ 
  class   Solution   { 
  public : 
- 
-     unordered_map < int , vector < TreeNode * >>  mp ; 
+ unordered_map < int , vector < TreeNode * >>  dp ; 
      vector < TreeNode * >   allPossibleFBT ( int  n )   { 
-         vector < TreeNode * >  ans ; 
- 
-          if ( n < 1   ||  n % 2 == 0 ) 
+         //memoization+dc 
+     vector < TreeNode * >  ans ; 
+         if ( n < 1 ||  n % 2 == 0 ) 
+          { 
+            
               return  ans ; 
-         
-          if ( mp . find ( n ) != mp . end ( ) ) 
-              return  mp [ n ] ; 
+          }  
+ 
+          if ( dp . find ( n ) != dp . end ( ) ) 
+              { 
+                  return  dp [ n ] ; 
+              } 
          
           if ( n == 1 ) 
           { 
-             TreeNode *  node = new   TreeNode ( 0 ) ; 
+              TreeNode *  node = new   TreeNode ( 0 ) ; 
             
              ans . push_back ( node ) ; 
-              return  mp [ 1 ] = ans ; 
+              return  dp [ 1 ] = ans ; 
           } 
- 
- 
+     
           for ( int  i = 1 ; i < n ; i += 2 ) 
           { 
-             vector < TreeNode * >  lft = allPossibleFBT ( i ) ; 
-             vector < TreeNode * >  rgt = allPossibleFBT ( n - i - 1 ) ; 
+            
+            vector < TreeNode * >  lft = allPossibleFBT ( i ) ; 
+             vector < TreeNode * >  rgt = allPossibleFBT ( n - 1 - i ) ; 
  
-              for ( auto  l :  lft ) 
+              for ( auto &  ele :  lft ) 
               { 
-                  for ( auto  r :  rgt ) 
+                  for ( auto & el2 :  rgt ) 
                   { 
-                     TreeNode *  as = new   TreeNode ( 0 ) ; 
-                     as -> left = l ; 
-                     as -> right = r ; 
-                     ans . push_back ( as ) ; 
+                           TreeNode *  nd = new   TreeNode ( 0 ) ; 
+                           nd -> left = ele ; 
+                           nd -> right = el2 ; 
+                           ans . push_back ( nd ) ; 
                   } 
               } 
- 
           } 
-         mp [ n ] = ans ; 
-          return  ans ; 
+          return  dp [ n ] = ans ; 
+     
       } 
  } ;
