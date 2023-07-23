@@ -11,58 +11,63 @@
  class   Solution   { 
  public : 
  
-     ListNode *   merge ( ListNode *  l1 , ListNode *  l2 ) 
-      { 
+     ListNode *   merge ( ListNode *  h1 , ListNode *  h2 ) 
+      {    
+         ListNode *  tmp = new   ListNode ( 0 ) ; 
+         ListNode *  ans = tmp ; 
+          while ( h1 != NULL   &&  h2 != NULL ) 
+          { 
+              if ( h1 -> val < h2 -> val ) 
+                  { 
+                     ans -> next = h1 ; 
+                     h1 = h1 -> next ; 
+                  } 
+              else 
+              { 
+                     ans -> next = h2 ; 
+                     h2 = h2 -> next ; 
+              } 
+             ans = ans -> next ; 
+          } 
  
-          if ( l1 == NULL ) 
-              return  l2 ; 
-          if ( l2 == NULL ) 
-              return  l1 ; 
+          while ( h1 != NULL ) 
+          { 
+             ans -> next = h1 ; 
+             h1 = h1 -> next ; 
+             ans = ans -> next ; 
+          } 
  
-         ListNode *  rt = ( l1 -> val <= l2 -> val ) ? l1 : l2 ; 
-         rt -> next = ( l1 -> val <= l2 -> val ) ? merge ( l1 -> next , l2 ) : merge ( l1 , l2 -> next ) ; 
+           while ( h2 != NULL ) 
+          { 
+             ans -> next = h2 ; 
+             h2 = h2 -> next ; 
+             ans = ans -> next ; 
+          } 
  
-          return  rt ; 
-         
+          return  tmp -> next ; 
       } 
- 
  
      ListNode *   mergeKLists ( vector < ListNode * > &  lists )   { 
          
-          //Brute Force 
+          //Merge 2 sorted list 
+          //is easy  
  
-          //Try to solve 
+          //Damn then reduce it to same 
+          //k*n 
  
-     
-          //M2 sc-Constant 
-          int  sz = lists . size ( ) ; 
-          if ( sz  ==   0 )  
+          if ( lists . size ( ) == 0 ) 
               return   NULL ; 
-          int  s = 0 ; 
-          int  e = lists . size ( ) - 1 ; 
+         ListNode *  tmp = lists [ 0 ] ; 
+          int  n = lists . size ( ) ; 
+         for ( int  i = 0 ; i < n - 1 ; i ++ ) 
+         { 
+            tmp = merge ( lists [ i ] , lists [ i + 1 ] ) ; 
+            lists [ i + 1 ] = tmp ; 
  
-       
-          int  lpos = e ; 
-          while ( lpos != 0 ) 
-          { 
-             s = 0 ; 
-             e = lpos ; 
-          while ( s < e ) 
-          { 
-             lists [ s ] = merge ( lists [ s ] , lists [ e ] ) ; 
-             s ++ ; 
-             e -- ; 
+         } 
  
-               if ( s >= e ) 
-                 lpos = e ; 
+         return  tmp ; 
  
-          } 
         
-       
- 
-          } 
- 
-          return  lists [ 0 ] ; 
- 
       } 
  } ;
