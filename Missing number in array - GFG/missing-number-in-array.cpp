@@ -14,12 +14,14 @@ class Solution{
   public:
     int missingNumber(vector<int>& array, int n) {
         // Your code goes here
-        long long sm=0;
-        sm=((1ll*n)*1ll*(n+1))/2;
-        
-        long long sm2=accumulate(array.begin(),array.end(),0ll);
-
-        return sm-sm2;        
+        int res=0;
+        for(int i=0;i<array.size();i++)
+        {
+            res=res^array[i];
+            res=res^(i+1);
+        }
+        res=res^n;
+        return res;
     }
 };
 
