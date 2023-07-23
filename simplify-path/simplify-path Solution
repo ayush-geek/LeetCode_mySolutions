@@ -2,61 +2,46 @@ class   Solution   {
  public : 
      string  simplifyPath ( string path )   { 
          
+         stringstream  ss ( path ) ; 
+         string word ; 
+         stack < string >  st ; 
+          while ( ! ss . eof ( ) ) 
+          { 
+              getline ( ss , word , '/' ) ; 
  
-        istringstream  ss ( path ) ; 
- 
-        string token ; 
-        stack < string >  st ; 
-         while ( getline ( ss ,  token ,   '/' ) )   { 
-             
-              if ( token == ".."   ) 
-              { 
-                  if ( ! st . empty ( ) ) 
-                     st . pop ( ) ; 
-                 
+              if ( word . size ( ) > 0 ) 
+              {     //cout<<word<<endl; 
+                  if ( word == ".." ) 
+                    {   if ( ! st . empty ( ) ) 
+                         st . pop ( ) ; } 
+                  else   if ( word == "." ) 
+                      continue ; 
+                   else 
+                     st . push ( word ) ; 
               } 
-               
-              else   if ( token == "." ) 
-                  continue ; 
-              else    if ( token . size ( ) > 0 ) 
-                 st . push ( token ) ; 
-                 
  
- 
+            
           } 
  
-         
-      
-         
-             
-         string tmp ; 
+         string res = "" ; 
           while ( ! st . empty ( ) ) 
           { 
-             tmp += st . top ( ) ; 
-             tmp += "/" ; 
+             
+             string z = st . top ( ) ; 
+              reverse ( z . begin ( ) , z . end ( ) ) ; 
+             res += z ; 
+             res += "/" ; 
+              // cout<<res<<endl; 
              st . pop ( ) ; 
-          } 
+          }    
+              if ( res . size ( ) == 0 ) 
+             res += "/" ; 
+              //  cout<<res<<endl; 
  
-          if ( tmp . size ( ) == 0 ) 
-             tmp = "/" ; 
+          reverse ( res . begin ( ) , res . end ( ) ) ; 
+              // cout<<res<<endl; 
  
-          reverse ( tmp . begin ( ) , tmp . end ( ) ) ; 
-          int  j = 0 ; 
-          for ( int  i = 0 ; i < tmp . size ( ) ; i ++ ) 
-          {    
-              if ( tmp [ i ] == '/' ) 
-                  {    
-                      if ( i != 0 ) 
-                      reverse ( tmp . begin ( ) + j + 1 , tmp . begin ( ) + i ) ; 
-                     j = i ; 
-                  } 
- 
- 
-          } 
-          reverse ( tmp . begin ( ) + j + 1 , tmp . end ( ) ) ; 
-     
-          return  tmp ; 
- 
+          return  res ; 
  
       } 
  } ;
