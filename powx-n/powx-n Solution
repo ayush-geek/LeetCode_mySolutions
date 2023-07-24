@@ -1,36 +1,19 @@
 class   Solution   { 
  public : 
-     map < pair < double , int > , double >  dp ; 
+     unordered_map < int , double >  mp ; 
       double   myPow ( double  x ,   int  n )   { 
-         
-          //pow (2,5)  
-          // 2*pow(2,2)*pow(2,2) 
- 
- 
-          //pow(2,6) 
-          //pow(2,3)* pow(2,3) 
-          //2*pow(2,1)*pow(2,1) 
-          if ( dp . find ( { x , n } ) != dp . end ( ) ) 
-              return  dp [ { x , n } ] ; 
- 
+          double  res = x ; 
           if ( n == 0 ) 
               return   1 ; 
-          if ( n == 1 ) 
-              return  x ; 
-          if ( n == - 1 ) 
-              return   1 / x ; 
  
+          if ( mp . count ( n ) ) 
+              return  mp [ n ] ; 
+          if ( n < 0 ) 
+             res = 1 / res ; 
  
-          double  ans = myPow ( x , n / 2 ) * myPow ( x , n / 2 ) ; 
-          int  z = abs ( n ) ; 
-          if ( z % 2 == 1   &&  n > 0 ) 
-              return   dp [ { x , n } ] =  x * ans ; 
-          else   if ( z % 2 == 1 ) 
-              return   dp [ { x , n } ] = ( 1 / x )   *  ans ; 
+          if ( n % 2 == 0 ) 
+              return  mp [ n ] = myPow ( x , n / 2 ) * myPow ( x , n / 2 ) ; 
           else 
-              return   dp [ { x , n } ] = ans ; 
-         
- 
- 
+              return  mp [ n ] = res * myPow ( x , n / 2 ) * myPow ( x , n / 2 ) ; 
       } 
  } ;
