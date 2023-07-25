@@ -1,5 +1,5 @@
 class   Solution   { 
-  public : 
+ public : 
       int   splitArray ( vector < int > &  nums ,   int  m )   { 
           int  n = size ( nums ) ;  
           long   long   sum = 0 ; 
@@ -44,4 +44,4 @@ class   Solution   {
           } 
           return   true ;   // if everything is fine without violating any condition we return true; 
       } 
-  } ;
+ } ;
