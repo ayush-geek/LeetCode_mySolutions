@@ -101,6 +101,8 @@ int main()
 // } Driver Code Ends
 
 
+
+
 //User function Template for C++
 /*
 Structure of the node of the binary tree is as
@@ -111,61 +113,53 @@ struct Node
 };
 */
 // your task is to complete this function
-
-unordered_map<int,int> mp;
-void dfs(Node* rt,int d,int k,int& ans,int node)
+void dfs(Node* rt,vector<int>& adj)
 {
     if(rt==NULL)
         return ;
     
-    // int z=rt->data;
-    // if(rt->left!=NULL)
-    // {
-    //   // adj[z].push_back(rt->left->data);
-    //     adj[rt->left->data].push_back(z);
-    // }
+    int z=rt->data;
+    if(rt->left!=NULL)
+    {
+       // adj[z].push_back(rt->left->data);
+        adj[rt->left->data]=(z);
+    }
     
-    //  if(rt->right!=NULL)
-    // {
-    //     //adj[z].push_back(rt->right->data);
-    //     adj[rt->right->data].push_back(z);
-    // }
-    if(rt->data==node)
-        {   
-           // cout<<d<<endl;
-            if(mp.count(d+k))
-                ans=mp[d+k];
-        }  
-    mp[d]=rt->data;
-    dfs(rt->left,d-1,k,ans,node);
-    dfs(rt->right,d-1,k,ans,node);
+     if(rt->right!=NULL)
+    {
+        //adj[z].push_back(rt->right->data);
+        adj[rt->right->data]=(z);
+    }
+    dfs(rt->left,adj);
+    dfs(rt->right,adj);
 }
-bool solve(int nd,int par,vector<int> adj[],int k,int& ans)
+int solve(int nd,vector<int>& adj,int k)
 {   
     //cout<<nd<<" "<<k<<endl;
-    if(k==0){
-        ans=nd;
-        return true;
-    }
-    for(auto& ele: adj[nd])
+   
+    while(nd!=-1)
     {   
-        if(ele!=par)
-            if(solve(ele,nd,adj,k-1,ans))
-                return true;
+        nd=adj[nd];
+        k--;
+         if(k==0){
+           
+            break;
+         }
+        
     }
-    return false;
+    return nd;
 }
 
 int kthAncestor(Node *root, int k, int node)
 {
         
-        // vector<int> adj[100001];
-          int ans=-1;
-        dfs(root,0,k,ans,node);
-      
+        vector<int> adj(100001,-1);
+        
+        dfs(root,adj);
+        int ans=-1;
         // if(adj[node].size()<k)
         //     return -1;
-        // bool z=solve(node,-1,adj,k,ans);
-        return ans;
+        return solve(node,adj,k);
+      
         
 }
