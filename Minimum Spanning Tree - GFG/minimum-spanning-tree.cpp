@@ -4,81 +4,52 @@ using namespace std;
 
 // } Driver Code Ends
 
-class DSU{
-    
-    public:
-    vector<int> parent, size;
-    
-    DSU(int n)
-    {
-        parent.resize(n+1,0);
-        size.resize(n+1,1);
-        iota(parent.begin(),parent.end(),0);
-    }
-    
-    int findUpar(int nd)
-    {
-        if(parent[nd]==nd)
-            return nd;
-            
-        return parent[nd]=findUpar(parent[nd]);
-    }
-    
-    bool unionBySize(int a,int b)
-    {
-        int pa=findUpar(a);
-        int pb=findUpar(b);
-        
-        if(pa==pb)
-            return false;
-        
-        if(size[pa]<size[pb])
-        {
-            size[pb]+=size[pa];
-            parent[pa]=pb;
-        }
-        else
-        {
-           size[pa]+=size[pb];
-            parent[pb]=pa; 
-        }
-        
-        return true;
-    }
-    
-};
-
+typedef pair<int,pair<int,int>> ppi;
 class Solution
 {
 	public:
 	//Function to find sum of weights of edges of the Minimum Spanning Tree.
     int spanningTree(int V, vector<vector<int>> adj[])
-    {
-      vector<pair<int,pair<int,int>>> vpp;
-      vector<int> vis(V,0);
-      DSU ds(V);
-      for(int i=0;i<V;i++)
-      {
-          for(auto& ele: adj[i])
-          {
-              vpp.push_back({ele[1],{ele[0],i}});
-          }
-      }
-      
-      sort(vpp.begin(),vpp.end());
-      int ans=0;
-      
-      for(auto& ele: vpp)
-      {
-          int a=ele.first;
-          int b=ele.second.first;
-          int c=ele.second.second;
+    {    
+    
+  
+    int n=V;
+
+vector<int> vis(n,0);
+
+  int ans=0;
+
+  //wt node parent
+  priority_queue<ppi,vector<ppi>,greater<ppi>> pq;
+  pq.push({0,{0,-1}});
+//   vis[0]=1;
+
+  while(!pq.empty())
+  { 
+    auto w=pq.top().first;
+    auto node=pq.top().second.first;
+    auto par=pq.top().second.second;
+    pq.pop();
+
+    if(vis[node])
+      continue;
+      vis[node]=1;
+      ans+=w;
+
+      for(auto& ele: adj[node])
+      { 
+          //cout<<node<<" "<<ele[0]<<endl;
+        if(!vis[ele[0]])
+        {
+          pq.push({ele[1],{ele[0],node}});
+        }
           
-          if(ds.unionBySize(b,c))
-            ans+=a;
       }
-      return ans;
-    }
+
+  }
+  return ans;
+
+}
 };
 
 //{ Driver Code Starts.
