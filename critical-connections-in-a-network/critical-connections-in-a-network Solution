@@ -1,56 +1,60 @@
 class   Solution   { 
+ public : 
+     vector < vector < int >>  bg ; 
  
- private :  
-      int  timer = 0 ; 
+ private : 
+      int  timer = 1 ; 
  
-      void   dfs ( int  nd , int  par , vector < int >  adj [ ] , vector < int > &  vis , vector < int > &  tin , vector < int > &  lin ) 
+ private : 
+ 
+ 
+      void   dfs ( int  i , int  par , vector < int > &  vis , vector < int >  adj [ ] , int  tin [ ] , int  low [ ] ) 
       { 
-         vis [ nd ] = 1 ; 
-         tin [ nd ] = lin [ nd ] = timer ; 
-         timer ++ ; 
+             vis [ i ] = 1 ; 
+            
+             low [ i ] = tin [ i ] = timer ; 
+              timer ++ ; 
+ 
+               for ( auto &  ele :  adj [ i ] ) 
+               { 
+                   if ( ele == par ) 
+                   { 
+                       continue ; 
+                   } 
+                   if ( ! vis [ ele ] ) 
+                   {   
+                       dfs ( ele , i , vis , adj , tin , low ) ; 
+ 
+                       low [ i ] = min ( low [ i ] , low [ ele ] ) ; 
  
  
-          for ( auto  it :  adj [ nd ] ) 
-          { 
-              if ( it == par ) 
-                  continue ; 
-              else   if ( ! vis [ it ] ) 
-              { 
-                  dfs ( it , nd , adj , vis , tin , lin ) ; 
-                  lin [ nd ] = min ( lin [ nd ] , lin [ it ] ) ; 
- 
-                   if ( lin [ it ] > tin [ nd ] ) 
-                     bridges . push_back ( { it , nd } ) ; 
-              } 
-              else 
-              { 
-                 lin [ nd ] = min ( lin [ nd ] , lin [ it ] ) ; 
-              } 
-          } 
+                        //i---ele 
+                        if ( low [ ele ] > tin [ i ] ) 
+                        { 
+                         bg . push_back ( { ele , i } ) ; 
+                        } 
+                   } 
+                   else 
+                   { 
+                      low [ i ] = min ( low [ i ] , low [ ele ] ) ; 
+                   } 
+               } 
       } 
- 
  
  public : 
-      vector < vector < int >>  bridges ; 
- 
      vector < vector < int >>   criticalConnections ( int  n ,  vector < vector < int >> &  connections )   { 
- 
          vector < int >  adj [ n ] ; 
+          for ( auto &  ele :  connections ) 
+              { 
+                 adj [ ele [ 0 ] ] . push_back ( ele [ 1 ] ) ; 
+                 adj [ ele [ 1 ] ] . push_back ( ele [ 0 ] ) ; 
  
-         for ( auto  it :  connections ) 
-         { 
-            adj [ it [ 0 ] ] . push_back ( it [ 1 ] ) ; 
-            adj [ it [ 1 ] ] . push_back ( it [ 0 ] ) ; 
+              } 
+     vector < int >   vis ( n , 0 ) ; 
+          int  tin [ n ] ; 
+          int  low [ n ] ; 
  
-         } 
- 
-        vector < int >   vis ( n , 0 ) ; 
-        vector < int >   tin ( n , 0 ) ; 
-        vector < int >   lin ( n , 0 ) ; 
-       
-           dfs ( 0 , - 1 , adj , vis , tin , lin ) ; 
- 
-         return  bridges ; 
- 
-      } 
+          dfs ( 0 , - 1 , vis , adj , tin , low ) ; 
+          return  bg ; 
+ } 
  } ;
