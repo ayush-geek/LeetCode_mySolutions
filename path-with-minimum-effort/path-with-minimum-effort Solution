@@ -1,52 +1,39 @@
 class   Solution   { 
  public : 
       int   minimumEffortPath ( vector < vector < int >> &  heights )   { 
-         
-          //Map a Problem to aLGORITHM 
- 
-          //dIJKSTRA aLGO 
- 
           int  n = heights . size ( ) ; 
- 
           int  m = heights [ 0 ] . size ( ) ; 
-         vector < vector < int >>   dis ( n , vector < int > ( m , INT_MAX ) ) ; 
-         dis [ 0 ] [ 0 ] = 0 ; 
-         priority_queue <  pair < int , pair < int , int >> >  pq ; 
-          //dif ,r,c 
-         pq . push ( { 0 , { 0 , 0 } } ) ; 
  
+         vector < vector < int >>   ht ( n , vector < int >   ( m , 1e9 ) ) ; 
+ 
+         queue < pair < int , int >>  q ; 
+         q . push ( { 0 , 0 } ) ; 
           int  dr [ ] = { - 1 , 0 , 1 , 0 } ; 
           int  dc [ ] = { 0 , - 1 , 0 , 1 } ; 
- 
-          while ( ! pq . empty ( ) ) 
+         ht [ 0 ] [ 0 ] = 0 ; 
+          while ( ! q . empty ( ) ) 
           { 
-              auto  it = pq . top ( ) ; 
-              int  dif = abs ( it . first ) ; 
-              int  r = it . second . first ; 
-              int  c = it . second . second ; 
-             cout << r << " " << c << endl ; 
-             pq . pop ( ) ; 
-              if ( r == n - 1   &&  c == m - 1 ) 
-                  return  dif ; 
+              auto  nd = q . front ( ) ; 
+             q . pop ( ) ; 
+              int  r = nd . first ; 
+              int  c = nd . second ; 
               for ( int  i = 0 ; i < 4 ; i ++ ) 
               { 
                   int  nr = r + dr [ i ] ; 
                   int  nc = c + dc [ i ] ; 
- 
- 
+                
                   if ( nr >= 0   &&  nr < n  &&  nc >= 0   &&  nc < m  ) 
-                  { 
-                      int  ne = max ( abs ( heights [ r ] [ c ] - heights [ nr ] [ nc ] ) , dif ) ; 
-                     // cout<<ne<<endl; 
-                      if ( dis [ nr ] [ nc ] > ne ) 
+                  {    
+                       int  dif = max ( abs ( heights [ nr ] [ nc ] - heights [ r ] [ c ] ) , ht [ r ] [ c ] ) ; 
+                      if ( dif < ht [ nr ] [ nc ] ) 
                       { 
-                         dis [ nr ] [ nc ] = ne ; 
-                         pq . push ( { - dis [ nr ] [ nc ] , { nr , nc } } ) ; 
+                         ht [ nr ] [ nc ] = dif ; 
+                         q . push ( { nr , nc } ) ; 
                       } 
                   } 
               } 
- 
           } 
-          return   - 1 ; 
+ 
+          return  ht [ n - 1 ] [ m - 1 ] ; 
       } 
  } ;
