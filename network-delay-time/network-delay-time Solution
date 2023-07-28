@@ -6,46 +6,40 @@ class   Solution   {
  
           for ( auto &  ele :  times ) 
           { 
-              int  a = ele [ 0 ] ; 
-              int  b = ele [ 1 ] ; 
-              int  c = ele [ 2 ] ; 
- 
-             adj [ a ] . push_back ( { b , c } ) ; 
+             adj [ ele [ 0 ] ] . push_back ( { ele [ 1 ] , ele [ 2 ] } ) ; 
           } 
  
-         priority_queue < pair < int , int >>  pq ; 
-         pq . push ( { 0 , k } ) ; 
- 
          vector < int >   dis ( n + 1 , 1e9 ) ; 
+          //dijkstra 
+         priority_queue < pair < int , int > , vector < pair < int , int >> , greater < pair < int , int >> >  pq ; 
+         pq . push ( { 0 , k } ) ; 
          dis [ k ] = 0 ; 
-          int  ans = 0 ; 
           while ( ! pq . empty ( ) ) 
           { 
               auto  nd = pq . top ( ) ; 
              pq . pop ( ) ; 
-              int  node  = nd . second ; 
-              int  d = abs ( nd . first ) ; 
- 
+              int  node = nd . second ; 
+              int  d = nd . first ; 
               for ( auto & ele :  adj [ node ] ) 
-              {    
-                  int  wt = ele . second ; 
+              { 
                   int  e = ele . first ; 
-                  if ( dis [ e ] > d + wt ) 
-                  { 
-                     dis [ e ] = d + wt ; 
-                     
-                     pq . push ( { - 1 * dis [ e ] , e } ) ; 
-                  } 
+                  int  w = ele . second ; 
  
+                  if ( dis [ e ] > d + w ) 
+                  { 
+                     pq . push ( { d + w , e } ) ; 
+                     dis [ e ] = d + w ; 
+                  } 
               } 
           } 
- 
+          int  mx = - 1 ; 
           for ( int  i = 1 ; i <= n ; i ++ ) 
           { 
-             ans = max ( ans , dis [ i ] ) ; 
+             mx = max ( mx , dis [ i ] ) ; 
           } 
-          if ( ans == 1e9 ) 
+ 
+          if ( mx == 1e9 ) 
               return   - 1 ; 
-          return  ans ; 
+          return  mx ; 
       } 
  } ;
