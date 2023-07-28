@@ -1,0 +1,64 @@
+class   Solution   { 
+ public : 
+         
+     
+     vector < vector < int >>  dp ; 
+     
+      int   solve ( int  i , vector < int > &  nums , int  pl , int  j ) 
+      {    
+          if ( i > j ) 
+              return   0 ; 
+         
+         
+         
+          int  lft = 0 ; 
+          int  rgt = 0 ; 
+         
+         
+      
+     
+        
+          if ( pl == 0 ) 
+          { 
+             lft = nums [ i ] + solve ( i + 1 , nums , 1 , j ) ; 
+         
+             rgt = nums [ j ] + solve ( i , nums , 1 , j - 1 ) ; 
+          } 
+         
+          else 
+          { 
+              lft = - 1 * nums [ i ] + solve ( i + 1 , nums , 0 , j ) ; 
+         
+              rgt = - 1 * nums [ j ] + solve ( i , nums , 0 , j - 1 ) ; 
+             
+             
+             
+          } 
+         
+              if ( pl == 1 ) 
+                  return   min ( lft , rgt ) ; 
+        
+              return   max ( lft , rgt ) ; 
+      } 
+     
+     
+      bool   PredictTheWinner ( vector < int > &  nums )   { 
+         
+         
+          //assume score >=0 
+         
+          //1 + 
+          // 2 - 
+         
+          int  n = nums . size ( ) ; 
+          int  j = nums . size ( ) - 1 ; 
+         dp . resize ( 21 , vector < int >   ( 21 , INT_MIN ) ) ; 
+         
+          int  sm = solve ( 0 , nums , 0 , n - 1 ) ; 
+         
+          if ( sm >= 0 ) 
+              return   true ; 
+          else 
+              return   false ; 
+      } 
+ } ;
