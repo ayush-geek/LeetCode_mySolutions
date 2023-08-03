@@ -8,42 +8,54 @@ using namespace std;
 // User function Template for C++
 class Solution {
   public:
-     vector<int> shortestPath(int N,int M, vector<vector<int>>& edges){
+     vector<int> shortestPath(int n,int M, vector<vector<int>>& edges){
         
-        vector<pair<int,int>> adj[N];
+        //dijkstra
+        vector<pair<int,int>> adj[n];
         
-        for(auto&ele: edges)
+        for(auto& ele: edges)
         {
-            adj[ele[0]].push_back({ele[1],ele[2]});
+            int a=ele[0];
+            int b=ele[1];
+            int w=ele[2];
+            adj[a].push_back({b,w});
         }
+        vector<int> dis(n,1e9);
         
-        vector<int> dis(N,1e9);
-        queue<int> q;
-        q.push(0);
+        priority_queue< pair<int,int> , 
+        vector<pair<int,int>>,
+        greater<pair<int,int>>> pq;
+        
+        pq.push({0,0});
         dis[0]=0;
-        while(!q.empty())
+        
+        while(!pq.empty())
         {
-            int nd=q.front();
-            q.pop();
+            auto node=pq.top();
+            pq.pop();
+            auto d=node.first;
+            auto nd=node.second;
             
-            for(auto&ele: adj[nd])
-            {   
+            for(auto& ele: adj[nd])
+            {
+                int adjnode=ele.first;
                 int w=ele.second;
-                int node=ele.first;
-                if(dis[nd]+w<dis[node])
+                
+                
+                if(d+w<dis[adjnode])
                 {
-                    //upadte
-                    dis[node]=w+dis[nd];
-                    q.push(node);
+                    dis[adjnode]=d+w;
+                    pq.push({dis[adjnode],adjnode});
                 }
             }
         }
-        for(int i=0;i<N;i++)
+        
+        
+        for(int i=0;i<n;i++)
         {
             if(dis[i]==1e9)
                 dis[i]=-1;
         }
-        
         return dis;
     }
 };
