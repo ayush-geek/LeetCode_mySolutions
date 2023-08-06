@@ -1,0 +1,56 @@
+class   Solution   { 
+ public : 
+     
+     
+      int   solve ( vector < vector < int >> &  matrix , vector < vector < int >> &  dp , int  i , int  j ) 
+      { 
+          if ( i < 0   ||  j < 0 ) 
+              return   0 ; 
+         
+          if ( dp [ i ] [ j ] != - 1 ) 
+              return  dp [ i ] [ j ] ; 
+         
+          int  m1 [ ] = { - 1 , 0 , + 1 , 0 } ; 
+          int  m2 [ ] = { 0 , - 1 , 0 , + 1 } ; 
+         
+          int  len = 1 ; 
+          for ( int  k = 0 ; k < 4 ; k ++ ) 
+          { 
+              int  new_i = i + m1 [ k ] ; 
+              int  new_j = j + m2 [ k ] ; 
+             
+             
+              if ( new_i >= 0   &&  new_i < matrix . size ( )   &&  new_j < matrix [ 0 ] . size ( )   &&  new_i < matrix . size ( )   &&  matrix [ i ] [ j ] < matrix [ new_i ] [ new_j ] ) 
+              { 
+                len = max ( len , 1 + solve ( matrix , dp , new_i , new_j ) ) ;  
+              } 
+             
+          } 
+        
+         
+          return   dp [ i ] [ j ] = len ; 
+         
+      } 
+     
+     
+      int   longestIncreasingPath ( vector < vector < int >> &  matrix )   { 
+         
+          int  n = matrix . size ( ) ; 
+          int  m = matrix [ 0 ] . size ( ) ; 
+         
+         vector < vector < int >>   dp ( n , vector < int >   ( m , - 1 ) ) ; 
+         
+          int  mx = 1 ; 
+          for ( int  i = 0 ; i < n ; i ++ ) 
+          { 
+              for ( int  j = 0 ; j < m ; j ++ ) 
+              { 
+             
+                 mx = max ( mx , solve ( matrix , dp , i , j ) ) ; 
+                  } 
+          } 
+         
+         
+          return  mx ; 
+      } 
+ } ;
