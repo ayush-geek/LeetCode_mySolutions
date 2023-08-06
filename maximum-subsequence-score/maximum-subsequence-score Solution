@@ -1,47 +1,42 @@
 class   Solution   { 
  public : 
       long   long   maxScore ( vector < int > &  nums1 ,  vector < int > &  nums2 ,   int  k )   { 
+         
+          //pq 
+ 
          vector < pair < int , int >>  vp ; 
+ 
           int  n = nums1 . size ( ) ; 
+ 
           for ( int  i = 0 ; i < n ; i ++ ) 
           { 
              vp . push_back ( { nums1 [ i ] , nums2 [ i ] } ) ; 
           } 
+          sort ( vp . begin ( ) , vp . end ( ) , [ ] ( pair < int , int > &  a , pair < int , int > &  b ) { 
+               if ( a . second == b . second ) 
+                  return  a . first > b . first ;  
  
-          sort ( vp . begin ( ) , vp . end ( ) , [ ] ( pair < int , int > &  a , pair < int , int > &  b ) 
-          { 
-              if ( a . second == b . second ) 
-                  return  a . first > b . first ; 
-             
               return  a . second > b . second ; 
           } ) ; 
  
-         priority_queue < long   long , vector < long   long > , greater < long   long >>  pq ; 
- 
-          long   long  ans = 0 ; 
+         priority_queue < int >  pq ; 
           long   long  sm = 0 ; 
-          int  l = 0 ; 
- 
-          while ( l != n ) 
-          { 
-             sm += vp [ l ] . first ; 
-             pq . push ( vp [ l ] . first ) ; 
+          long   long  ans = 0 ; 
+          for ( int  i = 0 ; i < n ; i ++ ) 
+          {    
+             sm += vp [ i ] . first ; 
+             pq . push ( - 1 * vp [ i ] . first ) ; 
  
               if ( pq . size ( ) > k ) 
-              { 
-                 sm -= pq . top ( ) ; 
-                 pq . pop ( ) ; 
-              } 
+                  { 
+                      int  z1 = abs ( pq . top ( ) ) ; 
+                     pq . pop ( ) ; 
+                     sm -= z1 ; 
+                  } 
  
               if ( pq . size ( ) == k ) 
-              { 
-                   ans = max ( ans , sm * vp [ l ] . second ) ; 
-              } 
- 
-     l ++ ; 
-           
+                 ans = max ( ans , sm * ( long   long ) vp [ i ] . second ) ; 
           } 
- 
           return  ans ; 
       } 
  } ;
