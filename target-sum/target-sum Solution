@@ -1,48 +1,33 @@
 class   Solution   { 
  public : 
-     
-     
-      int   solve ( int  i , int  target , vector < int > &  nums , vector < vector < int >> &  dp ) 
-      { 
+      int   findTargetSumWays ( vector < int > &  A ,   int  target )   { 
+           int  sm = accumulate ( A . begin ( ) , A . end ( ) , 0 ) ; 
          
+          if ( ( sm + target ) % 2 != 0   || sm + target < 0 )  
+              return   0 ; 
          
-          if ( i < 0 ) 
+          int  tgt = ( sm + target ) / 2 ; 
+ 
+         
+           int  n = A . size ( ) ; 
+           int  amount = tgt ; 
+          
+          
+         vector < vector < int >>   dp ( n + 1 , vector < int >   ( amount + 1 , 0 ) ) ; 
+ 
+       dp [ 0 ] [ 0 ] = 1 ; 
+ 
+          for ( int  i = 1 ; i <= n ; i ++ ) 
           { 
-              if ( target == 0 ) 
-                  return   1 ; 
-              else 
-                  return   0 ; 
+              for ( int  j = 0 ; j <= amount ; j ++ ) 
+              { 
+                  if ( A [ i - 1 ] <= j ) 
+                     dp [ i ] [ j ] = dp [ i - 1 ] [ j - A [ i - 1 ] ] ; 
+                 
+                 dp [ i ] [ j ] = ( dp [ i ] [ j ] + dp [ i - 1 ] [ j ] ) ; 
+              } 
           } 
          
-          if ( dp [ i ] [ target + 2000 ] != - 1 ) 
-              return  dp [ i ] [ target + 2000 ] ; 
-         
-          //+1 
-         
-          int  pos = solve ( i - 1 , target - nums [ i ] , nums , dp ) ; 
-         
-         
-         
-          //-1 
- 
-          int  neg = solve ( i - 1 , target + nums [ i ] , nums , dp ) ; 
-         
-        return    dp [ i ] [ target + 2000 ] = pos + neg ; 
-     
-      } 
-     
-     
-     
-     
-      int   findTargetSumWays ( vector < int > &  nums ,   int  target )   { 
-         
-         
-          int  n = nums . size ( ) ; 
-         
-         
-         vector < vector < int >>   dp ( n + 1 , vector < int >   ( 40001 , - 1 ) ) ; 
-         
-         
-          return   solve ( n - 1 , target , nums , dp ) ; 
+          return  dp [ n ] [ amount ] ; 
       } 
  } ;
