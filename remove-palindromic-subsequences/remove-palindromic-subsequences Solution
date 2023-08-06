@@ -1,0 +1,45 @@
+class   Solution   { 
+ public : 
+     
+ //     bool ispalindrome(string s,int start,int end) 
+ //     { 
+ //         while(start<end) 
+ //         { 
+ //             if(s[start]!=s[end]) 
+ //                 return false; 
+         
+             
+ //             start++; 
+ //             end--; 
+ //         } 
+         
+ //         return true; 
+ //     } 
+     
+     
+      int   removePalindromeSub ( string s )   { 
+         
+        if ( s == "" ) 
+            return   0 ; 
+         
+         
+          int  srt = 0 ; 
+          int  end = s . size ( ) - 1 ; 
+         
+          while ( srt < end ) 
+          { 
+              // all a or b  Return 1 
+              // if both characters then 2 subsequence 
+              if ( s [ srt ] != s [ end ] ) 
+                  return   2 ; 
+             
+             srt ++ ; 
+             end -- ; 
+          } 
+         
+         
+          return   1 ; 
+         
+         
+      } 
+ } ;
