@@ -2,29 +2,31 @@ class   Solution   {
  public : 
       int   maxProduct ( vector < int > &  nums )   { 
          
+         
           int  pos = 1 ; 
           int  neg = 1 ; 
- 
-          int  n = nums . size ( ) ; 
-          int  ans = nums [ 0 ] ; 
-          int  cur = 1 ; 
-          for ( int  i = 0 ; i < n ; i ++ ) 
-          {     //cout<<pos<<endl; 
-                 if ( nums [ i ] < 0 ) 
-                  swap ( neg , pos ) ; 
+          int  sm = 1 ; 
+         
+          int  mx = nums [ 0 ] ; 
+         
+          for ( int  i = 0 ; i < nums . size ( ) ; i ++ ) 
+          {    
              
-          //     cur*=nums[i]; 
- 
-          //   if(cur==0) 
-          //     neg=1; 
+              if ( nums [ i ] < 0 ) 
+              { 
+                  swap ( pos , neg ) ; 
+                 
+              } 
              
- 
              pos = max ( nums [ i ] , pos * nums [ i ] ) ; 
              neg = min ( nums [ i ] , neg * nums [ i ] ) ; 
- 
-         ans = max ( ans , pos ) ; 
+             
+             mx = max ( mx , pos ) ; 
+             
+             cout << pos << " " << neg << endl ; 
           } 
- 
-          return  ans ; ; 
+         
+         
+          return  mx ; 
       } 
  } ;
