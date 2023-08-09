@@ -1,0 +1,46 @@
+class   Solution   { 
+ public : 
+     
+      bool   solve ( vector < int > &  nums ,   int  mid , int  p ) 
+      { 
+          int  ct = 0 ; 
+          for ( int  i = 1 ; i < nums . size ( ) ; i ++ ) 
+          { 
+              if ( nums [ i ] - nums [ i - 1 ] <= mid ) 
+              { 
+                 ct ++ ; 
+                 i ++ ; 
+              } 
+          } 
+       
+          //cout<<mid<<" "<<ct<<endl; 
+         
+          return  ct >= p ; 
+      } 
+     
+      int   minimizeMax ( vector < int > &  nums ,   int  p )   { 
+         
+          //binary search 
+          sort ( nums . begin ( ) , nums . end ( ) ) ; 
+          int  n = nums . size ( ) ; 
+          int  low = 0 ; 
+          int  high = nums [ n - 1 ] - nums [ 0 ] ; 
+          int  ans = 0 ; 
+          //cout<<low<<" "<<high<<endl; 
+          while ( low <= high ) 
+          { 
+              int  mid = ( low + high ) / 2 ; 
+             
+             bool  z = solve ( nums , mid , p ) ; 
+             // cout<<mid<<" "<<z<<endl; 
+              if ( z ) 
+              { 
+                 ans = mid ; 
+                 high = mid - 1 ; 
+              } 
+              else 
+                 low = mid + 1 ; 
+          } 
+          return  ans ; 
+      } 
+ } ;
