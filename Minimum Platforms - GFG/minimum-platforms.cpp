@@ -12,41 +12,26 @@ class Solution{
     //railway station such that no train waits.
     int findPlatform(int arr[], int dep[], int n)
     {
+    	// Your code here
+    	map<int,int> mp;
     	
-    	
-    	//max intersectiom
-    	//line sweep algo
-    	
-    	
-    	vector<pair<int,int>> vp;
     	for(int i=0;i<n;i++)
     	{
-    	    vp.push_back({arr[i],dep[i]});
-    	}
-    	//9 to 11
-    	
-        map<int,int> mp;
-    	
-    
-    	
-    	for(auto& ele: vp)
-    	{
-    	    int a=ele.first;
-    	    int b=ele.second;
+    	    int a=arr[i];
+    	    int b=dep[i];
     	    
     	    mp[a]++;
     	    mp[b+1]--;
     	}
-    	   
-    	   int mx=0;
-    	   int sm=0;
-    	for(auto&ele: mp)
-    	{   
-    	    //cout<<ele.first<<" "<<ele.second<<endl;
-    	    sm+=ele.second;
-    	    mx=max(mx,sm);
-    	}
     	
+    	int sm=0;
+    	int mx=0;
+    	for(auto& ele: mp)
+    	{
+    	    sm+=mp[ele.first];
+    	    mx=max(mx,sm);
+    	    
+    	}
     	return mx;
     }
 };
