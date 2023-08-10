@@ -1,23 +1,23 @@
 class   Solution   { 
  public : 
-      int   jump ( vector < int > &  nums )   { 
-         
-          int  n = nums . size ( ) ; 
-         vector < int >   dp ( n , 1e9 ) ; 
-         dp [ n - 1 ] = 0 ; 
- 
-          for ( int  i = n - 2 ; i >= 0 ; i -- ) 
-          { 
-              for ( int  j = 0 ; j <= nums [ i ] ; j ++ ) 
-              { 
-                  if ( i + j <= nums . size ( ) - 1 ) 
-                      { 
-                         dp [ i ] = min ( dp [ i + j ] + 1 , dp [ i ] ) ; 
-                      } 
-              } 
-              //cout<<i<<" "<<dp[i]<<endl; 
+      int   jump ( vector < int > &  A )   { 
+          int  n = A . size ( ) ; 
+          if ( n  ==   1 ) { 
+          return   0 ; 
+      } 
+      int  maxReachPos  =  A [ 0 ] ; 
+      int  curMaxReachPos  =  A [ 0 ] ; 
+      int  curStep  =   1 ; 
+      for ( int  i  =   1 ;  i  <=   min ( n - 1 ,  maxReachPos ) ;  i ++ ) { 
+         curMaxReachPos  =   max ( curMaxReachPos ,  i  +  A [ i ] ) ; 
+          if ( i  ==  n  -   1 ) { 
+              return  curStep ; 
           } 
- 
-          return  dp [ 0 ] ; 
+          if ( i  ==  maxReachPos ) { 
+             maxReachPos  =  curMaxReachPos ; 
+             curStep ++ ; 
+          } 
+      } 
+      return   0 ; 
       } 
  } ;
