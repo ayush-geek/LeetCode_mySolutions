@@ -1,46 +1,41 @@
 class   DetectSquares   { 
  public : 
- 
-     map < vector < int > , int >  mp ; 
-    
+     vector < unordered_map < int ,   int >>  x_axis ; 
+     
       DetectSquares ( )   { 
-        
+         x_axis  =   vector < unordered_map < int ,   int >> ( 1005 ) ; 
       } 
      
       void   add ( vector < int >  point )   { 
-       
-      
- 
-        mp [ point ] ++ ; 
- 
+          int  x  =  point [ 0 ] ; 
+          int  y  =  point [ 1 ] ; 
+         x_axis [ x ] [ y ] ++ ; 
       } 
      
       int   count ( vector < int >  point )   { 
-      int  a = point [ 0 ] ; 
-      int  b = point [ 1 ] ; 
-    
-          int  ct = 0 ; 
-          for ( auto &  ele :  mp ) 
-          { 
-            int  x = ele . first [ 0 ] ; 
-            int  y = ele . first [ 1 ] ; 
- 
-            if ( x != a  &&  y != b  && ( abs ( x - a ) == abs ( y - b ) ) ) 
-            {   
-              int  z1 = mp [ { x , y } ] ; 
-              int  z2 = mp [ { a , y } ] ; 
-              int  z3 = mp [ { x , b } ] ; 
-             ct += z1 * z2 * z3 ; 
-            
-            } 
+          int  x  =  point [ 0 ] ,  y  =  point [ 1 ] ; 
+          int  res  =   0 ; 
+          for   ( auto &  it  :  x_axis [ x ] )   {                  // For all points lying on x_axis with value x_coordinate = x 
+              int  y_coord  =  it . first ; 
+              int  countOcc  =  it . second ; 
+             
+              if   ( y  ==  y_coord )   continue ; 
+              int  sideLength  =   abs ( y_coord  -  y ) ; 
+             
+ 			  // counting for p3' and p4' 
+              if   ( x  +  sideLength  <=   1000 )      // x_coordinate should be within range [0, 1000] 
+              { 
+                  int  newX  =  x  +  sideLength ; 
+                 res  +=  x_axis [ x ] [ y_coord ]   *  x_axis [ newX ] [ y_coord ]   *  x_axis [ newX ] [ y ] ; 
+              } 
+ 			
+ 			 // counting for p3'' and p4'' 
+              if   ( x  -  sideLength  >=   0 )         // x_coordinate should be within range [0, 1000] 
+              { 
+                  int  newX  =  x  -  sideLength ; 
+                 res  +=  x_axis [ x ] [ y_coord ]   *  x_axis [ newX ] [ y_coord ]   *  x_axis [ newX ] [ y ] ; 
+              } 
           } 
-          return  ct ; 
+          return  res ; 
       } 
- } ; 
- 
- /**
-  * Your DetectSquares object will be instantiated and called as such:
-  * DetectSquares* obj = new DetectSquares();
-  * obj->add(point);
-  * int param_2 = obj->count(point);
-  */
+ } ;
