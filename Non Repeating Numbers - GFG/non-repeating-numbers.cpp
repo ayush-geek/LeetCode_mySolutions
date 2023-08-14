@@ -8,27 +8,34 @@ class Solution
 public:
     vector<int> singleNumber(vector<int> nums) 
     {
+        // Code here.
         int res=0;
         for(int i=0;i<nums.size();i++)
-         res=res^nums[i];
-         
-         
-         //Find LeftMoST  Bit not set
-         
-         int a=0,b=0;
-         int lset= res &(-res) ;
-         
-         for(int i=0;i<nums.size();i++)
-         {
-             if(nums[i] & (lset))
-                a^=nums[i];
+        {
+            res=res^nums[i];
+        }
+        
+        // res=a^b
+        //cout<<res<<endl;
+        int a=0;
+        int b=0;
+        
+        int bit =res & ~(res - 1);;
+      //  cout<<bit<<endl;
+        
+        for(int i=0;i<nums.size();i++)
+        {
+            
+            if(bit & (nums[i])){
+             
+                a=a^nums[i];
+                
+                
+            }
             else
-                b^=nums[i];
-         }
-         
-         if(a>b)
-            swap(a,b);
-            return {a,b};
+                 b=b^nums[i];
+        }
+        return {min(a,b),max(a,b)};
     }
 };
 
