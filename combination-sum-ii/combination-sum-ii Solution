@@ -1,49 +1,44 @@
 class   Solution   { 
  public : 
-       void   solve ( int  i , vector < int > &  candidates , int &  target , vector < int > &  tmp , set < vector < int >> &  res , int &  cs ) 
-      {    
-         
-          if ( target == cs ) 
-          {    
-             
-                 res . insert ( tmp ) ; 
-                  return   ; 
-          } 
-         
-         
-         
-         
  
-          for ( int  j = i ; j < candidates . size ( ) ; j ++ ) 
-          {    
-              if ( j > i  &&  candidates [ j ] == candidates [ j - 1 ] ) 
+      void   solve ( int  i , int  target , vector < int > &  candidates , vector < int > &  tmp , vector < vector < int >> &  res )    
+      { 
+          int  n = candidates . size ( ) ; 
+          // if(i==n) 
+          // { 
+          //         if(target==0) 
+          //             res.push_back(tmp); 
+                 
+          //         return ; 
+          // } 
+ 
+         if ( target == 0 ) { 
+             res . push_back ( tmp ) ; 
+              return   ; 
+          } 
+ 
+          for ( int  j = i ; j < n ; j ++ ) 
+          { 
+              if ( j != i  &&  candidates [ j ] == candidates [ j - 1 ] ) 
                   continue ; 
-               if ( cs + candidates [ j ] <= target ) 
+ 
+              if ( candidates [ j ] <= target ) 
               {    
-                 cs += candidates [ j ] ; 
                  tmp . push_back ( candidates [ j ] ) ; 
-                  solve ( j + 1 , candidates , target , tmp , res , cs ) ; 
-                 cs -= candidates [ j ] ; 
+                  solve ( j + 1 , target - candidates [ j ] , candidates , tmp , res ) ; 
                  tmp . pop_back ( ) ; 
               } 
           } 
- 
-        
-       
-         
-       
       } 
+ 
      vector < vector < int >>   combinationSum2 ( vector < int > &  candidates ,   int  target )   { 
          
+          int  n = candidates . size ( ) ; 
           sort ( candidates . begin ( ) , candidates . end ( ) ) ; 
-         set < vector < int >>  rs ; 
          vector < vector < int >>  res ; 
          vector < int >  tmp ; 
-          int  cs = 0 ; 
-          solve ( 0 , candidates , target , tmp , rs , cs ) ; 
-         
-          for ( auto &  ele :  rs ) 
-             res . push_back ( ele ) ; 
+          solve ( 0 , target , candidates , tmp , res ) ; 
+ 
           return  res ; 
       } 
  } ;
