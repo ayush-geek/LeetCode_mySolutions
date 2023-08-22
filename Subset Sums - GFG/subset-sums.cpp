@@ -7,35 +7,28 @@ class Solution
 {
 public:
     
-    void solve(int i,vector<int>& nums,int tmp,vector<int>& res)   
+    void solve(int i,vector<int>& arr,int n,int sm,vector<int>& res)
     {
-        int n=nums.size();
-    if(i==nums.size())
-    {
-        res.push_back(tmp);
-        return ;
-    }
-
-  
-
-              
-                
-                solve(i+1,nums,tmp+nums[i],res);
-              
-            
-
-            
-             solve(i+1,nums,tmp,res);
+        if(i==arr.size())
+        {
+            res.push_back(sm);
+            return ;
+        }
         
+        //take
+        solve(i+1,arr,n,sm+arr[i],res);
+        
+        //nt
+        solve(i+1,arr,n,sm,res);
     }
 
-    vector<int> subsetSums(vector<int> arr, int N)
+    vector<int> subsetSums(vector<int> arr, int n)
     {
         // Write Your Code here
-        
+    
         vector<int> res;
-        int tmp=0;
-        solve(0,arr,tmp,res);
+        int sm=0;
+        solve(0,arr,n,sm,res);
         return res;
     }
 };
