@@ -1,0 +1,107 @@
+class   Solution   { 
+ public : 
+ 
+ 
+      // void sum(int i, unordered_map<int,set<int>>& mp,vector<int>& vis,int dis,int& ans) 
+      // { 
+      //     if(vis[i]) 
+      //         return; 
+        
+      //     vis[i]=1; 
+      //     dis+=1; 
+      //     for(auto itr=mp[i].begin();itr!=mp[i].end();itr++) 
+      //     { 
+      //         if(!vis[*itr]) 
+      //           {   
+      //               ans+=dis; 
+                  
+      //            // cout<<*itr<<" "<<ans<<endl; 
+      //           } 
+      //           sum(*itr,mp,vis,dis,ans); 
+      //     } 
+ 
+     
+ 
+      // } 
+ 
+      unordered_map < int , set < int >>  mp ; 
+      vector < int >  res , count ; 
+        
+     
+      //1 st type dfs 
+ 
+      void   dfs ( int  i , int  p = - 1 ) 
+      { 
+          for ( auto  u :  mp [ i ] ) 
+          { 
+              if ( u == p ) 
+                  continue   ;    //Child Node Matches With Parent 
+ 
+              dfs ( u , i ) ; 
+             count [ i ] += count [ u ] ; 
+             res [ i ]   +=  res [ u ]   +  count [ u ] ; 
+          } 
+         count [ i ] += 1 ; 
+      } 
+ 
+ 
+      void   dfs2 ( int  i , int  n , int  p = - 1 ) 
+      { 
+          for ( auto  u :  mp [ i ] ) 
+          { 
+              if ( u == p ) 
+                  continue   ;    //Child Node Matches With Parent 
+ 
+             
+             res [ u ]   =  res [ i ] - count [ u ] + n - count [ u ] ; 
+              dfs2 ( u , n , i ) ; 
+          } 
+        
+      } 
+     
+ 
+     vector < int >   sumOfDistancesInTree ( int  n ,  vector < vector < int >> &  edges )   { 
+         
+ 
+         
+ 
+ 
+          for ( int  i = 0 ; i < edges . size ( ) ; i ++ ) 
+              { 
+                  // adj[edges[0]].push_back(edges[1]); 
+                  // adj[edges[1]].push_back(edges[0]); 
+ 
+                 mp [ edges [ i ] [ 0 ] ] . insert ( edges [ i ] [ 1 ] ) ; 
+                 mp [ edges [ i ] [ 1 ] ] . insert ( edges [ i ] [ 0 ] ) ; 
+ 
+              } 
+ 
+ 
+         res . resize ( n ) ; 
+         count . resize ( n ) ; 
+          dfs ( 0 ) ; 
+          dfs2 ( 0 ,  n ) ; 
+          return  res ; 
+ 
+          //  int ans=0; 
+          //     int d=0; 
+          // int rtans=0; 
+          // for(int i=0;i<n;i++) 
+          // { 
+          //     vector<int> vis(n,0); 
+            
+          //     if(i==0) 
+          //        { sum(i,mp,vis,d,ans); 
+          //         rtans=ans; 
+          //        } 
+          //     //cout<<ans; 
+          //     else 
+          //         ans=res.back()-mp[i].size()+n-mp[i].size(); 
+          //     res.push_back(ans); 
+          // } 
+ 
+         // return res; 
+         
+        
+      } 
+ } ;
