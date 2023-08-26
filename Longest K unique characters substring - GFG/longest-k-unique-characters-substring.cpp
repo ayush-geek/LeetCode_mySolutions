@@ -9,34 +9,29 @@ using namespace std;
 
 class Solution{
   public:
-  
-  int solve(string s,int k)
-  {
-      int j=0;
-      int ans=-1;
-      unordered_map<char,int> mp;
-        
+    int longestKSubstr(string s, int k) {
+    // your code here
+    
+        unordered_map<char,int> mp;
+        int ans=-1;
+        int j=0;
         
         for(int i=0;i<s.size();i++)
         {
-                mp[s[i]]++;
+            mp[s[i]]++;
+            
+            while(mp.size()>k)
+            {
+                mp[s[j]]--;
                 
-                while(mp.size()>k)
-                {
-                    mp[s[j]]--;
-                    if(mp[s[j]]==0)
-                        mp.erase(s[j]);
-                    j++;
-                }
-                if(mp.size()==k)
-                    ans=max(ans,i-j+1);
+                if(mp[s[j]]==0)
+                    mp.erase(s[j]);
+                j++;
+            }
+            if(mp.size()==k)
+                ans=max(ans,i-j+1);
         }
         return ans;
-      
-  }
-    int longestKSubstr(string s, int k) {
-        
-        return solve(s,k);
     }
 };
 
