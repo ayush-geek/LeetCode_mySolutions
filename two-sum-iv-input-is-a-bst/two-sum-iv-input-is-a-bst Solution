@@ -12,36 +12,31 @@
  class   Solution   { 
  public : 
  
-      void   dfs ( TreeNode *  rt , vector < int > &  res ) 
+      void   solve ( TreeNode *  rt , vector < int > &  in ) 
       { 
+ 
           if ( rt == NULL ) 
               return   ; 
-          dfs ( rt -> left , res ) ; 
-         res . push_back ( rt -> val ) ; 
-          dfs ( rt -> right , res ) ; 
+          solve ( rt -> left , in ) ; 
+         in . push_back ( rt -> val ) ; 
+          solve ( rt -> right , in ) ; 
+ 
       } 
  
       bool   findTarget ( TreeNode *  root ,   int  k )   { 
          
- 
-         vector < int >  res ; 
- 
-          dfs ( root , res ) ; 
+         vector < int >  in ; 
+          solve ( root , in ) ; 
  
  
-          int  i = 0 ; 
-          int  j = res . size ( ) - 1 ; 
+         unordered_map < int , int >  mp ; 
  
-          while ( i < j ) 
+          for ( int  i = 0 ; i < in . size ( ) ; i ++ ) 
           { 
-              if ( res [ i ] + res [ j ] == k ) 
+              if ( mp . find ( k - in [ i ] ) != mp . end ( ) ) 
                   return   true ; 
-              else   if ( res [ i ] + res [ j ] < k ) 
-                 i ++ ; 
-              else 
-                 j -- ; 
+             mp [ in [ i ] ] ++ ; 
           } 
- 
-          return   false   ; 
+          return   false ; 
       } 
  } ;
