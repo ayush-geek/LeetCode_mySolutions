@@ -1,80 +1,58 @@
-class   LRUCache   { 
- public : 
+//new //used Recently at end  ,old enteries at front 
+ //whenever a key reappears put it back 
+ //That's all 
+ class   LRUCache   { 
+ private : 
+ int  size ; 
+ list < int >  dll ; 
  
-     vector < int >  vp ;     // 
-     unordered_map < int , pair < int , int >>  mp ;    //Value Pos 
-     set < int >  st ; 
-      int  sz ; 
-      int  cs ; 
-      int  k ; 
+ //to delete node faster and retreive value 
+ unordered_map < int , pair < list < int > :: iterator , int >>  mp ; 
+ 
+ public : 
       LRUCache ( int  capacity )   { 
-         vp . resize ( 300001 ) ; 
-         k = 0 ; 
-         sz = capacity ; 
-         cs = 0 ; 
+         size = capacity ;         
       } 
      
       int   get ( int  key )   { 
-          int  ans = - 1 ; 
-          if ( mp . find ( key ) != mp . end ( ) ) 
-            {   ans =  mp [ key ] . first ; 
-          int  old_pos = mp [ key ] . second ; 
-         mp [ key ] . second = k ; 
-         vp [ old_pos ] = - 1 ; 
-         // vp.erase(old_pos); 
-        st . erase ( old_pos ) ; 
-        st . insert ( k ) ; 
- 
-         vp [ k ] = key ; 
-         k ++ ; 
-            } 
- 
-          return  ans ; 
- 
+          //if not present 
+          if ( mp . count ( key ) == 0 ) 
+              return   - 1 ; 
+          // else put it in back 
+          int  v = mp [ key ] . second ; 
+          auto  itr = mp [ key ] . first ; 
+         dll . erase ( itr ) ; 
+         dll . push_back ( key ) ; 
+         mp [ key ] . first = -- dll . end ( ) ; 
+          return  v ;  
       } 
      
       void   put ( int  key ,   int  value )   { 
- 
-          if ( mp . find ( key ) != mp . end ( ) ) 
-              { 
-                 mp [ key ] . first = value ; 
-                   int  old_pos = mp [ key ] . second ; 
-                 mp [ key ] . second = k ; 
-                 vp [ old_pos ] = - 1 ; 
-      
-                 st . erase ( old_pos ) ; 
-                 st . insert ( k ) ; 
- 
-                 vp [ k ] = key ; 
-                 k ++ ; 
- 
-                  return   ; 
-              } 
          
-          if ( cs == sz ) 
+          //if key present 
+          if ( mp . count ( key ) ) 
           { 
-              for ( auto  ele :  st ) 
-              { 
-                  int  z = vp [ ele ] ; 
-                 vp [ ele ] = - 1 ; 
-                 mp . erase ( z ) ; 
-                 st . erase ( ele ) ; 
-                 cs -- ; 
- 
-                  break ; 
-              } 
-             
+             mp [ key ] . second = value ; 
+              auto  itr = mp [ key ] . first ; 
+             dll . erase ( itr ) ; 
+             dll . push_back ( key ) ; 
+             mp [ key ] . first = -- dll . end ( ) ; 
           } 
-         
-         
-         mp [ key ] = { value , k } ; 
-         vp [ k ] = key ; 
-         // cout<<vp[k]<<endl; 
-          st . insert ( k ) ; 
-     
-         k ++ ; 
-         cs ++ ; 
-          // 
+          else 
+          { 
+             dll . push_back ( key ) ; 
+             mp [ key ] = { -- dll . end ( ) , value } ; 
+ 
+              //chk size if more remove  
+              //old element from front 
+              if ( mp . size ( ) > size ) 
+              { 
+                  auto  frnt = dll . begin ( ) ; 
+                 mp . erase ( * frnt ) ; 
+                 dll . erase ( frnt ) ; 
+              } 
+          } 
+ 
       } 
  } ; 
  
