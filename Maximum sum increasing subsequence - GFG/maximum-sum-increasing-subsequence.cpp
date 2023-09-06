@@ -9,23 +9,23 @@ class Solution{
 	public:
 	int maxSumIS(int arr[], int n)  
 	{  
-	    vector<int> dp(n,0);
-	    
-	    
+	    // Your code goes here
+	    vector<int> dp(n+1,0);
+	    int mx=arr[0];
 	    
 	    for(int i=0;i<n;i++)
 	    {   
-	        dp[i]=arr[i];
+	         dp[i]=arr[i];
 	        for(int j=0;j<i;j++)
 	        {
-	            if(arr[i]>arr[j] && dp[i]<arr[i]+dp[j])
-	            {
-	                dp[i]=arr[i]+dp[j];
-	            }
+	           
+	            
+	            if(arr[j]<arr[i])
+	                dp[i]=max(dp[i],arr[i]+dp[j]);
 	        }
+	        mx=max(mx,dp[i]);
 	    }
-	    
-	    return *max_element(dp.begin(),dp.end());
+	    return mx;
 	}  
 };
 
