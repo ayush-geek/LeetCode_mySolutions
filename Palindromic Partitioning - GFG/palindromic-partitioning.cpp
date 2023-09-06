@@ -9,7 +9,7 @@ using namespace std;
 
 class Solution{
 public:
-    bool ispal(string& s)
+   bool ispal(string& s)
     {
         int i=0;
         int j=s.size()-1;
