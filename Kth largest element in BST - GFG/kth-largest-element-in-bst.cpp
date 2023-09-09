@@ -97,21 +97,29 @@ struct Node {
 class Solution
 {
     public:
+    
     void solve(Node* root,int& k,int& ans)
     {
         if(root==NULL)
             return ;
+        
+        // k--;
         solve(root->right,k,ans);
         k--;
+        
         if(k==0)
             ans=root->data;
-        
+    
         solve(root->left,k,ans);
+        
+        
     }
-    int kthLargest(Node *root, int k)
+    
+    int kthLargest(Node *root, int K)
     {
-         int ans=0;
-        solve(root,k,ans);
+        
+        int ans=0;
+        solve(root,K,ans);
         return ans;
     }
 };
