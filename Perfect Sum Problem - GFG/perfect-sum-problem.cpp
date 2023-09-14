@@ -6,44 +6,35 @@ using namespace std;
 class Solution{
 
 	public:
-	int mod=1e9+7;
-	  int solve(int i,int arr[],int& ct,int& sum,int& cs,int& n, vector<vector<int>>& dp)
-    {   
-        
-        if(i==n)
-        {
-                
-             return cs==sum;
-        }
-        
-        if(dp[i][cs]!=-1)
-            return dp[i][cs];
-        
-        //take
-        int l=0;
-        if(cs+arr[i]<=sum)
-        {
-        cs+=arr[i];
-        l=solve(i+1,arr,ct,sum,cs,n,dp)%mod;
-        cs-=arr[i];
-        }
-        
-        //Not_take
-          int r=solve(i+1,arr,ct,sum,cs,n,dp)%mod;
-    
-        
-        return dp[i][cs]=(l+r)%mod;
-    }
-  
+	   int mod=1e9+7;
+	   vector<vector<int>> dp;
+	   
+	int solve(int i,int arr[],int n,int sum)
+	{
+	    if(i<0)
+	        return sum==0;
+	   if(dp[i][sum]!=-1)
+	    return dp[i][sum];
+	    
+	   int take=0,not_take=0;
+	   
+	   if(arr[i]<=sum)
+	   {
+	       take=(take+solve(i-1,arr,n,sum-arr[i]))%mod;	   
+	       
+	   }
+	    
+	    not_take=(not_take+solve(i-1,arr,n,sum))%mod;
+	    
+	    return dp[i][sum]=(take+not_take)%mod;
+	}
 	
 	int perfectSum(int arr[], int n, int sum)
 	{
-        int ct=0;
-        int cs=0;
-         vector<vector<int>> dp(n,vector<int> (sum+1,-1));
-        return solve(0,arr,ct,sum,cs,n,dp);
-       
-        
+        // Your code goes here
+        dp.resize(n+1,vector<int> (sum+1,-1));
+        sort(arr,arr+n);
+        return solve(n-1,arr,n,sum);
 	}
 	  
 };
