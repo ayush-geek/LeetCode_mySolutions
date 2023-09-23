@@ -1,77 +1,60 @@
 class   Solution   { 
  public : 
-      static   bool   cmp ( string &  s1 ,  string &  s2 ) { 
-      return  s1 . size ( )   <  s2 . size ( ) ; 
- } 
-      bool   comp ( string nw , string prev ) 
+ 
+      bool   cmp ( string &  a , string &  b ) 
       {    
-          if ( nw . size ( ) != prev . size ( ) + 1 ) 
+          // cout<<a.size()<<" "<<b.size()<<endl; 
+          if ( b . size ( ) + 1   !=  a . size ( ) ) 
               return   false ; 
-          int  z = nw . size ( ) ; 
-          int  i = 0 ; 
-          int  j = 0 ; 
+        
+        vector < int >   v ( 26 , 0 ) ; 
  
-          //sort(nw.begin(),nw.end()); 
-          //sort(prev.begin(),prev.end()); 
-          int  ct = 0 ; 
- 
-          while ( i < nw . size ( )    &&  j < prev . size ( ) ) 
+          int  i = 0 , j = 0 ; 
+          while ( i < a . size ( )   &&  j < b . size ( ) ) 
           { 
-              if (  nw [ i ] != prev [ j ] ) 
-                  { ct ++ ; 
-                 
+              if ( a [ i ] == b [ j ] ) 
+              { 
                  i ++ ; 
-                  } 
- 
-                  else   { 
-                     i ++ ; 
-                     j ++ ; 
-                  } 
- 
-                  if ( j == prev . size ( ) )   return   true ; 
+                 j ++ ; 
+              } 
+              else  
+                 i ++ ; 
           } 
  
-          if ( i == nw . size ( )   &&  j == prev . size ( ) ) 
-              return   true ; 
- 
-          return   false ; 
+          return  j == b . size ( ) ; 
+      
       } 
  
-      int   longestStrChain ( vector < string > &  nums )   { 
- 
-        int  n = nums . size ( ) ; 
-         sort ( nums . begin ( ) , nums . end ( ) , cmp ) ; 
- 
+      int   longestStrChain ( vector < string > &  words )   { 
+          int  n = words . size ( ) ; 
          vector < int >   dp ( n , 1 ) ; 
-          // vector<int> hash(n,1); 
- 
-          int   ans = 1 ; 
-          // int lstind=0; 
- 
+          sort ( words . begin ( ) , words . end ( ) , [ ] ( string &  a , string &  b ) { 
+              return  a . size ( ) < b . size ( ) ; 
+          } ) ; 
           for ( int  i = 0 ; i < n ; i ++ ) 
           { 
-              // hash[i]=i; 
+             cout << words [ i ] << " " ; 
+          } 
+          // vector<int> hash(n,0); 
+          // iota(hash.begin(),hash.end(),0); //Set hash[i]=i; 
+          // int lst=0; 
+          int  mx = 1 ; 
+          for ( int  i = 0 ; i < n ; i ++ ) 
+          { 
               for ( int  j = 0 ; j < i ; j ++ ) 
               { 
-                  if ( comp ( nums [ i ] , nums [ j ] ) &&   1 + dp [ j ] > dp [ i ] ) 
-                  { 
-                     dp [ i ] = 1 + dp [ j ] ; 
-                      // hash[i]=j; 
- 
- 
-                      if ( dp [ i ] > ans ) 
+                  if ( cmp ( words [ i ] , words [ j ] )   &&   1 + dp [ j ] > dp [ i ] ) 
                       { 
-                         ans = dp [ i ] ; 
-                          // lstind=i; 
+                         dp [ i ] = 1 + dp [ j ] ; 
+                          // hash[i]=j; 
                       } 
+                  if ( dp [ i ] > mx ) 
+                  { 
+                     mx = dp [ i ] ; 
+                      // lst=i; 
                   } 
- 
-                 
               } 
           } 
- 
-          return  ans ; 
- 
-       
+          return  mx ; 
       } 
  } ;
