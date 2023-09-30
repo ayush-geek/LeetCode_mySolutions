@@ -26,30 +26,32 @@ class Solution
     {
         // Your code here
         
-        vector<pair<double,int>> vp;
-        for(int i=0;i<n;i++)
+        sort(arr,arr+n,[](Item& a,Item& b)
         {
-            double ans=(double)arr[i].value/(arr[i].weight);
-            vp.push_back({ans,arr[i].weight});
-        }
+           double a1=(double)a.value/a.weight;
+           double a2=(double)b.value/b.weight;
+         
+            return a1>=a2;
+          
+        });
         
-        sort(vp.rbegin(),vp.rend());
         double ans=0;
-        for(int i=0;i<vp.size();i++)
-        {
-            double tmp=vp[i].first;
-            int w=vp[i].second;
-            //cout<<tmp<<endl;   
-            if(w<=W)
-            {
-                ans+=(tmp)*w;
-                W-=w;
-            }
+        
+        for(int i=0;i<n;i++)
+        {   
+            double a1=(double)arr[i].value/arr[i].weight;
+            // double to_take=min(W,arr[i].weight)*a1;
+            if(W>=arr[i].weight)
+                ans+=arr[i].value;
             else
             {
-                ans+=(W)*tmp;
+                ans+=W*a1;
                 break;
             }
+          
+            W-=arr[i].weight;
+            
+            
         }
         return ans;
     }
