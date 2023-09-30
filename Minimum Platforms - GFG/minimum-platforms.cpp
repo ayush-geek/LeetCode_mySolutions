@@ -13,24 +13,22 @@ class Solution{
     int findPlatform(int arr[], int dep[], int n)
     {
     	// Your code here
+    	
     	map<int,int> mp;
+    	
     	
     	for(int i=0;i<n;i++)
     	{
-    	    int a=arr[i];
-    	    int b=dep[i];
-    	    
-    	    mp[a]++;
-    	    mp[b+1]--;
+    	    mp[arr[i]]++;
+    	    mp[dep[i]+1]--;
     	}
-    	
-    	int sm=0;
     	int mx=0;
+    	int ans=0;
     	for(auto& ele: mp)
-    	{
-    	    sm+=mp[ele.first];
-    	    mx=max(mx,sm);
+    	{   
+    	    ans+=ele.second;
     	    
+    	    mx=max(mx,ans);
     	}
     	return mx;
     }
