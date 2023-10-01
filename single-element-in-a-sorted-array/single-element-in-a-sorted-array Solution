@@ -5,7 +5,7 @@ class   Solution   {
  
          
           int  low = 1 ; 
-          int  high = n ; 
+          int  high = n - 2 ; 
  
           if ( n == 1 ) 
               return  nums [ 0 ] ; 
