@@ -10,50 +10,68 @@
   */ 
  class   Solution   { 
  public : 
+     
+     
+   
+     
+     
+     
      ListNode *   rotateRight ( ListNode *  head ,   int  k )   { 
-          if ( head == NULL ) 
-              return   NULL ; 
-          //shifting n-k in front 
+         
+         
+          //Count Total Number of Nodes 
+          if ( head == NULL   || k == 0 ) 
+              return  head ; 
+         
+          int  ct = 0 ; 
+         
          ListNode *  tmp = head ; 
-          int  n = 0 ; 
-         ListNode *  lst = NULL ; 
+         
           while ( tmp != NULL ) 
-              {    
-                 
-                  if ( tmp -> next == NULL ) 
-                     lst = tmp ; 
- 
-                 tmp = tmp -> next ; 
-                 n ++ ; 
- 
-              } 
- 
-         k = k % n ; 
- 
+          { 
+             
+             ct ++ ; 
+             tmp = tmp -> next ; 
+             
+          } 
+         
+         
+         k = k % ct ; 
+         
           if ( k == 0 ) 
               return  head ; 
          
-         tmp = head ; 
- 
-       
-         ListNode *  s = head ; 
-         ListNode *  f = head -> next ; 
-          while ( k -- ) 
-             f = f -> next ; 
-      
+          int  z = ct - k ; 
+         
         
-          while ( f != NULL   ) 
-          { 
-             f = f -> next ; 
-            
-             s = s -> next ; 
+         tmp = head ; 
+         
+           //find Index of n-k th node  
+      ListNode *  prev = NULL ; 
+          while ( z -- ) 
+          {    
+            prev = tmp ; 
+             tmp = tmp -> next ; 
           } 
-         cout << s -> val << endl ; 
-         ListNode *  tmp2 = s -> next ; 
-         s -> next = NULL ; 
-         lst -> next = head ; 
-          return  tmp2 ; 
- 
- 
+         
+         
+         prev -> next = NULL ; 
+         ListNode *  nh = tmp ; 
+          
+          //cout<<tmp->val<<endl; 
+         
+         
+          while ( tmp != NULL ) 
+          {    prev = tmp ; 
+             tmp = tmp -> next ; 
+             
+          } 
+         
+        prev -> next = head ; 
+         
+       
+         return  nh ; 
+         
+         
       } 
  } ;
