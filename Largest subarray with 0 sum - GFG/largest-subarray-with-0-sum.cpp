@@ -12,31 +12,36 @@ class Solution{
     public:
     int maxLen(vector<int>&A, int n)
     {   
-        //largest Subarray With 0 sum
-        
         unordered_map<int,int> mp;
-        int sm=0;
-        int fg=0;
         int ans=0;
+    
+        int sm=0;
+        int k=0;
         mp[0]=-1;
-        for(int i=0;i<n;i++)
+        for(auto& ele: A)
         {
+            sm+=ele;
             
-            sm+=A[i];
+            if(ele==0)
+            {
+                ans=max(ans,1);
+            }
             
-            if(mp.find(sm)!=mp.end())
-                ans=max(ans,i-mp[sm]);
+            if(mp.count(sm)==1)
+            {
+                ans=max(ans,k-mp[sm]);
+            }
+            
             else
-                mp[sm]=i;
-            
+                mp[sm]=k;
+            k++;
         }
         
-      
-            
         return ans;
         
     }
 };
+
 
 
 //{ Driver Code Starts.
