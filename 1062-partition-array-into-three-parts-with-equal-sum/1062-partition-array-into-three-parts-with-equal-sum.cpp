@@ -17,7 +17,7 @@ public:
             if(f1==1 && cs==2*sm/3)
                 f2=1;
 
-            if(cs==sm/3)
+            else if(cs==sm/3)
                 f1=1;
             
 
