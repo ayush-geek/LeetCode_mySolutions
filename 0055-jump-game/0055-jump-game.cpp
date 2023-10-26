@@ -1,42 +1,18 @@
 class Solution {
 public:
     bool canJump(vector<int>& nums) {
-        
-    // M1 Greedy
-        // int mxjmp=0;
+        int n=nums.size();
 
-        // for(int i=0;i<nums.size();i++)
-        // {
-        //     if(mxjmp<i)
-        //         return false;
-
-        //     mxjmp=max(mxjmp,i+nums[i]);
-        // }
-
-        // return true;
+        int mxJ=0;
 
 
-
-    // M2 Dp
-    int n=nums.size();
-    vector<int> dp(n,0);
-
-    dp[n-1]=1;
-    for(int i=n-2;i>=0;i--)
-    {
-
-        for(int j=i;j<=i+nums[i];j++)
+        for(int i=0;i<n-1;i++)
         {
-                if(j<n && dp[j]==1)
-                {
-                    dp[i]=1;
-                    break;
-                }
+            if(i>mxJ)
+                return false;
+            mxJ=max(mxJ,i+nums[i]);
         }
 
-       
-    }
-
-        return dp[0];
+        return mxJ>=n-1;
     }
 };
