@@ -1,0 +1,33 @@
+class Solution {
+public:
+    int eliminateMaximum(vector<int>& dist, vector<int>& speed) {
+        
+
+        //ceil
+
+        vector<int> tmp;
+
+        int n=dist.size();
+
+        for(int i=0;i<n;i++)
+        {
+            int z=(dist[i]+speed[i]-1)/speed[i];
+            tmp.push_back(z);
+        }
+
+        sort(tmp.begin(),tmp.end());
+
+        // if(tmp[0]==0)
+        //     return 0;
+        int ct=1;
+        for(int i=1;i<n;i++)
+        {
+            if(tmp[i]<=ct)
+                return i;
+            else
+                ct++;
+        }
+
+        return n;
+    }
+};
